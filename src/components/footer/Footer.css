@@ -1,0 +1,34 @@
+.bottom-nav {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  background-color: var(--muted);
+  display: flex;
+  justify-content: space-around;
+  padding: calc(var(--space-sm) + 4px) 0;
+  font-size: 1.5rem;
+  border-top: 1px solid var(--border);
+  width: 100%;
+}
+
+.bottom-nav a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.bottom-nav button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: var(--space-sm) var(--space-md);
+}
+
+.bottom-nav button.active {
+  transform: scale(1.05);
+  color: var(--primary);
+}
+
+.bottom-nav button:hover {
+  transform: scale(1.05);
+}

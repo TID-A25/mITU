@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import Header from "./components/Header.jsx";
-import Footer from "./components/Footer.jsx";
+import Header from "./components/header/Header.jsx";
+import Footer from "./components/footer/Footer.jsx";
 import Home from "./pages/Home.jsx";
 import UserProfile from "./pages/UserProfile";
 import OtherUserProfile from "./pages/OtherUserProfile";

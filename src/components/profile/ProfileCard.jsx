@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import React from "react";
+import "./ProfileSection.css";
 
 /**
  * ProfileCard Component

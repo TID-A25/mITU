@@ -1,0 +1,28 @@
+/* Header Styles */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: var(--muted);
+  padding: var(--space-md);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: var(--primary);
+}
+
+.app-header nav {
+  margin-top: 0.5rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--primary);
+}
+
+/* Spacing between nav items */
+.app-header nav button {
+  margin: 0 var(--space-sm);
+}

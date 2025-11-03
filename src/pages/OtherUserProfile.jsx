@@ -1,8 +1,8 @@
 import React from "react";
 import { mockProfileData } from "../data/mockProfiles.js";
-import ProfileHeader from "../components/ProfileHeader.jsx";
-import ProfileInfo from "../components/ProfileInfo.jsx";
-import ProfileInterests from "../components/ProfileInterests.jsx";
+import ProfileHeader from "../components/profile/ProfileHeader.jsx";
+import ProfileInfo from "../components/profile/ProfileInfo.jsx";
+import ProfileInterests from "../components/profile/ProfileInterests.jsx";
 import chadPic from "../assets/Chad.jpg";
 import { useNavigate } from "react-router-dom";
 
