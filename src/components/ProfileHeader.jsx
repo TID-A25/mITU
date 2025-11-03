@@ -1,7 +1,7 @@
 import React from "react";
 import coverPhoto from "../assets/Coverpicture.jpg";
 import settingsIcon from "../assets/Settings.svg";
-import "./ProfileHeader.css";
+import "./ProfileSection.css";
 export default function ProfileHeader({
   profilePicture,
   showSettings = false,
