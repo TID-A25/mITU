@@ -6,7 +6,8 @@ import profilePicture from "../assets/Athena.jpg";
 import globe from "../assets/Globe.svg";
 import hat from "../assets/Graduation_hat.svg";
 import settingsIcon from "../assets/Settings.svg";
-import InterestCard from "../components/InterestCard.jsx";
+// InterestScroller lives under src/components/profile
+import InterestScroller from "../components/profile/InterestScroller.jsx";
 
 export default function UserProfile() {
   {
@@ -60,7 +61,7 @@ export default function UserProfile() {
       {/* Interests row*/}
       <div className="interests-row">
         <h3>Interests</h3>
-        <InterestCard interest={profile.interest} />
+        <InterestScroller interests={profile.interests || profile.interest} />
       </div>
     </div>
   );

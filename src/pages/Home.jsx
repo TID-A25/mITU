@@ -1,15 +1,34 @@
 import React from "react";
 import { mockProfileData } from "../data/mockProfiles.js";
-import ProfileSection from "../components/ProfileSection.jsx";
+import ProfileSection from "../components/profile/ProfileSection.jsx";
 import "../App.css"; // Load global styles here
 
 export default function Home() {
-  // Group profiles by interest
+  {
+    /*Group profiles by interest*/
+  }
   const profilesByInterest = mockProfileData.reduce((acc, profile) => {
-    if (!acc[profile.interest]) {
-      acc[profile.interest] = [];
+    // make sure we always get an array of interests
+    let interests = [];
+
+    if (Array.isArray(profile.interest)) {
+      interests = profile.interest;
+    } else {
+      interests = [profile.interest];
     }
-    acc[profile.interest].push(profile);
+
+   {/* looping through each interest and group.
+    * If the interest key doesn't exist in acc,
+    * it is created as an empty array. 
+    * Then the current profile is added to the array. 
+    */}
+    interests.forEach((interest) => {
+      if (!acc[interest]) {
+        acc[interest] = [];
+      }
+      acc[interest].push(profile);
+    });
+
     return acc;
   }, {});
 
