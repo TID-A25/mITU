@@ -1,5 +1,6 @@
 import React from "react";
 import HorizontalScroller from "./HorizontalScroller";
+import "./ProfileSection.css";
 
 /**
  * ProfileSection Component

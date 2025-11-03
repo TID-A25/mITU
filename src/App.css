@@ -1,149 +1,22 @@
+@import './styles/theme.css';
+
 /* General Reset */
 body {
   margin: 0;
-  font-family: "Helvetica Neue", sans-serif;
-  background-color: #ffffff;
-  color: #111;
+  font-family: var(--font-sans);
+  background-color: var(--bg);
+  color: var(--text);
 }
 
-/* Header Styles */
-.app-header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background-color: #e7fff1;
-  padding: 1rem;
-  text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.app-header h1 {
-  margin: 0;
-  font-size: 2rem;
-  color: #3ec199;
-}
-
-.app-header nav {
-  margin-top: 0.5rem;
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: #3ec199;
-}
-
-/* Spacing between nav items */
-.app-header nav button {
-  margin: 0 0.5rem;
-}
-
-/* Section Title */
-.profile-section h2 {
-  margin-top: 2rem;
-  font-size: 1.2rem;
-  color: #222;
-  padding-left: 1rem;
-}
-
-/* Horizontal Scroll Area */
-.horizontal-scroll {
-  display: flex;
-  overflow-x: auto;
-  padding: 1rem;
-  gap: 1rem;
-
-  /* Remove snapping */
-  scroll-snap-type: none;
-  -webkit-overflow-scrolling: touch; /* smoother scroll on iOS */
-}
-
-/* Profile Card Styles */
-.profile-card {
-  min-width: 180px;
-  border-radius: 16px;
-  overflow: hidden;
-  text-decoration: none;
-  color: inherit;
-  border: 2px solid #baf3dc;
-  background-color: #f3fff9;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  flex-shrink: 0;
-  transition: transform 0.2s ease;
-  scroll-snap-align: start;
-  cursor: pointer;
-}
-
-.profile-card:hover {
-  transform: scale(1.03);
-}
-
-/* Profile Image Placeholder */
-.profile-photo {
-  height: 180px;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  padding: 1rem;
-}
-
-/* Text overlay */
-.profile-info {
-  background: rgba(0, 0, 0, 0.45);
-  padding: 0.5rem 0.75rem;
-  border-radius: 8px;
-  width: 100%;
-}
-
-.profile-info h3 {
-  margin: 0;
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: #fff;
-}
-
-.profile-info p {
-  margin: 0;
-  font-size: 0.9rem;
-  color: #e3e3e3;
-}
-
-/* Interests */
-.interests {
-  padding: 0.75rem 1rem;
-}
-
-.interests span {
-  margin: 2px 4px 0 0;
-  background: #dffff4;
-  border: 1px solid #a2e5cb;
-  color: #2b8c75;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  display: inline-block;
-}
-
-/* Footer Nav */
-.bottom-nav {
-  position: sticky;
-  bottom: 0;
-  z-index: 10;
-  background-color: #e7fff1;
-  display: flex;
-  justify-content: space-around;
-  padding: 0.8rem 0;
-  font-size: 1.5rem;
-  border-top: 1px solid #c8f1e0;
-  width: 100%;
-}
+/* Component-specific styles were moved to individual component CSS files */
 
 /* App Container for mobile-width UI */
 .app-container {
   max-width: 430px;
   margin: 0 auto;
-  background-color: #ffffff;
+  background-color: var(--bg);
   min-height: 100vh;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
   position: relative;
@@ -152,8 +25,8 @@ body {
 /* Optional: Light outer background (like native mobile feel) */
 body {
   margin: 0;
-  font-family: "Helvetica Neue", sans-serif;
-  background-color: #dcf7ec; /* pastel green */
+  font-family: var(--font-sans);
+  background-color: var(--app-bg); /* pastel green */
   display: flex;
   justify-content: center;
 }
@@ -167,103 +40,10 @@ body {
   box-sizing: border-box;
 }
 
-.header-wrap {
-  position: relative;
-  text-align: center; /* center child elements */
-}
+/* Profile header styles moved to ProfileHeader.css */
 
-.cover-photo-header img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  display: block;
-}
 
-/* Profile picture overlap and centering */
-.profile-picture-header {
-  position: absolute;
-  left: 50%;
-  bottom: -70px;
-  transform: translateX(-50%);
-  z-index: 2;
-
-  /* positioning reference for the icon */
-  width: 160px;
-  height: 160px;
-}
-
-/* profile image  */
-.profile-picture-header .profile-img {
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  border: 2px solid #74d6b3;
-  object-fit: cover;
-  display: block;
-  margin: 0 auto;
-}
-
-.user-profile-info {
-  margin-top: 60px; /* crating space for overlapped picture */
-  text-align: center;
-  font-family: system-ui, sans-serif;
-}
-
-.user-profile-info h3 {
-  font-size: 1.5rem;
-  margin-bottom: 0.2rem;
-}
-
-/* settings icon*/
-.settings-icon {
-  position: absolute;
-  bottom: 10px; /* vertically aligned near bottom */
-  right: -50%;
-  width: 20%; /* size relative to the profile picture */
-  height: auto;
-  cursor: pointer;
-}
-
-/* "Bump" button */
-.bump-button {
-  position: absolute;
-  bottom: 10px;
-  right: -50%;
-  background-color: rgb(189, 239, 212); /* #BDEFD4 */
-  color: black;
-  border: none;
-  border-radius: 50%; /* make the button it round */
-  width: 50px; /* equal width and height */
-  height: 50px;
-  font-size: 0.6rem;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center; /* centers the text */
-  transition: all 0.2s ease;
-}
-
-.bump-button:hover {
-  background-color: rgb(169, 219, 192); /* slightly darker on hover */
-  transform: scale(1.08);
-}
-
-/* === Mobile tweaks === */
-@media (max-width: 600px) {
-  .cover-photo-header img {
-    height: 150px;
-  }
-
-  .profile-picture-header .profile-img {
-    width: 120px;
-    height: 120px;
-  }
-
-  .user-profile-info h3 {
-    font-size: 1.2rem;
-  }
-}
+/* Mobile tweaks for some components live in their component CSS files */
 
 .badge {
   width: 20px;
@@ -275,7 +55,7 @@ body {
 .user-profile-info p {
   margin: 0.3rem 0;
   font-size: 0.95rem;
-  color: #333;
+  color: var(--muted-text);
 }
 
 .name-row {
@@ -330,129 +110,4 @@ body {
   font-size: 1.25rem;
 }
 
-/* Card */
-.interest-card {
-  position: relative;
-  flex: 0 0 280px; /* card width*/
-  height: 170px;
-  border-radius: 18px;
-  overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-}
-
-/* Background image */
-.interest-card img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* Dark gradient overlay for readability */
-.interest-card .overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.25),
-    rgba(0, 0, 0, 0.45)
-  );
-}
-
-.card-title {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  color: #fff;
-  font-weight: 700;
-  font-size: 1.2rem;
-  text-align: center;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
-  padding: 0 10px; /* avoid text touching edges on small screens */
-}
-
-/* Responsive for card*/
-@media (max-width: 420px) {
-  .interest-card {
-    flex-basis: 240px;
-    height: 150px;
-  }
-  .card-title {
-    font-size: 1.05rem;
-  }
-}
-
-.bump-page,
-.bump-title,
-.shared-interest-title,
-.shared-interest-card,
-.buttons {
-  text-align: center;
-}
-
-/* Profile pictures side by side */
-.bumping-pictures {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 24px;
-  margin-top: 40px;
-  margin-bottom: 12px;
-}
-
-.bumping-pictures .profile-img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #baf3dc;
-}
-
-/* Title under bump profile pictures */
-.bump-title {
-  margin-top: 8px;
-  font-size: 1.3rem;
-  color: #000;
-  font-weight: 600;
-}
-
-/* "You both like:" heading */
-.shared-interest-title {
-  margin-top: 24px;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #333;
-}
-
-/* Interest card centered */
-.shared-interest-card {
-  display: flex;
-  justify-content: center;
-  margin-top: 12px;
-}
-
-/* Bump buttons container */
-.buttons {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 18px;
-  margin-top: 40px;
-}
-
-/* Bump small buttons */
-.bump-buttons-small {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-}
-
-/* Bump big button */
-.button-big {
-  display: flex;
-  justify-content: center;
-}
+/* Interest and bump-related styles were moved to component CSS files */

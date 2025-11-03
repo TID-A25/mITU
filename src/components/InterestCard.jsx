@@ -1,4 +1,5 @@
 import React from "react";
+import "./ProfileSection.css"; // styles for interest-card and card-title
 import AnimeImg from "../assets/images/interests/Anime.jpg";
 import SportsImg from "../assets/images/interests/Sports.jpg";
 import KnittingImg from "../assets/images/interests/knitting.jpg";

@@ -1,0 +1,46 @@
+/* Button variants */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: transform 120ms ease, filter 120ms ease;
+}
+
+.button--round {
+  border-radius: 9999px;
+}
+
+.button--small {
+  width: 48px;
+  height: 48px;
+}
+
+.button--big {
+  width: 112px;
+  height: 112px;
+}
+
+.button--gray {
+  background-color: var(--gray);
+  color: black;
+}
+
+.button--danger {
+  background-color: var(--danger);
+  color: black;
+}
+
+.button--teal {
+  background-color: var(--accent);
+  color: black;
+}
+
+.button:active {
+  transform: scale(0.96);
+}
+
+.button:hover {
+  filter: brightness(0.98);
+}

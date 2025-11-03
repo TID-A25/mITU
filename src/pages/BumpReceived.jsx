@@ -4,9 +4,9 @@ import profilePicture from "../assets/Athena.jpg";
 import otherProfilePicture from "../assets/Chad.jpg";
 import confetti_orange from "../assets/Confetti_orange.svg";
 import confetti_teal from "../assets/Confetti_teal.svg";
-import ButtonBig from "../components/ButtonBig.jsx";
-import ButtonBack from "../components/ButtonBack.jsx";
-import ButtonDecline from "../components/ButtonDecline.jsx";
+import ButtonBig from "../components/buttons/ButtonBig.jsx";
+import ButtonBack from "../components/buttons/ButtonBack.jsx";
+import ButtonDecline from "../components/buttons/ButtonDecline.jsx";
 import InterestCard from "../components/InterestCard.jsx";
 
 export default function BumpReceived() {
