@@ -1,13 +1,14 @@
 import React from "react";
 import "./ProfileSection.css"; // styles for interest-card and card-title
-import AnimeImg from "../assets/images/interests/Anime.jpg";
-import SportsImg from "../assets/images/interests/Sports.jpg";
-import KnittingImg from "../assets/images/interests/knitting.jpg";
-import MoviesImg from "../assets/images/interests/movies.jpg";
-import GolfImg from "../assets/images/interests/golf.jpg";
-import PumpkinImg from "../assets/images/interests/pumpkin.jpg";
-import MusicImg from "../assets/images/interests/music.jpg";
-import DefaultImg from "../assets/images/interests/default.jpg";
+import AnimeImg from "../../assets/images/interests/Anime.jpg";
+// note: filename in repository is 'Sports.JPG' (uppercase extension)
+import SportsImg from "../../assets/images/interests/Sports.JPG";
+import KnittingImg from "../../assets/images/interests/knitting.jpg";
+import MoviesImg from "../../assets/images/interests/movies.jpg";
+import GolfImg from "../../assets/images/interests/golf.jpg";
+import PumpkinImg from "../../assets/images/interests/pumpkin.jpg";
+import MusicImg from "../../assets/images/interests/music.jpg";
+import DefaultImg from "../../assets/images/interests/default.jpg";
 
 export default function InterestCard({ interest }) {
   const images = {

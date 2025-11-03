@@ -97,7 +97,7 @@
   padding-left: var(--space-md);
 }
 
-.horizontal-scroll {
+.profile-gallery {
   display: flex;
   overflow-x: auto;
   padding: var(--space-md);

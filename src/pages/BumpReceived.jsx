@@ -7,7 +7,7 @@ import confetti_teal from "../assets/Confetti_teal.svg";
 import ButtonBig from "../components/buttons/ButtonBig.jsx";
 import ButtonBack from "../components/buttons/ButtonBack.jsx";
 import ButtonDecline from "../components/buttons/ButtonDecline.jsx";
-import InterestCard from "../components/InterestCard.jsx";
+import InterestCard from "../components/profile/InterestCard.jsx";
 
 export default function BumpReceived() {
   // load first and second element of mock data list, Athena and Chad

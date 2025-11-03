@@ -1,6 +1,7 @@
 import React from "react";
-import coverPhoto from "../assets/Coverpicture.jpg";
-import settingsIcon from "../assets/Settings.svg";
+// asset paths: this file lives at src/components/profile, so go up two levels to src/
+import coverPhoto from "../../assets/Coverpicture.jpg";
+import settingsIcon from "../../assets/Settings.svg";
 import "./ProfileSection.css";
 
 
