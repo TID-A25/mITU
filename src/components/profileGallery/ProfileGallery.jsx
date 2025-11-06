@@ -1,6 +1,6 @@
 import React from "react";
-import ProfileCard from "./ProfileCard";
-import "./ProfileSection.css";
+import ProfileCard from "../profileCard/ProfileCard";
+import "../profileSection//ProfileSection.css";
 
 /**
  * HorizontalScroller Component

@@ -1,5 +1,6 @@
 import React from "react";
 import InterestCard from "../interestCard/InterestCard.jsx";
+import "./InterestGallery.css";
 
 export default function InterestGallery({ interests }) {
   /**
@@ -33,7 +34,7 @@ export default function InterestGallery({ interests }) {
   }
 
   return (
-    <div className="horizontal-scroll">
+    <div className="gallery">
       {normalizedInterests.map((interest, i) => (
         <InterestCard key={i} interest={interest} />
       ))}

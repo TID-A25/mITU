@@ -1,9 +1,9 @@
 import React from "react";
 import { mockProfileData } from "../data/mockProfiles.js";
-import ProfileHeader from "../components/profile/ProfileHeader.jsx";
-import ProfileInfo from "../components/profile/ProfileInfo.jsx";
-import ProfileInterests from "../components/profile/ProfileInterests.jsx";
-import chadPic from "../assets/Chad.jpg";
+import ProfileHeader from "../components/profileHeader/ProfileHeader.jsx";
+import ProfileInfo from "../components/profileInfo/ProfileInfo.jsx";
+import ProfileInterests from "../components/profileInterests/ProfileInterests.jsx";
+import chadPic from "../assets/images/profiles/Chad.jpg";
 import { useNavigate } from "react-router-dom";
 
 export default function OtherUserProfilePage() {

@@ -1,13 +1,13 @@
 import React from "react";
 import { mockProfileData } from "../data/mockProfiles.js";
-import profilePicture from "../assets/Athena.jpg";
-import otherProfilePicture from "../assets/Chad.jpg";
-import confetti_orange from "../assets/Confetti_orange.svg";
-import confetti_teal from "../assets/Confetti_teal.svg";
+import profilePicture from "../assets/images/profiles/Athena.jpg";
+import otherProfilePicture from "../assets/images/profiles/Chad.jpg";
+import confetti_orange from "../assets/images/icons/Confetti_orange.svg";
+import confetti_teal from "../assets/images/icons/Confetti_teal.svg";
 import ButtonBig from "../components/buttons/ButtonBig.jsx";
 import ButtonBack from "../components/buttons/ButtonBack.jsx";
 import ButtonDecline from "../components/buttons/ButtonDecline.jsx";
-import InterestCard from "../components/profile/InterestCard.jsx";
+import InterestCard from "../components/interestCard/InterestCard.jsx";
 
 export default function BumpReceived() {
   // load first and second element of mock data list, Athena and Chad

@@ -1,6 +1,6 @@
 import React from "react";
 import { mockProfileData } from "../data/mockProfiles.js";
-import ProfileSection from "../components/profile/ProfileSection.jsx";
+import ProfileSection from "../components/profileSection/ProfileSection.jsx";
 import "../App.css"; // Load global styles here
 
 export default function Home() {

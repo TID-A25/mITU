@@ -1,8 +1,10 @@
 import React from "react";
 // asset paths: this file lives at src/components/profile, so go up two levels to src/
-import verifiedBadge from "../../assets/Verified.svg";
-import globe from "../../assets/Globe.svg";
-import hat from "../../assets/Graduation_hat.svg";
+import verifiedBadge from "../../assets/images/icons/Verified.svg";
+import globe from "../../assets/images/icons/Globe.svg";
+import hat from "../../assets/images/icons/Graduation_hat.svg";
+import "./ProfileInfo.css";
+
 
 export default function ProfileInfo({ profile }) {
   return (

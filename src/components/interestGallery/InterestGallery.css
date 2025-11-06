@@ -1,0 +1,33 @@
+/* Wrapper for all interest cards */
+.gallery {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;                 /* space between cards */
+  overflow-x: auto;          /* enable horizontal scroll */
+  overflow-y: hidden;
+  padding: 0 16px 12px;      /* horizontal padding */
+  margin-top: 8px;           
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch; /* smooth scrolling on mobile */
+}
+
+/* make each card snap nicely when scrolling */
+.gallery .interest-card {
+  scroll-snap-align: start;
+  flex-shrink: 0;            /* prevents cards from squishing */
+}
+
+/* Hide scrollbar (but still scrollable) */
+.gallery::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* Optional: slightly smaller cards on very small screens
+   (works together with interest-card media query) */
+@media (max-width: 420px) {
+  .gallery {
+    padding: 0 12px 10px;
+    gap: 12px;
+  }
+}

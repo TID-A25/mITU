@@ -8,8 +8,6 @@ body {
   color: var(--text);
 }
 
-/* Component-specific styles were moved to individual component CSS files */
-
 /* App Container for mobile-width UI */
 .app-container {
   max-width: 430px;
@@ -39,75 +37,3 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
-
-/* Profile header styles moved to ProfileHeader.css */
-
-
-/* Mobile tweaks for some components live in their component CSS files */
-
-.badge {
-  width: 20px;
-  height: 20px;
-  vertical-align: middle;
-  margin-left: 4px;
-}
-
-.user-profile-info p {
-  margin: 0.3rem 0;
-  font-size: 0.95rem;
-  color: var(--muted-text);
-}
-
-.name-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-}
-
-.info-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 6px;
-}
-
-.info-row img {
-  width: 18px;
-  height: 18px;
-}
-
-.info-row p {
-  margin: 0;
-  font-size: 0.95rem;
-}
-
-.name-row {
-  display: flex;
-  align-items: center;
-  justify-content: center; /* centers horizontally */
-  gap: 6px; /* space between name and badge */
-}
-
-.name-row h3 {
-  margin: 0;
-}
-
-.badge {
-  width: 20px;
-  height: 20px;
-}
-
-/* Interests section */
-.interests-row {
-  margin-top: 20px;
-  padding-inline: 16px;
-}
-
-.interests-row > h3 {
-  margin: 0 0 12px 0;
-  font-size: 1.25rem;
-}
-
-/* Interest and bump-related styles were moved to component CSS files */

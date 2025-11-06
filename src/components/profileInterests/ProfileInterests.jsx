@@ -1,11 +1,12 @@
 import React from "react";
-import InterestScroller from "./InterestScroller.js";
+import InterestGallery from "../interestGallery/InterestGallery.jsx";
+import "./ProfileInterests.css";
 
 export default function ProfileInterests({ interests }) {
   return (
     <div className="interests-row">
       <h3>Interests</h3>
-      <InterestScroller interests={interests} />
+      <InterestGallery interests={interests} />
     </div>
   );
 }
