@@ -1,7 +1,7 @@
 import React from "react";
-import InterestCard from "./InterestCard.jsx";
+import InterestCard from "../interestCard/InterestCard.jsx";
 
-export default function InterestScroller({ interests }) {
+export default function InterestGallery({ interests }) {
   /**
    * Interest scroller component.
    * Displays interests as cards in a horizontal scroll layout,
