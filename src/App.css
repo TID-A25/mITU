@@ -37,17 +37,3 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
-
-
-/* Interests section */
-.interests-row {
-  margin-top: 20px;
-  padding-inline: 16px;
-}
-
-.interests-row > h3 {
-  margin: 0 0 12px 0;
-  font-size: 1.25rem;
-}
-
-/* Interest and bump-related styles were moved to component CSS files */

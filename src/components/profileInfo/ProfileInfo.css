@@ -4,6 +4,17 @@
   color: var(--muted-text);
 }
 
+.user-profile-info {
+  margin-top: 60px;
+  text-align: center;
+  font-family: var(--font-sans);
+}
+
+.user-profile-info h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.2rem;
+}
+
 .badge {
   width: 20px;
   height: 20px;
@@ -45,4 +56,11 @@
 
 .name-row h3 {
   margin: 0;
+}
+
+@media (max-width: 600px) {
+
+  .user-profile-info h3 {
+    font-size: 1.2rem;
+  }
 }
