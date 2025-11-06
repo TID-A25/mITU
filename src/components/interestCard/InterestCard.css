@@ -1,0 +1,43 @@
+.interest-card {
+  position: relative;
+  flex: 0 0 280px; /* card width*/
+  height: 170px; 
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* Dark gradient overlay for readability */
+.interest-card .overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.25),
+    rgba(0, 0, 0, 0.45)
+  );
+}
+
+.card-title {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-align: center;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  padding: 0 10px; /* avoid text touching edges on small screens */
+}
+
+/* Responsive for card*/
+@media (max-width: 420px) {
+  .interest-card {
+    flex-basis: 240px;
+    height: 150px;
+  }
+  .card-title {
+    font-size: 1.05rem;
+  }
+}

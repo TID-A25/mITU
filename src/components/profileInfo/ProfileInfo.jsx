@@ -3,6 +3,8 @@ import React from "react";
 import verifiedBadge from "../../assets/images/icons/Verified.svg";
 import globe from "../../assets/images/icons/Globe.svg";
 import hat from "../../assets/images/icons/Graduation_hat.svg";
+import "./ProfileInfo.css";
+
 
 export default function ProfileInfo({ profile }) {
   return (

@@ -1,0 +1,48 @@
+.user-profile-info p {
+  margin: 0.3rem 0;
+  font-size: 0.95rem;
+  color: var(--muted-text);
+}
+
+.badge {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
+.name-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.info-row img {
+  width: 18px;
+  height: 18px;
+}
+
+.info-row p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.name-row {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* centers horizontally */
+  gap: 6px; /* space between name and badge */
+}
+
+.name-row h3 {
+  margin: 0;
+}

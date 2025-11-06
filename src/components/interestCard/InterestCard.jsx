@@ -9,6 +9,7 @@ import GolfImg from "../../assets/images/interests/golf.jpg";
 import PumpkinImg from "../../assets/images/interests/pumpkin.jpg";
 import MusicImg from "../../assets/images/interests/music.jpg";
 import DefaultImg from "../../assets/images/interests/default.jpg";
+import "./InterestCard.css";
 
 export default function InterestCard({ interest }) {
   const images = {
