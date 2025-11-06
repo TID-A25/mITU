@@ -1,13 +1,13 @@
 import React from "react";
-import verifiedBadge from "../assets/Verified.svg";
+import verifiedBadge from "../assets/images/icons/Verified.svg";
 import { mockProfileData } from "../data/mockProfiles.js";
-import coverPhoto from "../assets/Coverpicture.jpg";
-import profilePicture from "../assets/Athena.jpg";
-import globe from "../assets/Globe.svg";
-import hat from "../assets/Graduation_hat.svg";
-import settingsIcon from "../assets/Settings.svg";
+import coverPhoto from "../assets/images/profiles/Coverpicture.jpg";
+import profilePicture from "../assets/images/profiles/Athena.jpg";
+import globe from "../assets/images/icons/Globe.svg";
+import hat from "../assets/images/icons/Graduation_hat.svg";
+import settingsIcon from "../assets/images/icons/Settings.svg";
 // InterestScroller lives under src/components/profile
-import InterestScroller from "../components/profile/InterestScroller.jsx";
+import InterestGallery from "../components/interestGallery/InterestGallery.jsx";
 
 export default function UserProfile() {
   {
@@ -61,7 +61,7 @@ export default function UserProfile() {
       {/* Interests row*/}
       <div className="interests-row">
         <h3>Interests</h3>
-        <InterestScroller interests={profile.interests || profile.interest} />
+        <InterestGallery interests={profile.interests || profile.interest} />
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import "./ProfileSection.css"; // styles for interest-card and card-title
+import "../profileSection/ProfileSection.css"; // styles for interest-card and card-title
 import AnimeImg from "../../assets/images/interests/Anime.jpg";
 // note: filename in repository is 'Sports.JPG' (uppercase extension)
 import SportsImg from "../../assets/images/interests/Sports.JPG";

@@ -1,5 +1,5 @@
 import React from "react";
-import HorizontalScroller from "./ProfileGallery";
+import ProfileGallery from "../profileGallery/ProfileGallery";
 import "./ProfileSection.css";
 
 /**
@@ -10,7 +10,7 @@ export default function ProfileSection({ title, profiles }) {
   return (
     <section className="profile-section">
       <h2>People who also like <strong>{title}</strong></h2>
-      <HorizontalScroller profiles={profiles} />
+      <ProfileGallery profiles={profiles} />
     </section>
   );
 }
