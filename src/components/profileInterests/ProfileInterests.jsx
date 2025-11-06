@@ -1,5 +1,5 @@
 import React from "react";
-import InterestScroller from "./InterestScroller.jsx";
+import InterestScroller from "./InterestScroller.js";
 
 export default function ProfileInterests({ interests }) {
   return (
