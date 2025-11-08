@@ -10,15 +10,6 @@ import OtherUserProfile from "./pages/OtherUserProfile";
 import BumpSent from "./pages/BumpSent.jsx";
 import BumpReceived from "./pages/BumpReceived.jsx";
 
-
-
-
-//javascriptKey is required only if you have it on server.
-Parse.initialize("aWNL9Z0PjnXfY2j23yo3HgcKgW0oqsoHQ430hwly", "ekx89ghYcTfy9OOPoHLaPg5Aa4pXksoGL5ZiUnha");
-
-Parse.serverURL = 'https://parseapi.back4app.com/'
-
-
 function App() {
   return (
     <BrowserRouter>
