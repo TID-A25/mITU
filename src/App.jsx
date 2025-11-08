@@ -1,3 +1,6 @@
+//Setting up Parse
+// ** importing Parse as configured in vite.config.js:
+import "./parseConfig.js";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Header from "./components/header/Header.jsx";
 import Footer from "./components/footer/Footer.jsx";
@@ -6,13 +9,15 @@ import UserProfile from "./pages/UserProfile";
 import OtherUserProfile from "./pages/OtherUserProfile";
 import BumpSent from "./pages/BumpSent.jsx";
 import BumpReceived from "./pages/BumpReceived.jsx";
-// ** Using the minified version of Parse as configured in vite.config.js:
-import Parse from "parse/dist/parse.min.js";
 
-Parse.initialize("aWNL9Z0PjnXfY2j23yo3HgcKgW0oqsoHQ430hwly", "ekx89ghYcTfy9OOPoHLaPg5Aa4pXksoGL5ZiUnha");
+
+
+
 //javascriptKey is required only if you have it on server.
+Parse.initialize("aWNL9Z0PjnXfY2j23yo3HgcKgW0oqsoHQ430hwly", "ekx89ghYcTfy9OOPoHLaPg5Aa4pXksoGL5ZiUnha");
 
 Parse.serverURL = 'https://parseapi.back4app.com/'
+
 
 function App() {
   return (
@@ -22,7 +27,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/user-profile" element={<UserProfile />} />
-          <Route path="/other-user-profile" element={<OtherUserProfile />} />
+          <Route path="/user/:userId" element={<OtherUserProfile />} />  
           <Route path="/bump-sent" element={<BumpSent />} />
           <Route path="/bump-received" element={<BumpReceived />} />
         </Routes>
