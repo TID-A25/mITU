@@ -41,8 +41,3 @@
   background: var(--primary);
   color: var(--muted);
 }
-
-.app-header nav .button:focus {
-  outline: 2px solid var(--focus, rgba(94, 215, 179, 0.35));
-  outline-offset: 2px;
-}
