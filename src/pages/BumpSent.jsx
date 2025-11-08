@@ -30,7 +30,7 @@ export default function BumpSent() {
 
       {/* Title message saying you bumped into them */}
       <div className="bump-title">
-        <h3 className="name-row">You bumped into {other.name}!</h3>
+        <h2 className="name-row">You bumped into {other.name}!</h2>
       </div>
 
       {/* Showing You both like: and interest card */}

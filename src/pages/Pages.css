@@ -29,3 +29,32 @@
 .padding-lg {
   padding: var(--space-lg);
 }
+
+/* headings */
+h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: var(--space-md);
+}
+
+h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: var(--space-sm);
+}
+
+h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: var(--space-xs);
+}
+
+/* paragraph text */
+p {
+  color: var(--muted-text);
+  line-height: 1.5;
+  margin-bottom: var(--space-sm);
+}
