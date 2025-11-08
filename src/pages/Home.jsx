@@ -8,6 +8,9 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Define the current logged-in user ID
+  const CURRENT_USER_ID = "C6YoifVWmr"; // user is victoria
+
   useEffect(() => {
     async function fetchProfiles() {
       try {
@@ -17,9 +20,13 @@ export default function Home() {
         const userQuery = new Parse.Query("Users");
         const users = await userQuery.find();
 
+        // Filter out the current logged-in user
+        const otherUsers = users.filter(user => user.id !== CURRENT_USER_ID);
+
         // map each user and get their interests
+        //changed logic to map to other users instead of all users
         const profilesWithInterests = await Promise.all(
-          users.map(async (user) => {
+          otherUsers.map(async (user) => {
             try {
               const firstName = user.get("first_name");
               
