@@ -22,6 +22,10 @@
   height: 112px;
 }
 
+.button--text {
+  background: transparent;
+}
+
 .button--gray {
   background-color: var(--gray);
   color: black;
