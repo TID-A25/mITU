@@ -8,6 +8,8 @@ import ButtonBig from "../components/buttons/ButtonBig.jsx";
 import ButtonBack from "../components/buttons/ButtonBack.jsx";
 import ButtonDecline from "../components/buttons/ButtonDecline.jsx";
 import InterestCard from "../components/interestCard/InterestCard.jsx";
+import "../App.css"; // Load global styles here
+import "./Pages.css"; // Load page-specific styles here
 
 export default function BumpReceived() {
   // load first and second element of mock data list, Athena and Chad
@@ -15,7 +17,7 @@ export default function BumpReceived() {
   const other = mockProfileData[1];
 
   return (
-    <div className="bump-page">
+    <div className="page container stack">
       {/* The two profile pictures */}
       <div className="bumping-pictures">
         <img src={profilePicture} alt={you.name} className="profile-img" />

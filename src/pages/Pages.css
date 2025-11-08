@@ -1,0 +1,31 @@
+/* shared layout styles for all pages */
+
+/* main wrapper for each page */
+.page {
+  background-color: var(--bg);
+  min-height: 100vh;
+}
+
+/* keeps page content centered */
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* gives even space between vertical stacked elements */
+.stack > * + * {
+  margin-top: var(--space-md);
+}
+
+/* helper classes for extra spacing */
+.margin-top-md {
+  margin-top: var(--space-md);
+}
+
+.margin-bottom-md {
+  margin-bottom: var(--space-md);
+}
+
+.padding-lg {
+  padding: var(--space-lg);
+}
