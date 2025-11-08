@@ -7,7 +7,7 @@ import confetti_teal from "../assets/images/icons/Confetti_teal.svg";
 import ButtonBig from "../components/buttons/ButtonBig.jsx";
 import ButtonBack from "../components/buttons/ButtonBack.jsx";
 import ButtonDecline from "../components/buttons/ButtonDecline.jsx";
-import InterestCard from "../components/interestCard/InterestCard.jsx";
+import BumpHeader from "../components/bump/BumpHeader.jsx";
 import "../App.css"; // Load global styles here
 import "./Pages.css"; // Load page-specific styles here
 
@@ -18,28 +18,14 @@ export default function BumpSent() {
 
   return (
     <div className="page container stack">
-      {/* The two profile pictures */}
-      <div className="bumping-pictures">
-        <img src={profilePicture} alt={you.name} className="profile-img" />
-        <img
-          src={otherProfilePicture}
-          alt={other.name}
-          className="profile-img"
-        />
-      </div>
-
-      {/* Title message saying you bumped into them */}
-      <div className="bump-title">
-        <h2 className="name-row">You bumped into {other.name}!</h2>
-      </div>
-
-      {/* Showing You both like: and interest card */}
-      <div className="shared-interest-title">
-        <h4 className="name-row">You both like:</h4>
-      </div>
-      <div className="shared-interest-card">
-        <InterestCard interest={you.interest} />
-      </div>
+      <BumpHeader
+        you={you}
+        other={other}
+        leftImageSrc={profilePicture}
+        rightImageSrc={otherProfilePicture}
+        interest={you.interest}
+        type="sent"
+      />
 
       <div className="buttons">
         {/* OK button */}
