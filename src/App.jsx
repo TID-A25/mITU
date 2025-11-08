@@ -6,6 +6,13 @@ import UserProfile from "./pages/UserProfile";
 import OtherUserProfile from "./pages/OtherUserProfile";
 import BumpSent from "./pages/BumpSent.jsx";
 import BumpReceived from "./pages/BumpReceived.jsx";
+// ** Using the minified version of Parse as configured in vite.config.js:
+import Parse from "parse/dist/parse.min.js";
+
+Parse.initialize("aWNL9Z0PjnXfY2j23yo3HgcKgW0oqsoHQ430hwly", "ekx89ghYcTfy9OOPoHLaPg5Aa4pXksoGL5ZiUnha");
+//javascriptKey is required only if you have it on server.
+
+Parse.serverURL = 'https://parseapi.back4app.com/'
 
 function App() {
   return (
