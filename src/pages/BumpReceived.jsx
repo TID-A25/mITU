@@ -4,9 +4,7 @@ import profilePicture from "../assets/images/profiles/Athena.jpg";
 import otherProfilePicture from "../assets/images/profiles/Chad.jpg";
 import confetti_orange from "../assets/images/icons/Confetti_orange.svg";
 import confetti_teal from "../assets/images/icons/Confetti_teal.svg";
-import ButtonBig from "../components/buttons/ButtonBig.jsx";
-import ButtonBack from "../components/buttons/ButtonBack.jsx";
-import ButtonDecline from "../components/buttons/ButtonDecline.jsx";
+import BumpButtons from "../components/bump/BumpButtons.jsx";
 import BumpHeader from "../components/bump/BumpHeader.jsx";
 import "../App.css"; // Load global styles here
 import "./Pages.css"; // Load page-specific styles here
@@ -27,18 +25,8 @@ export default function BumpReceived() {
         type="received"
       />
 
-      <div className="buttons">
-        {/* Accept button */}
-        <div className="button-big">
-          <ButtonBig label="Accept!" />
-        </div>
-
-        {/* Back and decline button */}
-        <div className="bump-buttons-small">
-          <ButtonBack />
-          <ButtonDecline label="Decline" />
-        </div>
-      </div>
+      {/* Simple presentational buttons component — variant="received" */}
+      <BumpButtons variant="received" />
     </div>
   );
 }

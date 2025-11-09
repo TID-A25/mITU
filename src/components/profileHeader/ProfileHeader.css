@@ -43,15 +43,6 @@
   position: absolute;
   bottom: 10px;
   right: -50%;
-  /* keep bump-specific color but rely on shared .button for size/shape */
-  background-color: rgb(189, 239, 212);
-  color: black;
-}
-
-/* keep the original hover effect (slightly brighter + scale) */
-.bump-button:hover {
-  background-color: rgb(169, 219, 192);
-  transform: scale(1.08);
 }
 
 @media (max-width: 600px) {

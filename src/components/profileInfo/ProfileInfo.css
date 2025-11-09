@@ -49,4 +49,5 @@
   gap: 6px; /* space between name and badge */
 }
 
-@media (max-width: 600px) {}
+@media (max-width: 600px) {
+}

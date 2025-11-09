@@ -30,7 +30,7 @@ export default function ProfileHeader({
         {!showSettings && (
           // calls the onBump prop when user clicks
           <button
-            className="button button--round button--small bump-button"
+            className="button button--small button--teal bump-button"
             onClick={onBump}
           >
             Bump
