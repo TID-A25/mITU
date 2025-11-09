@@ -58,3 +58,25 @@ p {
   line-height: 1.5;
   margin-bottom: var(--space-sm);
 }
+
+/* Base gallery styles for horizontal scrolling galleries */
+.gallery {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-md);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  padding: var(--space-md);
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Make gallery items snap and prevent squishing */
+.gallery > * {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+.gallery::-webkit-scrollbar {
+  display: none;
+}

@@ -2,14 +2,4 @@
   margin-top: calc(var(--space-lg));
   font-size: 1.2rem;
   color: var(--text);
-  padding-left: var(--space-md);
-}
-
-.profile-gallery {
-  display: flex;
-  overflow-x: auto;
-  padding: var(--space-md);
-  gap: var(--space-md);
-  scroll-snap-type: none;
-  -webkit-overflow-scrolling: touch;
 }
