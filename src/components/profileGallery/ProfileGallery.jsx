@@ -1,6 +1,5 @@
 import React from "react";
 import ProfileCard from "../profileCard/ProfileCard";
-import "../../pages/Pages.css";
 import "./ProfileGallery.css";
 
 /**

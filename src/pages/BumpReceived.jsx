@@ -6,8 +6,6 @@ import confetti_orange from "../assets/images/icons/Confetti_orange.svg";
 import confetti_teal from "../assets/images/icons/Confetti_teal.svg";
 import BumpButtons from "../components/bump/BumpButtons.jsx";
 import BumpHeader from "../components/bump/BumpHeader.jsx";
-import "../App.css"; // Load global styles here
-import "./Pages.css"; // Load page-specific styles here
 
 export default function BumpReceived() {
   // load first and second element of mock data list, Athena and Chad

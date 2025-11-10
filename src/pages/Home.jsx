@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ProfileSection from "../components/profileSection/ProfileSection.jsx";
 import Parse from "parse";
-import "../App.css";
 
 export default function Home() {
   const [profilesByInterest, setProfilesByInterest] = useState({});
@@ -21,7 +20,7 @@ export default function Home() {
         const users = await userQuery.find();
 
         // Filter out the current logged-in user
-        const otherUsers = users.filter(user => user.id !== CURRENT_USER_ID);
+        const otherUsers = users.filter((user) => user.id !== CURRENT_USER_ID);
 
         // map each user and get their interests
         //changed logic to map to other users instead of all users
@@ -33,11 +32,13 @@ export default function Home() {
               userInterestQuery.equalTo("user", user);
               userInterestQuery.include("interest");
               const interestResults = await userInterestQuery.find();
-              
-              const interests = interestResults.map((entry) => {
-                const interest = entry.get("interest");
-                return interest ? interest.get("interest_name") : null;
-              }).filter(Boolean);
+
+              const interests = interestResults
+                .map((entry) => {
+                  const interest = entry.get("interest");
+                  return interest ? interest.get("interest_name") : null;
+                })
+                .filter(Boolean);
 
               // Get profile picture URL
               const profilePic = user.get("profile_pic");
@@ -50,13 +51,15 @@ export default function Home() {
                 interests: interests,
                 degree: user.get("programme"),
                 semester: user.get("semester"),
-                country: user.get("country") || "Not specified"
+                country: user.get("country") || "Not specified",
               };
-              
+
               return profile;
-              
             } catch (error) {
-              console.error(`Error fetching interests for user ${user.id}:`, error);
+              console.error(
+                `Error fetching interests for user ${user.id}:`,
+                error
+              );
               return {
                 id: user.id,
                 name: `${user.get("first_name")} ${user.get("last_name")}`,
@@ -64,7 +67,7 @@ export default function Home() {
                 interests: [],
                 degree: user.get("programme"),
                 semester: user.get("semester"),
-                country: user.get("country") || "Not specified"
+                country: user.get("country") || "Not specified",
               };
             }
           })
@@ -89,7 +92,6 @@ export default function Home() {
 
         setProfilesByInterest(grouped);
         setError(null);
-
       } catch (error) {
         console.error("Failed to fetch profiles:", error);
         setError(`Failed to load profiles: ${error.message}`);
@@ -100,7 +102,6 @@ export default function Home() {
 
     fetchProfiles();
   }, []);
-
 
   return (
     <div>

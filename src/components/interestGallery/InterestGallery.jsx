@@ -1,6 +1,5 @@
 import React from "react";
 import InterestCard from "../interestCard/InterestCard.jsx";
-import "../../pages/Pages.css";
 import "./InterestGallery.css";
 
 export default function InterestGallery({ interests }) {
