@@ -48,3 +48,22 @@
 .button:active {
   transform: scale(0.96);
 }
+
+/* bump buttons layout (moved from BumpButtons.css) */
+.bump-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: stretch;
+  width: 100%;
+}
+
+.bump-buttons .button-big {
+  display: flex;
+  justify-content: center;
+}
+
+.bump-buttons .bump-buttons-small {
+  display: flex;
+  justify-content: center;
+}

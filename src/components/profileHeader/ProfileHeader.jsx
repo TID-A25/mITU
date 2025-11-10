@@ -3,7 +3,7 @@ import React from "react";
 import coverPhoto from "../../assets/images/profiles/Coverpicture.jpg";
 import settingsIcon from "../../assets/images/icons/Settings.svg";
 import "./ProfileHeader.css";
-import "../buttons/Button.css";
+import "../buttons/Buttons.css";
 
 export default function ProfileHeader({
   profilePicture,

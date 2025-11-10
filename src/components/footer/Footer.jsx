@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import React from "react";
 import "./Footer.css";
-import "../buttons/Button.css";
+import "../buttons/Buttons.css";
 
 /**
  * Footer - bottom navigation bar

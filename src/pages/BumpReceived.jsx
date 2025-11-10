@@ -4,7 +4,7 @@ import profilePicture from "../assets/images/profiles/Athena.jpg";
 import otherProfilePicture from "../assets/images/profiles/Chad.jpg";
 import confetti_orange from "../assets/images/icons/Confetti_orange.svg";
 import confetti_teal from "../assets/images/icons/Confetti_teal.svg";
-import BumpButtons from "../components/bump/BumpButtons.jsx";
+import Buttons from "../components/buttons/Buttons.jsx";
 import BumpHeader from "../components/bump/BumpHeader.jsx";
 
 export default function BumpReceived() {
@@ -24,7 +24,7 @@ export default function BumpReceived() {
       />
 
       {/* Simple presentational buttons component — variant="received" */}
-      <BumpButtons variant="received" />
+      <Buttons mode="bump" variant="received" />
     </div>
   );
 }

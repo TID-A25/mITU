@@ -1,5 +1,5 @@
 import React from "react";
-import "./Button.css";
+import "./Buttons.css";
 
 export default function ButtonSmall({ label = "text", onClick }) {
   return (

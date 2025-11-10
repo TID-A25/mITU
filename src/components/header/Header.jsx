@@ -1,6 +1,6 @@
 import React from "react";
 import "./Header.css";
-import "../buttons/Button.css";
+import "../buttons/Buttons.css";
 
 /**
  * Header - sticks to top of the page
