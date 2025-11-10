@@ -12,7 +12,7 @@ export const mockProfileData = [
     degree: "MSc Games",
     semester: "3rd. semester",
     country: "Greece",
-    interest:  ["Sports", "Knitting", "Movies"],
+    interest: ["Sports", "Knitting", "Movies"],
   },
 
   {
@@ -69,7 +69,7 @@ export const mockProfileData = [
     country: "Vietnam",
     interest: "Pumpkin-carving",
   },
-  
+
   {
     name: "Chi Chi",
     degree: "BSc Hacking",
@@ -77,7 +77,7 @@ export const mockProfileData = [
     country: "Vietnam",
     interest: "Pumpkin-carving",
   },
-  
+
   {
     name: "Chi Chi",
     degree: "BSc Hacking",
