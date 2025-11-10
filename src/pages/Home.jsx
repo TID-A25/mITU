@@ -28,16 +28,16 @@ export default function Home() {
         const profilesWithInterests = await Promise.all(
           otherUsers.map(async (user) => {
             try {
-              const firstName = user.get("first_name");
-              
-              // get user interests from user_interests table
-              const userInterestQuery = new Parse.Query("user_interests");
-              userInterestQuery.equalTo("user", firstName);
+              // get user interests from User_interests table
+              const userInterestQuery = new Parse.Query("User_interests");
+              userInterestQuery.equalTo("user", user);
+              userInterestQuery.include("interest");
               const interestResults = await userInterestQuery.find();
               
               const interests = interestResults.map((entry) => {
-                return entry.get("interest");
-              });
+                const interest = entry.get("interest");
+                return interest ? interest.get("interest_name") : null;
+              }).filter(Boolean);
 
               // Get profile picture URL
               const profilePic = user.get("profile_pic");

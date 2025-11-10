@@ -1,28 +1,31 @@
-import React from "react";
-import "../profileSection/ProfileSection.css"; // styles for interest-card and card-title
-import AnimeImg from "../../assets/images/interests/Anime.jpg";
-import SportsImg from "../../assets/images/interests/Sports.JPG";
-import KnittingImg from "../../assets/images/interests/knitting.jpg";
-import MoviesImg from "../../assets/images/interests/movies.jpg";
-import GolfImg from "../../assets/images/interests/golf.jpg";
-import PumpkinImg from "../../assets/images/interests/pumpkin.jpg";
-import MusicImg from "../../assets/images/interests/music.jpg";
+import React, { useEffect, useState } from "react";
+import Parse from "parse";
 import DefaultImg from "../../assets/images/interests/default.jpg";
 import "./InterestCard.css";
 
 export default function InterestCard({ interest }) {
-  const images = {
-    Anime: AnimeImg,
-    Sports: SportsImg,
-    Knitting: KnittingImg,
-    Movies: MoviesImg,
-    Golf: GolfImg,
-    "Pumpkin-carving": PumpkinImg,
-    Music: MusicImg
+  const [imageSrc, setImageSrc] = useState(DefaultImg);
 
-  };
-  // choosing image src based on interest, otherwise default to a generic img
-  const imageSrc = images[interest] || DefaultImg;
+/* Looks in DB, gets interest name and pic. Throws an error if unable to get image. */
+
+  useEffect(() => {
+    async function fetchInterestImage() {
+      try {
+        const query = new Parse.Query("Interest");
+        query.equalTo("interest_name", interest);
+        const result = await query.first();
+
+        if (result && result.get("interest_pic")) {
+          const imageFile = result.get("interest_pic");
+          setImageSrc(imageFile.url());
+        }
+      } catch (error) {
+        console.error("Error fetching interest image:", error);
+      }
+    }
+
+    fetchInterestImage();
+  }, [interest]);
 
   return (
     <div className="interest-card">

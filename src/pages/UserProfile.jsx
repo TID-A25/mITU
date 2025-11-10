@@ -17,7 +17,7 @@ export default function UserProfile() {
   // is this own profile?
   const isOwnProfile = location.pathname === "/user-profile" || userId === CURRENT_USER_ID;
   
-  // When accessing /user-profile, use the current user's ID
+  // when going in /user-profile, use current user's ID
   const targetUserId = location.pathname === "/user-profile" ? CURRENT_USER_ID : userId;
 
   useEffect(() => {
@@ -25,12 +25,16 @@ export default function UserProfile() {
       const userQuery = new Parse.Query("Users");
       const user = await userQuery.get(targetUserId);
 
-      // Get user interests from user_interests table
-      const interestQuery = new Parse.Query("user_interests");
-      interestQuery.equalTo("user", user.get("first_name"));
+      // Get user interests from User_interests table
+      const interestQuery = new Parse.Query("User_interests");
+      interestQuery.equalTo("user", user);
+      interestQuery.include("interest");
       const results = await interestQuery.find();
 
-      const interests = results.map((entry) => entry.get("interest"));
+      const interests = results.map((entry) => {
+        const interest = entry.get("interest");
+        return interest ? interest.get("interest_name") : null;
+      }).filter(Boolean);
 
       // Get profile picture URL
       const profilePic = user.get("profile_pic");
