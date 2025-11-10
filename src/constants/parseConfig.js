@@ -1,9 +1,10 @@
-/**
- * Configuration constants for connecting to Parse Server.
- * - These should NOT change at runtime
- * - Used by the Parse SDK during initialization
- *
- * - Define and export Parse SDK configuration constants.
- * - Include App ID, JavaScript key (if used), and server URL.
- * - These values are imported into the app's initialization logic.
- */
+import Parse from "parse";
+
+Parse.initialize(
+  "aWNL9Z0PjnXfY2j23yo3HgcKgW0oqsoHQ430hwly", // App ID
+  "ekx89ghYcTfy9OOPoHLaPg5Aa4pXksoGL5ZiUnha" // JavaScript Key
+);
+
+Parse.serverURL = "https://parseapi.back4app.com/";
+
+export default Parse;
