@@ -3,7 +3,11 @@ import "./Button.css";
 
 export default function ButtonBack({ onClick }) {
   return (
-    <button onClick={onClick} className="button button--round button--small button--gray" aria-label="Back">
+    <button
+      onClick={onClick}
+      className="button button--small button--gray"
+      aria-label="Back"
+    >
       {/* Arrow pointing left */}
       <svg
         xmlns="http://www.w3.org/2000/svg"

@@ -2,6 +2,7 @@ import React from "react";
 import { mockProfileData } from "../data/mockProfiles.js";
 import ProfileSection from "../components/profileSection/ProfileSection.jsx";
 import "../App.css"; // Load global styles here
+import "./Pages.css"; // Load page-specific styles here
 
 export default function Home() {
   {
@@ -17,11 +18,13 @@ export default function Home() {
       interests = [profile.interest];
     }
 
-   {/* looping through each interest and group.
-    * If the interest key doesn't exist in acc,
-    * it is created as an empty array. 
-    * Then the current profile is added to the array. 
-    */}
+    {
+      /* looping through each interest and group.
+       * If the interest key doesn't exist in acc,
+       * it is created as an empty array.
+       * Then the current profile is added to the array.
+       */
+    }
     interests.forEach((interest) => {
       if (!acc[interest]) {
         acc[interest] = [];
@@ -33,7 +36,7 @@ export default function Home() {
   }, {});
 
   return (
-    <div>
+    <div className="page container stack">
       {/* Render all interest sections */}
       {Object.entries(profilesByInterest).map(([interest, profiles]) => (
         <ProfileSection key={interest} title={interest} profiles={profiles} />

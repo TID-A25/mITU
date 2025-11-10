@@ -6,20 +6,28 @@
   border: none;
   cursor: pointer;
   transition: transform 120ms ease, filter 120ms ease;
-}
-
-.button--round {
-  border-radius: 9999px;
+  font-weight: 700;
 }
 
 .button--small {
+  border-radius: 9999px;
   width: 48px;
   height: 48px;
 }
 
 .button--big {
+  border-radius: 9999px;
   width: 112px;
   height: 112px;
+}
+
+.button--text {
+  background: transparent;
+}
+
+.button--teal {
+  background-color: var(--accent);
+  color: black;
 }
 
 .button--gray {
@@ -32,15 +40,11 @@
   color: black;
 }
 
-.button--teal {
-  background-color: var(--accent);
-  color: black;
+.button:hover {
+  filter: brightness(1.05);
+  transform: scale(1.08);
 }
 
 .button:active {
   transform: scale(0.96);
-}
-
-.button:hover {
-  filter: brightness(0.98);
 }

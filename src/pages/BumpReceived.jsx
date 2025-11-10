@@ -4,10 +4,10 @@ import profilePicture from "../assets/images/profiles/Athena.jpg";
 import otherProfilePicture from "../assets/images/profiles/Chad.jpg";
 import confetti_orange from "../assets/images/icons/Confetti_orange.svg";
 import confetti_teal from "../assets/images/icons/Confetti_teal.svg";
-import ButtonBig from "../components/buttons/ButtonBig.jsx";
-import ButtonBack from "../components/buttons/ButtonBack.jsx";
-import ButtonDecline from "../components/buttons/ButtonDecline.jsx";
-import InterestCard from "../components/interestCard/InterestCard.jsx";
+import BumpButtons from "../components/bump/BumpButtons.jsx";
+import BumpHeader from "../components/bump/BumpHeader.jsx";
+import "../App.css"; // Load global styles here
+import "./Pages.css"; // Load page-specific styles here
 
 export default function BumpReceived() {
   // load first and second element of mock data list, Athena and Chad
@@ -15,42 +15,18 @@ export default function BumpReceived() {
   const other = mockProfileData[1];
 
   return (
-    <div className="bump-page">
-      {/* The two profile pictures */}
-      <div className="bumping-pictures">
-        <img src={profilePicture} alt={you.name} className="profile-img" />
-        <img
-          src={otherProfilePicture}
-          alt={other.name}
-          className="profile-img"
-        />
-      </div>
+    <div className="page container stack">
+      <BumpHeader
+        you={you}
+        other={other}
+        leftImageSrc={profilePicture}
+        rightImageSrc={otherProfilePicture}
+        interest={you.interest}
+        type="received"
+      />
 
-      {/* Title message saying they bumped into you */}
-      <div className="bump-title">
-        <h3 className="name-row">{other.name} bumped into you!</h3>
-      </div>
-
-      {/* Showing You both like: and interest card */}
-      <div className="shared-interest-title">
-        <h4 className="name-row">You both like:</h4>
-      </div>
-      <div className="shared-interest-card">
-        <InterestCard interest={you.interest} />
-      </div>
-
-      <div className="buttons">
-        {/* Accept button */}
-        <div className="button-big">
-          <ButtonBig label="Accept!" />
-        </div>
-
-        {/* Back and decline button */}
-        <div className="bump-buttons-small">
-          <ButtonBack />
-          <ButtonDecline label="Decline" />
-        </div>
-      </div>
+      {/* Simple presentational buttons component — variant="received" */}
+      <BumpButtons variant="received" />
     </div>
   );
 }

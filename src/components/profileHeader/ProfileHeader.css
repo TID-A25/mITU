@@ -30,7 +30,6 @@
   margin: 0 auto;
 }
 
-
 .settings-icon {
   position: absolute;
   bottom: 10px;
@@ -44,26 +43,7 @@
   position: absolute;
   bottom: 10px;
   right: -50%;
-  background-color: rgb(189, 239, 212);
-  color: black;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 0.6rem;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
 }
-
-.bump-button:hover {
-  background-color: rgb(169, 219, 192);
-  transform: scale(1.08);
-}
-
 
 @media (max-width: 600px) {
   .cover-photo-header img {
@@ -74,5 +54,4 @@
     width: 120px;
     height: 120px;
   }
-
 }

@@ -8,6 +8,8 @@ import hat from "../assets/images/icons/Graduation_hat.svg";
 import settingsIcon from "../assets/images/icons/Settings.svg";
 // InterestScroller lives under src/components/profile
 import InterestGallery from "../components/interestGallery/InterestGallery.jsx";
+import "../App.css"; // Load global styles here
+import "./Pages.css"; // Load page-specific styles here
 
 export default function UserProfile() {
   {
@@ -16,7 +18,7 @@ export default function UserProfile() {
   const profile = mockProfileData[0];
 
   return (
-    <div>
+    <div className="page container stack">
       {/* Header photo and cover photo */}
 
       <div className="header-wrap">
@@ -41,7 +43,7 @@ export default function UserProfile() {
       {/* Profile info on the page */}
       <div className="user-profile-info">
         <div className="name-row">
-          <h3>{profile.name}</h3>
+          <h2>{profile.name}</h2>
           <img src={verifiedBadge} className="badge" alt="Verified badge" />
         </div>
 
