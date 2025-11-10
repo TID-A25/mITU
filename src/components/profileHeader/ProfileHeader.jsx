@@ -3,7 +3,7 @@ import React from "react";
 import coverPhoto from "../../assets/images/profiles/Coverpicture.jpg";
 import settingsIcon from "../../assets/images/icons/Settings.svg";
 import "./ProfileHeader.css";
-
+import "../buttons/Button.css";
 
 export default function ProfileHeader({
   profilePicture,
@@ -28,8 +28,11 @@ export default function ProfileHeader({
         )}
 
         {!showSettings && (
-          //calls the onBump prop whn user clicks
-          <button className="bump-button" onClick={onBump}>
+          // calls the onBump prop when user clicks
+          <button
+            className="button button--small button--teal bump-button"
+            onClick={onBump}
+          >
             Bump
           </button>
         )}

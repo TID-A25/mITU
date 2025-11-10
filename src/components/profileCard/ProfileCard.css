@@ -1,0 +1,61 @@
+.profile-card {
+  min-width: 180px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  border: 2px solid var(--border);
+  background-color: var(--card-bg);
+  box-shadow: var(--shadow-md);
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+  scroll-snap-align: start;
+  cursor: pointer;
+}
+
+.profile-card:hover {
+  transform: scale(1.03);
+}
+
+.profile-photo {
+  height: 180px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: 1rem;
+}
+
+.profile-info {
+  background: rgba(0, 0, 0, 0.45);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  width: 100%;
+}
+
+.profile-info h3 {
+  margin: 0;
+  color: var(--on-dark);
+}
+
+.profile-info p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--on-dark);
+}
+
+.interests {
+  padding: calc(var(--space-sm) * 2) var(--space-md);
+}
+
+.interests span {
+  margin: 2px 4px 0 0;
+  background: var(--badge-bg);
+  border: 1px solid var(--border);
+  color: var(--primary);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  display: inline-block;
+}

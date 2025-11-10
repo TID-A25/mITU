@@ -10,11 +10,6 @@
   font-family: var(--font-sans);
 }
 
-.user-profile-info h3 {
-  font-size: 1.5rem;
-  margin-bottom: 0.2rem;
-}
-
 .badge {
   width: 20px;
   height: 20px;
@@ -54,13 +49,5 @@
   gap: 6px; /* space between name and badge */
 }
 
-.name-row h3 {
-  margin: 0;
-}
-
 @media (max-width: 600px) {
-
-  .user-profile-info h3 {
-    font-size: 1.2rem;
-  }
 }

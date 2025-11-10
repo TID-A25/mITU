@@ -1,6 +1,7 @@
 import React from "react";
 import ProfileCard from "../profileCard/ProfileCard";
-import "../profileSection//ProfileSection.css";
+import "../../pages/Pages.css";
+import "./ProfileGallery.css";
 
 /**
  * HorizontalScroller Component
@@ -8,7 +9,7 @@ import "../profileSection//ProfileSection.css";
  */
 export default function ProfileGallery({ profiles }) {
   return (
-    <div className="profile-gallery">
+    <div className="gallery">
       {profiles.map((profile, i) => (
         <ProfileCard key={i} profile={profile} />
       ))}

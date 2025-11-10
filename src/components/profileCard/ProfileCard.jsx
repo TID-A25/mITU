@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import React from "react";
-import "../profileSection/ProfileSection.css";
+import "./ProfileCard.css";
 
 export default function ProfileCard({ profile }) {
   // Better fallback for profile picture

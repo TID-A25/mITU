@@ -1,5 +1,6 @@
 import React from "react";
 import InterestCard from "../interestCard/InterestCard.jsx";
+import "../../pages/Pages.css";
 import "./InterestGallery.css";
 
 export default function InterestGallery({ interests }) {
@@ -10,11 +11,10 @@ export default function InterestGallery({ interests }) {
    * Receives an array of interests.
    */
 
-  
   let normalizedInterests;
 
-    //if array exists
-  if (Array.isArray(interests)) { 
+  //if array exists
+  if (Array.isArray(interests)) {
     normalizedInterests = interests;
     //otherwise wrap it in an array
   } else if (interests) {
@@ -24,7 +24,7 @@ export default function InterestGallery({ interests }) {
     normalizedInterests = [];
   }
 
-  // if array is empty, show msg to user 
+  // if array is empty, show msg to user
   if (normalizedInterests.length === 0) {
     return (
       <p className="empty-interests">
