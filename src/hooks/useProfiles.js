@@ -1,6 +1,7 @@
 /**
- * React hook for fetching a list of all user profiles.
- * - Uses useEffect to load data once on mount
- * - Uses useState to manage list state
- * - Useful for feed/gallery views
+ * Implement a React hook to fetch and return a list of user profiles.
+ * - No input parameters for now (future: filters, search).
+ * - Uses useState to manage the list of profiles.
+ * - Uses useEffect to load profiles once on initial component mount.
+ * - Calls a service to retrieve data, then maps it to a usable format.
  */
