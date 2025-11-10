@@ -10,13 +10,13 @@ export default function Footer() {
   return (
     <footer className="bottom-nav">
       <Link to="">
-        <button className="button button--round button--small">🔔</button>
+        <button className="button button--small">🔔</button>
       </Link>
       <Link to="/">
-        <button className="button button--round button--small">🏠</button>
+        <button className="button button--small">🏠</button>
       </Link>
       <Link to="/user-profile">
-        <button className="button button--round button--small">👤</button>
+        <button className="button button--small">👤</button>
       </Link>
     </footer>
   );
