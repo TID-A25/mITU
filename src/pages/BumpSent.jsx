@@ -22,10 +22,13 @@ export default function BumpSent() {
       try {
         // get current user
         const userQuery = new Parse.Query("Users");
+        userQuery.select("first_name", "last_name", "profile_pic");
         const currentUser = await userQuery.get(CURRENT_USER_ID);
 
         // get other user
-        const otherUser = await userQuery.get(otherUserId);
+        const otherUserQuery = new Parse.Query("Users");
+        otherUserQuery.select("first_name", "last_name", "profile_pic");
+        const otherUser = await otherUserQuery.get(otherUserId);
 
         // get interests for both users
         const interestQueryA = new Parse.Query("User_interests");
