@@ -64,7 +64,7 @@ export default function UserProfile() {
       <ProfileHeader
         profilePicture={profile.profilePicture}
         showSettings={isOwnProfile} // if is own profile, show settings icon
-        onBump={() => navigate("/bump-sent")}
+        onBump={() => navigate(`/bump-sent/${profile.objectId}`)}
       />
       <ProfileInfo profile={profile} />
       <ProfileInterests interests={profile.interests} />
