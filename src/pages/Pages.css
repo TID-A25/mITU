@@ -67,7 +67,6 @@ p {
   overflow-x: auto;
   overflow-y: hidden;
   scroll-snap-type: x mandatory;
-  padding: var(--space-md);
   -webkit-overflow-scrolling: touch;
 }
 
