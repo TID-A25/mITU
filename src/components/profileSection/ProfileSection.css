@@ -1,5 +1,5 @@
-.profile-section h2 {
-  margin-top: calc(var(--space-lg));
-  font-size: 1.2rem;
-  color: var(--text);
+
+.profile-section {
+  padding-left: var(--space-md);
+  padding-right: var(--space-md);
 }

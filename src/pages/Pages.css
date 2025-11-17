@@ -67,7 +67,6 @@ p {
   overflow-x: auto;
   overflow-y: hidden;
   scroll-snap-type: x mandatory;
-  padding: var(--space-md);
   -webkit-overflow-scrolling: touch;
 }
 
@@ -79,4 +78,13 @@ p {
 
 .gallery::-webkit-scrollbar {
   display: none;
+}
+
+/* Optional: slightly smaller cards on very small screens
+   (works together with interest-card media query) */
+@media (max-width: 420px) {
+  .gallery {
+    padding: 0 12px 10px;
+    gap: 12px;
+  }
 }

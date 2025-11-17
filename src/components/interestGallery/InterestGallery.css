@@ -1,8 +1,1 @@
-/* Optional: slightly smaller cards on very small screens
-   (works together with interest-card media query) */
-@media (max-width: 420px) {
-  .gallery {
-    padding: 0 12px 10px;
-    gap: 12px;
-  }
-}
+

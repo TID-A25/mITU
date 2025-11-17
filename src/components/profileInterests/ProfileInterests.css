@@ -1,5 +1,10 @@
+
+.interests-row {
+  padding-left: var(--space-md);
+  padding-right: var(--space-md);
+}
+
 .interests-row > h3 {
   margin: 0 0 12px 0;
   font-size: 1.25rem;
-  padding-inline: 16px;
 }
