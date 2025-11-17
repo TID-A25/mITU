@@ -18,7 +18,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/user-profile" element={<UserProfile />} />
           <Route path="/user/:userId" element={<UserProfile />} />  
-          <Route path="/bump-sent" element={<BumpSent />} />
+          <Route path="/bump-sent/:otherUserId" element={<BumpSent />} />
           <Route path="/bump-received" element={<BumpReceived />} />
         </Routes>
         <Footer />

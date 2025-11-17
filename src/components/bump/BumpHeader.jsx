@@ -1,6 +1,6 @@
 import React from "react";
 import "./BumpHeader.css";
-import InterestCard from "../interestCard/InterestCard.jsx";
+import InterestGallery from "../interestGallery/InterestGallery.jsx";
 
 /**
  * BumpHeader
@@ -36,13 +36,6 @@ export default function BumpHeader({
             ? `${other.name} bumped into you!`
             : `You bumped into ${other.name}!`}
         </h2>
-      </div>
-
-      <div className="shared-interest-title">
-        <h4 className="name-row">You both like:</h4>
-      </div>
-      <div className="shared-interest-card">
-        <InterestCard interest={interest} />
       </div>
     </div>
   );

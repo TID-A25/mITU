@@ -1,14 +1,20 @@
 .bottom-nav {
-  position: sticky;
+  /* have footer stay at the bottom of the viewport, and constrained to app width */
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
   bottom: 0;
-  z-index: 10;
+  z-index: 999;
   background-color: var(--muted);
   display: flex;
   justify-content: space-around;
-  padding: calc(var(--space-sm) + 4px) 0;
+  align-items: center;
+  height: 64px;
+  padding: 0 0;
   font-size: 1.5rem;
   border-top: 1px solid var(--border);
   width: 100%;
+  max-width: 430px; /* match .app-container width */
 }
 
 .bottom-nav a {
@@ -21,7 +27,7 @@
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  padding: var(--space-sm) var(--space-md);
+  padding: 8px 12px;
 }
 
 .bottom-nav button.active {
