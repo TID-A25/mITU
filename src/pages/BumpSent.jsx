@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Parse from "parse";
-import BumpButtons from "../components/bump/BumpButtons.jsx";
+import Buttons from "../components/buttons/Buttons.jsx";
 import BumpHeader from "../components/bump/BumpHeader.jsx";
 import InterestGallery from "../components/interestGallery/InterestGallery.jsx";
 import "../App.css";
