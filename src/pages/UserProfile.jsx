@@ -4,6 +4,7 @@ import ProfileHeader from "../components/profileHeader/ProfileHeader";
 import ProfileInfo from "../components/profileInfo/ProfileInfo";
 import ProfileInterests from "../components/profileInterests/ProfileInterests";
 import Parse from "parse";
+import "./Pages.css";
 
 export default function UserProfile() { 
   const { userId } = useParams();
@@ -23,12 +24,14 @@ export default function UserProfile() {
   useEffect(() => {
     async function fetchUserProfile() {
       const userQuery = new Parse.Query("Users");
+      userQuery.select("first_name", "last_name", "programme", "semester", "country", "profile_pic");
       const user = await userQuery.get(targetUserId);
 
       // Get user interests from User_interests table
       const interestQuery = new Parse.Query("User_interests");
       interestQuery.equalTo("user", user);
       interestQuery.include("interest");
+      interestQuery.select("interest");
       const results = await interestQuery.find();
 
       const interests = results.map((entry) => {
@@ -60,11 +63,11 @@ export default function UserProfile() {
   if (!profile) return null;
 
   return (
-    <div>
+    <div className="page container stack">
       <ProfileHeader
         profilePicture={profile.profilePicture}
         showSettings={isOwnProfile} // if is own profile, show settings icon
-        onBump={() => navigate("/bump-sent")}
+        onBump={() => navigate(`/bump-sent/${profile.objectId}`)}
       />
       <ProfileInfo profile={profile} />
       <ProfileInterests interests={profile.interests} />
