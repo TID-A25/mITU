@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ProfileSection from "../components/profileSection/ProfileSection.jsx";
 import Parse from "parse";
+import "../App.css";
+import "./Pages.css";
 
 export default function Home() {
   const [profilesByInterest, setProfilesByInterest] = useState({});
@@ -17,6 +19,14 @@ export default function Home() {
 
         // fetch all users from Parse
         const userQuery = new Parse.Query("Users");
+        userQuery.select(
+          "first_name",
+          "last_name",
+          "profile_pic",
+          "programme",
+          "semester",
+          "country"
+        );
         const users = await userQuery.find();
 
         // Filter out the current logged-in user
@@ -31,6 +41,7 @@ export default function Home() {
               const userInterestQuery = new Parse.Query("User_interests");
               userInterestQuery.equalTo("user", user);
               userInterestQuery.include("interest");
+              userInterestQuery.select("interest");
               const interestResults = await userInterestQuery.find();
 
               const interests = interestResults
@@ -103,8 +114,32 @@ export default function Home() {
     fetchProfiles();
   }, []);
 
+  if (loading) {
+    return (
+      <div className="page container stack">
+        <p>Loading profiles..</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="page container stack">
+        <p className="error-message">{error}</p>
+      </div>
+    );
+  }
+
+  if (Object.keys(profilesByInterest).length === 0) {
+    return (
+      <div className="page container stack">
+        <p>No profiles with matching interests found.</p>
+      </div>
+    );
+  }
+
   return (
-    <div>
+    <div className="page container stack">
       {Object.entries(profilesByInterest).map(([interest, profiles]) => (
         <ProfileSection key={interest} title={interest} profiles={profiles} />
       ))}
