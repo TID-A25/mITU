@@ -5,23 +5,23 @@ import InterestGallery from "../interestGallery/InterestGallery.jsx";
 /**
  * BumpHeader
  * Props:
- * - you: object (your profile)
- * - other: object (other profile)
+ * - currentUser: object (your profile)
+ * - otherUser: object (other profile)
  * - leftImageSrc: string (image URL for left profile)
  * - rightImageSrc: string (image URL for right profile)
  * - interest: string|array (shared interest passed to InterestCard)
  * - type: 'sent'|'received' (controls title copy)
  */
 export default function BumpHeader({
-  you = {},
-  other = {},
+  currentUser = {},
+  otherUser = {},
   leftImageSrc,
   rightImageSrc,
   interest,
   type = "sent",
 }) {
-  const leftAlt = you.name || "You";
-  const rightAlt = other.name || "Other";
+  const leftAlt = currentUser.name || "You";
+  const rightAlt = otherUser.name || "Other";
 
   return (
     <div className="bump-header">
@@ -33,8 +33,8 @@ export default function BumpHeader({
       <div className="bump-title">
         <h2 className="name-row">
           {type === "received"
-            ? `${other.name} bumped into you!`
-            : `You bumped into ${other.name}!`}
+            ? `${otherUser.name} bumped into you!`
+            : `You bumped into ${otherUser.name}!`}
         </h2>
       </div>
     </div>
