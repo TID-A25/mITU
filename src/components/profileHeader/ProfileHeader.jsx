@@ -2,6 +2,7 @@ import React from "react";
 // asset paths: this file lives at src/components/profile, so go up two levels to src/
 import coverPhoto from "../../assets/images/profiles/Coverpicture.jpg";
 import settingsIcon from "../../assets/images/icons/Settings.svg";
+import Buttons from "../buttons/Buttons.jsx";
 import "./ProfileHeader.css";
 import "../buttons/Buttons.css";
 
@@ -29,12 +30,13 @@ export default function ProfileHeader({
 
         {!showSettings && (
           // calls the onBump prop when user clicks
-          <button
-            className="button button--small button--teal bump-button"
+          <Buttons
+            mode="single"
+            size="small"
+            color="teal"
+            label="Bump"
             onClick={onBump}
-          >
-            Bump
-          </button>
+          />
         )}
       </div>
     </div>
