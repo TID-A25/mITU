@@ -10,18 +10,12 @@ export default function InterestGallery({ interests }) {
    * Receives an array of interests.
    */
 
-  let normalizedInterests;
-
-  //if array exists
-  if (Array.isArray(interests)) {
-    normalizedInterests = interests;
-    //otherwise wrap it in an array
-  } else if (interests) {
-    normalizedInterests = [interests];
-  } else {
-    //otherwise save empty array
-    normalizedInterests = [];
-  }
+  // if interests is an array then set it in the variable "normalizedInterests"
+  const normalizedInterests = Array.isArray(interests) 
+    ? interests          //is interests an array? 
+    : interests          //if yes then use it
+    ? [interests]        // if not, place it in an array
+    : [];                //if interests is null or undefined, set as empty array
 
   // if array is empty, show msg to user
   if (normalizedInterests.length === 0) {
