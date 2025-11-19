@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./Header.css";
 import "../buttons/Buttons.css";
 
@@ -10,9 +11,9 @@ export default function Header() {
     <header className="app-header">
       <h1>mITU</h1>
       <nav>
-        <button className="button button--text active">Profiles</button>
-        <span>|</span>
-        <button className="button button--text">Events</button>
+        <Link to="/" className="button button--text active">
+          Profiles
+        </Link>
       </nav>
     </header>
   );

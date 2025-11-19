@@ -16,38 +16,48 @@ export default function Footer() {
   const [active, setActive] = React.useState("home");
   return (
     <footer className="bottom-nav">
-      {/* Notification button commented out */}
+      {/* Notification button . Notification page is yet to be implemented */}
 
-      {/*<Link to="" onClick={() => setActive("notifications")}>
-        <button className="button button--small" aria-label="Notifications">
+        <Link
+          to=""
+          onClick={() => setActive("notifications")}
+          className="button button--small"
+          aria-label="Notifications"
+        >
           <img
             src={active === "notifications" ? bellFill : bell}
             alt=""
             className="icon"
           />
-        </button>
-      </Link> */}
+        </Link>
+
 
       {/* Home button */}
-      <Link to="/" onClick={() => setActive("home")}>
-        <button className="button button--small" aria-label="Home">
-          <img
-            src={active === "home" ? homeFill : home}
-            alt=""
-            className="icon"
-          />
-        </button>
-
-        {/* Profile button */}
+      <Link
+        to="/"
+        onClick={() => setActive("home")}
+        className="button button--small"
+        aria-label="Home"
+      >
+        <img
+          src={active === "home" ? homeFill : home}
+          alt=""
+          className="icon"
+        />
       </Link>
-      <Link to="/user-profile" onClick={() => setActive("profile")}>
-        <button className="button button--small" aria-label="Profile">
-          <img
-            src={active === "profile" ? userFill : user}
-            alt=""
-            className="icon"
-          />
-        </button>
+
+      {/* Profile button */}
+      <Link
+        to="/user-profile"
+        onClick={() => setActive("profile")}
+        className="button button--small"
+        aria-label="Profile"
+      >
+        <img
+          src={active === "profile" ? userFill : user}
+          alt=""
+          className="icon"
+        />
       </Link>
     </footer>
   );
