@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import ProfileHeader from "../components/profileHeader/ProfileHeader";
 import ProfileInfo from "../components/profileInfo/ProfileInfo";
-import ProfileInterests from "../components/profileInterests/ProfileInterests";
+import InterestGallery from "../components/interestGallery/InterestGallery";
 import Parse from "parse";
 import "./Pages.css";
 
@@ -105,7 +105,7 @@ export default function UserProfile() {
         onBump={() => navigate(`/bump-sent/${profile.objectId}`)}
       />
       <ProfileInfo profile={profile} />
-      <ProfileInterests interests={profile.interests} />
+      <InterestGallery interests={profile.interests} />
     </div>
   );
 }
