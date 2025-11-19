@@ -16,9 +16,8 @@ export default function Footer() {
   const [active, setActive] = React.useState("home");
   return (
     <footer className="bottom-nav">
-      {/* Notification button commented out */}
+      {/* Notification button . Notification page is yet to be implemented */}
 
-      {/*
         <Link
           to=""
           onClick={() => setActive("notifications")}
@@ -31,7 +30,7 @@ export default function Footer() {
             className="icon"
           />
         </Link>
-      */}
+
 
       {/* Home button */}
       <Link
