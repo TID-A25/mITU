@@ -7,17 +7,17 @@ import BumpHeader from "../components/bump/BumpHeader.jsx";
 
 export default function BumpReceived() {
   // load first and second element of mock data list, Athena and Chad
-  const you = mockProfileData[0];
-  const other = mockProfileData[1];
+  const currentUser = mockProfileData[0];
+  const otherUser = mockProfileData[1];
 
   return (
     <div className="page container stack">
       <BumpHeader
-        you={you}
-        other={other}
+        currentUser={currentUser}
+        otherUser={otherUser}
         leftImageSrc={profilePicture}
         rightImageSrc={otherProfilePicture}
-        interest={you.interest}
+        interest={currentUser.interest}
         type="received"
       />
 

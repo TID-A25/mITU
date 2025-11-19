@@ -12,8 +12,8 @@ export default function BumpSent() {
 
   const CURRENT_USER_ID = "C6YoifVWmr"; //same currentuserid as profile page
 
-  const [you, setYou] = useState(null);
-  const [other, setOther] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [otherUser, setOtherUser] = useState(null);
   const [bumpCreated, setBumpCreated] = useState(false);
   const [sharedInterests, setSharedInterests] = useState([]);
 
@@ -62,7 +62,7 @@ export default function BumpSent() {
         const youProfilePic = currentUser.get("profile_pic");
         const otherProfilePic = otherUser.get("profile_pic");
 
-        setYou({
+        setCurrentUser({
           id: currentUser.id,
           name: `${currentUser.get("first_name")} ${currentUser.get(
             "last_name"
@@ -70,7 +70,7 @@ export default function BumpSent() {
           profilePicture: youProfilePic ? youProfilePic.url() : null,
         });
 
-        setOther({
+        setOtherUser({
           id: otherUser.id,
           name: `${otherUser.get("first_name")} ${otherUser.get("last_name")}`,
           profilePicture: otherProfilePic ? otherProfilePic.url() : null,
@@ -97,15 +97,15 @@ export default function BumpSent() {
   }, [otherUserId]);
 
   //if users are not loaded yet, show loading message
-  if (!you || !other) return <div>Loading..</div>;
+  if (!currentUser || !otherUser) return <div>Loading..</div>;
 
   return (
     <div className="page container stack">
       <BumpHeader
-        you={you}
-        other={other}
-        leftImageSrc={you.profilePicture}
-        rightImageSrc={other.profilePicture}
+        currentUser={currentUser}
+        otherUser={otherUser}
+        leftImageSrc={currentUser.profilePicture}
+        rightImageSrc={otherUser.profilePicture}
         type="sent"
       />
 
