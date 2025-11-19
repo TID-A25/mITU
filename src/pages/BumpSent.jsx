@@ -121,7 +121,7 @@ export default function BumpSent() {
       <div className="shared-interest-card">
         <InterestGallery interests={sharedInterests} />
       </div>
-      {/* Simple presentational buttons component — variant="sent" */}
+
       <Buttons mode="bump" variant="sent" />
     </div>
   );
