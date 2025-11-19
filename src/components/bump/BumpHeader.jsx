@@ -1,7 +1,5 @@
 import React from "react";
 import "./BumpHeader.css";
-import InterestGallery from "../interestGallery/InterestGallery.jsx";
-
 /**
  * BumpHeader
  * Props:

@@ -1,5 +1,4 @@
 .bottom-nav {
-  /* have footer stay at the bottom of the viewport, and constrained to app width */
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
@@ -14,7 +13,7 @@
   font-size: 1.5rem;
   border-top: 1px solid var(--border);
   width: 100%;
-  max-width: 430px; /* match .app-container width */
+  max-width: 430px; 
 }
 
 .bottom-nav a {

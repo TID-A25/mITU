@@ -2,8 +2,6 @@ import React from "react";
 import { mockProfileData } from "../data/mockProfiles.js";
 import profilePicture from "../assets/images/profiles/Athena.jpg";
 import otherProfilePicture from "../assets/images/profiles/Chad.jpg";
-import confetti_orange from "../assets/images/icons/Confetti_orange.svg";
-import confetti_teal from "../assets/images/icons/Confetti_teal.svg";
 import Buttons from "../components/buttons/Buttons.jsx";
 import BumpHeader from "../components/bump/BumpHeader.jsx";
 
@@ -23,7 +21,6 @@ export default function BumpReceived() {
         type="received"
       />
 
-      {/* Simple presentational buttons component — variant="received" */}
       <Buttons mode="bump" variant="received" />
     </div>
   );
