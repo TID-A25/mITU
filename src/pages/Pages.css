@@ -95,5 +95,4 @@ p {
   padding: var(--space-md);
   background-color: var(--error-bg, #fff5f5);
   border-radius: 8px;
-  border-left: 4px solid var(--error-color, #e53e3e);
 }
