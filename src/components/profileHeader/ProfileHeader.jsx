@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 // asset paths: this file lives at src/components/profile, so go up two levels to src/
 import coverPhoto from "../../assets/images/profiles/Coverpicture.jpg";
 import settingsIcon from "../../assets/images/icons/Settings.svg";
@@ -11,6 +12,7 @@ export default function ProfileHeader({
   showSettings = false,
   onBump, //callback function, runs when bump is clicked
 }) {
+  const navigate = useNavigate();
   return (
     <div className="header-wrap">
       <div className="cover-photo-header">
@@ -25,6 +27,9 @@ export default function ProfileHeader({
             src={settingsIcon}
             className="settings-icon"
             alt="Settings icon"
+            role="button"
+            tabIndex={0}
+            onClick={() => navigate("/edit-profile")}
           />
         )}
 
