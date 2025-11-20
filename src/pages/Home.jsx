@@ -6,6 +6,7 @@ import "./Pages.css";
 
 export default function Home() {
   const [profilesByInterest, setProfilesByInterest] = useState({});
+  const [currentUserInterests, setCurrentUserInterests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -16,6 +17,18 @@ export default function Home() {
     async function fetchProfiles() {
       try {
         setLoading(true);
+
+        // fetch current user's interests
+        const currentUserQuery = new Parse.Query("Users");
+        const currentUser = await currentUserQuery.get(CURRENT_USER_ID);
+        const currentUserInterestQuery = new Parse.Query("User_interests");
+        currentUserInterestQuery.equalTo("user", currentUser);
+        currentUserInterestQuery.include("interest");
+        const currentUserInterestEntries = await currentUserInterestQuery.find();
+        const currentInterests = currentUserInterestEntries
+          .map((e) => e.get("interest")?.get("interest_name"))
+          .filter(Boolean);
+        setCurrentUserInterests(currentInterests);
 
         // fetch all users from Parse
         const userQuery = new Parse.Query("Users");
@@ -141,7 +154,12 @@ export default function Home() {
   return (
     <div className="page container stack">
       {Object.entries(profilesByInterest).map(([interest, profiles]) => (
-        <ProfileSection key={interest} title={interest} profiles={profiles} />
+        <ProfileSection
+          key={interest}
+          title={interest}
+          profiles={profiles}
+          isCommonInterest={currentUserInterests.includes(interest)}
+        />
       ))}
     </div>
   );
