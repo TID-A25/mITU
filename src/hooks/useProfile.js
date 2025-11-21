@@ -45,23 +45,6 @@ export default function useProfile(profileId, { autoRefresh = true } = {}) {
 import { useEffect, useState, useCallback } from 'react';
 import { fetchProfileById } from '../services/parseQueries';
 
-/*
- * useProfile hook
- * - Fetches a single user's profile (and their interests) by id using
- *   `fetchProfileById` from `src/services/parseQueries.js`.
- *
- * Parameters:
- * - profileId: string | undefined - Parse objectId of the user to fetch.
- * - options: { autoRefresh: boolean } - if false, the hook will NOT fetch on
- *   mount/initial render; consumers must call `refresh()` to trigger loading.
- *
- * Returns: { profile, loading, error, refresh, updateLocal }
- * - `profile` is a plain JS object (or null) shaped for the UI
- * - `loading` indicates active fetch
- * - `error` contains a readable message on failure
- * - `refresh()` forces a refetch
- * - `updateLocal(patch)` merges `patch` into the local `profile` (no network)
- */
 export default function useProfile(profileId, { autoRefresh = true } = {}) {
 	const [profile, setProfile] = useState(null);
 	const [loading, setLoading] = useState(Boolean(profileId && autoRefresh));
