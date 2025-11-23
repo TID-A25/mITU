@@ -1,119 +1,69 @@
 import React, { useEffect, useState } from "react";
-import Parse from "parse";
+import { useParams, useNavigate } from "react-router-dom";
 import Buttons from "../components/buttons/Buttons.jsx";
 import BumpHeader from "../components/bump/BumpHeader.jsx";
 import InterestGallery from "../components/interestGallery/InterestGallery.jsx";
 import "../App.css";
 import "./Pages.css";
-import { useParams } from "react-router-dom";
+import useProfile from "../hooks/useProfile";
+import { createBump } from "../services/parseQueries";
 
 export default function BumpSent() {
-  const { otherUserId } = useParams();
+  const params = useParams();
+  const otherUserId = params.otherUserId || params.userId;
+  const navigate = useNavigate();
 
-  const CURRENT_USER_ID = "C6YoifVWmr"; //same currentuserid as profile page
+  // Hardcoded current user id for demo
+  const CURRENT_USER_ID = "C6YoifVWmr"; // victoria
 
-  const [currentUser, setCurrentUser] = useState(null);
-  const [otherUser, setOtherUser] = useState(null);
+  // Use hooks to fetch both profiles (current and the other user)
+  const currentHook = useProfile(CURRENT_USER_ID);
+  const otherHook = useProfile(otherUserId);
+
+  const currentProfile = currentHook.profile;
+  const otherProfile = otherHook.profile;
+  const loading = currentHook.loading || otherHook.loading;
+  const error = currentHook.error || otherHook.error;
+
+  // track whether we've already created a bump to avoid duplicate saves
   const [bumpCreated, setBumpCreated] = useState(false);
-  const [sharedInterests, setSharedInterests] = useState([]);
+
+  // compute shared interests when both profiles available
+  const sharedInterests = (currentProfile?.interests || []).filter((i) => (otherProfile?.interests || []).includes(i));
 
   useEffect(() => {
-    async function fetchUsersAndCreateBump() {
+    async function sendBumpOnce() {
+      if (!currentProfile || !otherProfile || bumpCreated) return;
       try {
-        // get current user
-        const userQuery = new Parse.Query("Users");
-        userQuery.select("first_name", "last_name", "profile_pic");
-        const currentUser = await userQuery.get(CURRENT_USER_ID);
-
-        // get other user
-        const otherUserQuery = new Parse.Query("Users");
-        otherUserQuery.select("first_name", "last_name", "profile_pic");
-        const otherUser = await otherUserQuery.get(otherUserId);
-
-        // get interests for both users
-        const interestQueryA = new Parse.Query("User_interests");
-        interestQueryA.equalTo("user", currentUser);
-        interestQueryA.include("interest");
-        const interestsA = await interestQueryA.find();
-
-        const interestQueryB = new Parse.Query("User_interests");
-        interestQueryB.equalTo("user", otherUser);
-        interestQueryB.include("interest");
-        const interestsB = await interestQueryB.find();
-
-        // get interest names for both users
-        const namesA = interestsA
-          .map((e) => e.get("interest")?.get("interest_name"))
-          .filter(Boolean);
-        const namesB = interestsB
-          .map((e) => e.get("interest")?.get("interest_name"))
-          .filter(Boolean);
-
-        console.log("Current user interests:", namesA);
-        console.log("Other user interests:", namesB);
-
-        // shared interests
-        const shared = namesA.filter((name) => namesB.includes(name));
-
-        console.log("Shared interests:", shared);
-
-        setSharedInterests(shared);
-
-        const youProfilePic = currentUser.get("profile_pic");
-        const otherProfilePic = otherUser.get("profile_pic");
-
-        setCurrentUser({
-          id: currentUser.id,
-          name: `${currentUser.get("first_name")} ${currentUser.get(
-            "last_name"
-          )}`,
-          profilePicture: youProfilePic ? youProfilePic.url() : null,
-        });
-
-        setOtherUser({
-          id: otherUser.id,
-          name: `${otherUser.get("first_name")} ${otherUser.get("last_name")}`,
-          profilePicture: otherProfilePic ? otherProfilePic.url() : null,
-        });
-
-        // create a bump requst with status pending in the Bump_status table
-        const BumpStatus = Parse.Object.extend("Bump_status");
-        const bumpStatus = new BumpStatus();
-        bumpStatus.set("userA", currentUser);
-        bumpStatus.set("userB", otherUser);
-        bumpStatus.set("status", "pending");
-        bumpStatus.set("requestedBy", currentUser);
-        await bumpStatus.save();
-
+        await createBump({ userAId: currentProfile.id, userBId: otherProfile.id, requestedById: currentProfile.id });
         setBumpCreated(true);
-      } catch (error) {
-        console.error("Error fetching users or creating bump:", error);
+      } catch (err) {
+        console.error("Failed to create bump:", err);
       }
     }
 
-    if (otherUserId) {
-      fetchUsersAndCreateBump();
-    }
-  }, [otherUserId]);
+    sendBumpOnce();
+  }, [currentProfile, otherProfile, bumpCreated]);
 
-  //if users are not loaded yet, show loading message
-  if (!currentUser || !otherUser) return <div>Loading..</div>;
+  if (loading) {
+    return (
+      <div className="page container stack">
+        <p>Loading bump page..</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="page container stack">
+        <p className="error-message">{error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="page container stack">
-      <BumpHeader
-        currentUser={currentUser}
-        otherUser={otherUser}
-        leftImageSrc={currentUser.profilePicture}
-        rightImageSrc={otherUser.profilePicture}
-        type="sent"
-      />
-
-      {/*
-        I moved the following html from the BumpHeader jsx, maybe we need to move it back when refactoring the parse code? 
-        idk what the best solution is here. 
-        /Vic
-      */}
+      <BumpHeader currentUser={currentProfile} otherUser={otherProfile} />
 
       <div className="shared-interest-title">
         <h4 className="name-row">You both like:</h4>
