@@ -14,14 +14,25 @@
   width: 20px;
   height: 20px;
   vertical-align: middle;
-  margin-left: 4px;
+  margin-top: 10px;
 }
 
 .name-row {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 6px;
+  justify-content: center; /* centers horizontally */
+  gap: var(--space-md); /* space between name, badge and bump button */
+}
+
+.name-row .button {
+  margin-left: 0; /* rely on gap for spacing */
+}
+
+.settings-icon {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  margin-top: 5px;
 }
 
 .info-row {

@@ -52,7 +52,6 @@ export default function UserProfile() {
         showSettings={isOwnProfile}
         onBump={() => navigate(`/bump-sent/${profile.objectId || profile.id}`)}
       />
-      <ProfileInfo profile={profile} />
       <InterestGallery interests={profile.interests} />
     </div>
   );

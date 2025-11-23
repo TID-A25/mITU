@@ -19,7 +19,7 @@ export default function BumpHeader({
   type = "sent",
 }) {
   const leftAlt = currentUser.name || "You";
-  const rightAlt = otherUser.name || "Other";
+  const rightAlt = otherUser.name || "Someone";
 
   return (
     <div className="bump-header">
@@ -31,8 +31,8 @@ export default function BumpHeader({
       <div className="bump-title">
         <h2 className="name-row">
           {type === "received"
-            ? `${otherUser.name} bumped into you!`
-            : `You bumped into ${otherUser.name}!`}
+            ? `${rightAlt} bumped into you!`
+            : `You bumped into ${rightAlt}!`}
         </h2>
       </div>
     </div>

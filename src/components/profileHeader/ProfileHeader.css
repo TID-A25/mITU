@@ -30,15 +30,6 @@
   margin: 0 auto;
 }
 
-.settings-icon {
-  position: absolute;
-  bottom: 10px;
-  right: -50%;
-  width: 20%;
-  height: auto;
-  cursor: pointer;
-}
-
 @media (max-width: 600px) {
   .cover-photo-header img {
     height: 150px;
