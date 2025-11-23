@@ -12,11 +12,13 @@ export default function UserProfile() {
   const location = useLocation();
 
   // For testing keep user id hardcoded; in production derive from auth
-  const CURRENT_USER_ID = 'C6YoifVWmr';
+  const CURRENT_USER_ID = "C6YoifVWmr";
 
   // whether we show current user's profile (route /user-profile) or a profile by param
-  const isOwnProfile = location.pathname === '/user-profile' || userId === CURRENT_USER_ID;
-  const targetUserId = location.pathname === '/user-profile' ? CURRENT_USER_ID : userId;
+  const isOwnProfile =
+    location.pathname === "/user-profile" || userId === CURRENT_USER_ID;
+  const targetUserId =
+    location.pathname === "/user-profile" ? CURRENT_USER_ID : userId;
 
   // Use the reusable hook to fetch a single profile (uses parseQueries.fetchProfileById)
   const { profile, loading, error } = useProfile(targetUserId);
@@ -47,12 +49,12 @@ export default function UserProfile() {
 
   return (
     <div className="page container stack">
-      <ProfileHeader
-        profilePicture={profile.profilePicture}
-        showSettings={isOwnProfile}
+      <ProfileHeader profilePicture={profile.profilePicture} />
+      <ProfileInfo
+        profile={profile}
+        isOwnProfile={isOwnProfile}
         onBump={() => navigate(`/bump-sent/${profile.objectId || profile.id}`)}
       />
-      <ProfileInfo profile={profile} />
       <InterestGallery interests={profile.interests} />
     </div>
   );
