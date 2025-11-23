@@ -6,7 +6,7 @@ import InterestGallery from "../components/interestGallery/InterestGallery";
 import Parse from "parse";
 import "./Pages.css";
 
-export default function UserProfile() { 
+export default function UserProfile() {
   const { userId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
@@ -16,20 +16,29 @@ export default function UserProfile() {
 
   // Defining the current logged-in user ID
   const CURRENT_USER_ID = "C6YoifVWmr"; // user is victoria
-  
+
   // is this own profile?
-  const isOwnProfile = location.pathname === "/user-profile" || userId === CURRENT_USER_ID;
-  
+  const isOwnProfile =
+    location.pathname === "/user-profile" || userId === CURRENT_USER_ID;
+
   // when going in /user-profile, use current user's ID
-  const targetUserId = location.pathname === "/user-profile" ? CURRENT_USER_ID : userId;
+  const targetUserId =
+    location.pathname === "/user-profile" ? CURRENT_USER_ID : userId;
 
   useEffect(() => {
     async function fetchUserProfile() {
       try {
         setLoading(true);
-        
+
         const userQuery = new Parse.Query("Users");
-        userQuery.select("first_name", "last_name", "programme", "semester", "country", "profile_pic");
+        userQuery.select(
+          "first_name",
+          "last_name",
+          "programme",
+          "semester",
+          "country",
+          "profile_pic"
+        );
         const user = await userQuery.get(targetUserId);
 
         // Get user interests from User_interests table
@@ -39,16 +48,18 @@ export default function UserProfile() {
         interestQuery.select("interest");
         const results = await interestQuery.find();
 
-        const interests = results.map((entry) => {
-          const interest = entry.get("interest");
-          return interest ? interest.get("interest_name") : null;
-        }).filter(Boolean);
+        const interests = results
+          .map((entry) => {
+            const interest = entry.get("interest");
+            return interest ? interest.get("interest_name") : null;
+          })
+          .filter(Boolean);
 
         // Get profile picture URL
         const profilePic = user.get("profile_pic");
         const profilePictureUrl = profilePic ? profilePic.url() : null;
 
-        // make profile object 
+        // make profile object
         setProfile({
           objectId: user.id,
           name: `${user.get("first_name")} ${user.get("last_name")}`,
@@ -58,7 +69,7 @@ export default function UserProfile() {
           profilePicture: profilePictureUrl,
           interests: interests,
         });
-        
+
         setError(null);
       } catch (error) {
         console.error("Error fetching user profile: ", error);
@@ -99,12 +110,13 @@ export default function UserProfile() {
 
   return (
     <div className="page container stack">
-      <ProfileHeader
-        profilePicture={profile.profilePicture}
-        showSettings={isOwnProfile} // if is own profile, show settings icon
+      <ProfileHeader profilePicture={profile.profilePicture} />
+      <ProfileInfo
+        profile={profile}
+        isOwnProfile={isOwnProfile}
         onBump={() => navigate(`/bump-sent/${profile.objectId}`)}
+        onSettings={() => navigate("/settings")}
       />
-      <ProfileInfo profile={profile} />
       <InterestGallery interests={profile.interests} />
     </div>
   );
