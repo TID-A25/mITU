@@ -5,8 +5,7 @@ import "./ProfileHeader.css";
 import "../buttons/Buttons.css";
 
 export default function ProfileHeader({
-  profilePicture,
-  showSettings = false,
+  profilePicture
 }) {
   return (
     <div className="header-wrap">
