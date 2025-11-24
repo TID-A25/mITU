@@ -19,50 +19,46 @@ export async function fetchProfiles({ excludeUserId } = {}) {
 
 		const users = await userQuery.find();
 
-		const profilesWithInterests = await Promise.all(
-			users.map(async (user) => {
-				try {
-					const userInterestQuery = new Parse.Query('User_interests');
-					userInterestQuery.equalTo('user', user);
-					userInterestQuery.include('interest');
-					userInterestQuery.select('interest');
-					const interestResults = await userInterestQuery.find();
+		// Fetch all interests for all users in one query to avoid N+1 problem
+		const allInterestsQuery = new Parse.Query('User_interests');
+		allInterestsQuery.containedIn('user', users);
+		allInterestsQuery.include('interest');
+		allInterestsQuery.select('user', 'interest');
+		const allInterestResults = await allInterestsQuery.find();
 
-					const interests = interestResults
-						.map((entry) => {
-							const interest = entry.get('interest');
-							return interest ? interest.get('interest_name') : null;
-						})
-						.filter(Boolean);
-
-					const profilePic = user.get('profile_pic');
-					const profilePictureUrl = profilePic ? profilePic.url() : null;
-
-					return {
-						id: user.id,
-						objectId: user.id,
-						name: `${user.get('first_name')} ${user.get('last_name')}`,
-						profilePicture: profilePictureUrl,
-						interests,
-						degree: user.get('programme'),
-						semester: user.get('semester'),
-						country: user.get('country') || 'Not specified',
-					};
-				} catch (err) {
-					console.error(`Error fetching interests for user ${user.id}:`, err);
-					return {
-						id: user.id,
-						objectId: user.id,
-						name: `${user.get('first_name')} ${user.get('last_name')}`,
-						profilePicture: null,
-						interests: [],
-						degree: user.get('programme'),
-						semester: user.get('semester'),
-						country: user.get('country') || 'Not specified',
-					};
+		// Group interests by user id
+		const interestsByUserId = {};
+		allInterestResults.forEach((entry) => {
+			const user = entry.get('user');
+			const interest = entry.get('interest');
+			if (user && interest) {
+				const userId = user.id;
+				if (!interestsByUserId[userId]) {
+					interestsByUserId[userId] = [];
 				}
-			})
-		);
+				const interestName = interest.get('interest_name');
+				if (interestName) {
+					interestsByUserId[userId].push(interestName);
+				}
+			}
+		});
+
+		// Map users to profile objects
+		const profilesWithInterests = users.map((user) => {
+			const profilePic = user.get('profile_pic');
+			const profilePictureUrl = profilePic ? profilePic.url() : null;
+
+			return {
+				id: user.id,
+				objectId: user.id,
+				name: `${user.get('first_name')} ${user.get('last_name')}`,
+				profilePicture: profilePictureUrl,
+				interests: interestsByUserId[user.id] || [],
+				degree: user.get('programme'),
+				semester: user.get('semester'),
+				country: user.get('country') || 'Not specified',
+			};
+		});
 
 		return profilesWithInterests;
 	} catch (error) {
