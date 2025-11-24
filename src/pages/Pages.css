@@ -1,23 +1,34 @@
-/* shared layout styles for all pages */
+/* ============================================
+   SHARED PAGE LAYOUT STYLES
+   ============================================ */
 
-/* main wrapper for each page */
+/* ============================================
+   PAGE WRAPPER - Main Page Container
+   ============================================ */
 .page {
   background-color: var(--bg);
   min-height: 100vh;
 }
 
-/* keeps page content centered */
+/* ============================================
+   CONTAINER - Content Centering Wrapper
+   ============================================ */
 .container {
   max-width: 100%;
   margin: 0 auto;
 }
 
-/* gives even space between vertical stacked elements */
+/* ============================================
+   STACK - Vertical Spacing Utility
+   ============================================ */
+/* Gives even space between vertical stacked elements */
 .stack > * + * {
   margin-top: var(--space-md);
 }
 
-/* helper classes for extra spacing */
+/* ============================================
+   SPACING UTILITIES - Helper Classes
+   ============================================ */
 .margin-top-md {
   margin-top: var(--space-md);
 }
@@ -30,7 +41,10 @@
   padding: var(--space-lg);
 }
 
-/* headings */
+/* ============================================
+   TYPOGRAPHY - Headings
+   ============================================ */
+/* H1 - Page titles */
 h1 {
   font-size: 1.75rem;
   font-weight: 700;
@@ -38,6 +52,7 @@ h1 {
   margin-bottom: var(--space-md);
 }
 
+/* H2 - Section titles */
 h2 {
   font-size: 1.4rem;
   font-weight: 600;
@@ -45,6 +60,7 @@ h2 {
   margin-bottom: var(--space-sm);
 }
 
+/* H3 - Subsection titles */
 h3 {
   font-size: 1.1rem;
   font-weight: 600;
@@ -52,13 +68,18 @@ h3 {
   margin-bottom: var(--space-xs);
 }
 
-/* paragraph text */
+/* ============================================
+   TYPOGRAPHY - Paragraph Text
+   ============================================ */
 p {
   color: var(--muted-text);
   line-height: 1.5;
   margin-bottom: var(--space-sm);
 }
 
+/* ============================================
+   GALLERY - Horizontal Scrolling Container
+   ============================================ */
 /* Base gallery styles for horizontal scrolling galleries */
 .gallery {
   display: flex;
@@ -70,18 +91,21 @@ p {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Make gallery items snap and prevent squishing */
+/* Gallery items - snap behavior and prevent squishing */
 .gallery > * {
   scroll-snap-align: start;
   flex-shrink: 0;
 }
 
+/* Hide scrollbar in webkit browsers */
 .gallery::-webkit-scrollbar {
   display: none;
 }
 
-/* Optional: slightly smaller cards on very small screens
-   (works together with interest-card media query) */
+/* ============================================
+   GALLERY - Responsive Adjustments
+   ============================================ */
+/* Slightly smaller cards on very small screens */
 @media (max-width: 420px) {
   .gallery {
     padding: 0 12px 10px;
@@ -89,6 +113,9 @@ p {
   }
 }
 
+/* ============================================
+   ERROR MESSAGE - Error Display Styling
+   ============================================ */
 .error-message {
   color: var(--error-color, #e53e3e);
   font-weight: 500;

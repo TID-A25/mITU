@@ -1,6 +1,8 @@
 @import "./styles/theme.css";
 
-/* General Reset */
+/* ============================================
+   BODY - General Reset & Font Setup
+   ============================================ */
 body {
   margin: 0;
   font-family: var(--font-sans);
@@ -8,7 +10,9 @@ body {
   color: var(--text);
 }
 
-/* App Container for mobile-width UI */
+/* ============================================
+   APP CONTAINER - Mobile-Width UI Wrapper
+   ============================================ */
 .app-container {
   max-width: 430px;
   margin: 0 auto;
@@ -21,16 +25,20 @@ body {
   padding-bottom: 80px; /*reserve space for footer so page content is not hidden underneath the footer */
 }
 
-/* Optional: Light outer background (like native mobile feel) */
+/* ============================================
+   BODY - Outer Background (Native Mobile Feel)
+   ============================================ */
 body {
   margin: 0;
   font-family: var(--font-sans);
-  background-color: var(--app-bg); /* pastel green */
+  background-color: var(--app-bg); /* Pastel green */
   display: flex;
   justify-content: center;
 }
 
-/* User Profile Styling */
+/* ============================================
+   ROOT & APP - Full Width Base Styling
+   ============================================ */
 #root,
 .App {
   width: 100%;

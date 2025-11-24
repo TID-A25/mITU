@@ -1,4 +1,7 @@
-
+/* ============================================
+   PROFILE SECTION - Interest Group Container
+   ============================================ */
+/* Section wrapper with horizontal padding */
 .profile-section {
   padding-left: var(--space-md);
   padding-right: var(--space-md);

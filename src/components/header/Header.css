@@ -1,4 +1,7 @@
-/* Header Styles */
+/* ============================================
+   APP HEADER - Sticky Top Navigation
+   ============================================ */
+/* Main header container */
 .app-header {
   position: sticky;
   top: 0;
@@ -9,12 +12,14 @@
   box-shadow: var(--shadow-sm);
 }
 
+/* Header title/logo */
 .app-header h1 {
   margin: 0;
   font-size: 2rem;
   color: var(--primary);
 }
 
+/* Navigation container */
 .app-header nav {
   margin-top: 0.5rem;
   font-weight: 600;
@@ -22,11 +27,17 @@
   color: var(--primary);
 }
 
+/* ============================================
+   NAV BUTTONS - Spacing & Layout
+   ============================================ */
 /* Spacing between nav items */
 .app-header nav button {
   margin: 0 var(--space-sm);
 }
 
+/* ============================================
+   NAV BUTTON STYLES - Transparent Base
+   ============================================ */
 /* Use shared button base but make header buttons visually inline/transparent by default */
 .app-header nav .button {
   background: transparent;
@@ -37,6 +48,7 @@
   font-weight: 600;
 }
 
+/* Active button state - solid background */
 .app-header nav .button.active {
   background: var(--primary);
   color: var(--muted);

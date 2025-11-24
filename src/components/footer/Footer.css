@@ -1,3 +1,7 @@
+/* ============================================
+   BOTTOM NAV - Fixed Footer Navigation
+   ============================================ */
+/* Main nav container */
 .bottom-nav {
   position: fixed;
   left: 50%;
@@ -16,11 +20,17 @@
   max-width: 430px; 
 }
 
+/* ============================================
+   NAV LINKS - Link Styling
+   ============================================ */
 .bottom-nav a {
   text-decoration: none;
   color: inherit;
 }
 
+/* ============================================
+   NAV BUTTONS - Icon Button Base Styles
+   ============================================ */
 .bottom-nav button {
   background: none;
   border: none;
@@ -29,16 +39,20 @@
   padding: 8px 12px;
 }
 
+/* Active button state - scaled and colored */
 .bottom-nav button.active {
   transform: scale(1.05);
   color: var(--primary);
 }
 
+/* Hover state - slight scale up */
 .bottom-nav button:hover {
   transform: scale(1.05);
 }
 
-/* Footer icon sizing */
+/* ============================================
+   ICON SIZING - Footer Icon Dimensions
+   ============================================ */
 .bottom-nav button .icon {
   width: 3rem;
   height: 3rem;

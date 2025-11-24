@@ -1,7 +1,12 @@
+/* ============================================
+   CSS VARIABLES - Design System Tokens
+   ============================================ */
 :root {
-  /* Colors (light mode) */
+  /* ============================================
+     COLORS - Light Mode Theme
+     ============================================ */
   --bg: #ffffff;
-  --app-bg: #dcf7ec; /* outer background */
+  --app-bg: #dcf7ec; /* Outer background */
   --primary: #3ec199;
   --accent: #74d6b3;
   --muted: #e7fff1;
@@ -14,22 +19,30 @@
   --danger: #f7d4bd;
   --gray: #e0e0e0;
 
-  /* Spacing */
+  /* ============================================
+     SPACING - Consistent Padding/Margin Scale
+     ============================================ */
   --space-xs: 4px;
   --space-sm: 8px;
   --space-md: 16px;
   --space-lg: 24px;
 
-  /* Radius */
+  /* ============================================
+     BORDER RADIUS - Rounded Corner Sizes
+     ============================================ */
   --radius-sm: 8px;
   --radius-md: 16px;
   --radius-lg: 20px;
 
-  /* Shadows */
+  /* ============================================
+     SHADOWS - Elevation Levels
+     ============================================ */
   --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.06);
   --shadow-md: 0 8px 20px rgba(0, 0, 0, 0.08);
 
-  /* Typography */
+  /* ============================================
+     TYPOGRAPHY - Font Families
+     ============================================ */
   --font-sans: "Helvetica Neue", system-ui, -apple-system, "Segoe UI", Roboto,
     "Helvetica", Arial;
 }

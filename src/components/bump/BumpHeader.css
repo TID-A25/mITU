@@ -1,7 +1,14 @@
+/* ============================================
+   BUMP HEADER - Main Container
+   ============================================ */
 .bump-header {
   text-align: center;
 }
 
+/* ============================================
+   BUMPING PICTURES - Two Profile Photos
+   ============================================ */
+/* Container for side-by-side profile pictures */
 .bumping-pictures {
   display: flex;
   justify-content: center;
@@ -11,6 +18,7 @@
   margin-bottom: 12px;
 }
 
+/* Individual profile image - circular */
 .bumping-pictures .profile-img {
   width: 100px;
   height: 100px;
@@ -19,6 +27,9 @@
   border: 2px solid var(--badge-bg, #baf3dc);
 }
 
+/* ============================================
+   BUMP TITLE - Confirmation Message
+   ============================================ */
 .bump-title {
   margin-top: 8px;
   font-size: 1.3rem;
@@ -26,6 +37,9 @@
   font-weight: 600;
 }
 
+/* ============================================
+   SHARED INTEREST - Section Title
+   ============================================ */
 .shared-interest-title {
   margin-top: 24px;
   font-size: 1rem;
@@ -33,6 +47,10 @@
   color: var(--text);
 }
 
+/* ============================================
+   SHARED INTEREST CARD - Interest Display
+   ============================================ */
+/* Container for the shared interest card */
 .shared-interest-card {
   display: flex;
   justify-content: center;

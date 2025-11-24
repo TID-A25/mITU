@@ -1,13 +1,19 @@
+/* ============================================
+   INTEREST CARD - Card Container
+   ============================================ */
+/* Main card container with background image */
 .interest-card {
   position: relative;
-  flex: 0 0 280px; /* card width*/
+  flex: 0 0 280px; /* Card width */
   height: 170px; 
   border-radius: 18px;
   overflow: hidden;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
 
-/* Dark gradient overlay for readability */
+/* ============================================
+   OVERLAY - Dark Gradient for Text Readability
+   ============================================ */
 .interest-card .overlay {
   position: absolute;
   inset: 0;
@@ -18,6 +24,10 @@
   );
 }
 
+/* ============================================
+   CARD TITLE - Centered Interest Name
+   ============================================ */
+/* Interest name - centered with text shadow */
 .card-title {
   position: absolute;
   left: 50%;
@@ -28,15 +38,19 @@
   font-size: 1.2rem;
   text-align: center;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
-  padding: 0 10px; /* avoid text touching edges on small screens */
+  padding: 0 10px; /* Avoid text touching edges on small screens */
 }
 
-/* Responsive for card*/
+/* ============================================
+   RESPONSIVE - Mobile Adjustments
+   ============================================ */
 @media (max-width: 420px) {
+  /* Smaller card on mobile */
   .interest-card {
     flex-basis: 240px;
     height: 150px;
   }
+  /* Smaller title text on mobile */
   .card-title {
     font-size: 1.05rem;
   }

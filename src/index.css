@@ -1,21 +1,33 @@
-/* makes all elements the size we assign it even with padding*/
+/* ============================================
+   GLOBAL RESET - Box Sizing
+   ============================================ */
+/* Makes all elements the size we assign it even with padding */
 * {
   box-sizing: border-box;
 }
 
-/* app fills the screen */
+/* ============================================
+   FULL HEIGHT LAYOUT
+   ============================================ */
+/* App fills the screen */
 html,
 body,
 #root {
   height: 100%;
 }
 
-/* remove browser’s default margin */
+/* ============================================
+   BODY RESET
+   ============================================ */
+/* Remove browser's default margin */
 body {
   margin: 0;
 }
 
-/* smoother text */
+/* ============================================
+   TEXT RENDERING OPTIMIZATION
+   ============================================ */
+/* Smoother text rendering across browsers */
 :root {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

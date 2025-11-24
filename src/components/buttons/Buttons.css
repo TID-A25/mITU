@@ -1,4 +1,6 @@
-/* Button variants */
+/* ============================================
+   BUTTON BASE - Core Button Styles
+   ============================================ */
 .button {
   display: inline-flex;
   align-items: center;
@@ -9,47 +11,66 @@
   font-weight: 700;
 }
 
+/* ============================================
+   BUTTON SIZES - Small & Big Variants
+   ============================================ */
+/* Small button - 48x48px circular */
 .button--small {
   border-radius: 9999px;
   width: 48px;
   height: 48px;
 }
 
+/* Big button - 112x112px circular */
 .button--big {
   border-radius: 9999px;
   width: 112px;
   height: 112px;
 }
 
+/* ============================================
+   BUTTON COLORS - Color Variants
+   ============================================ */
 .button--text {
   background: transparent;
 }
 
+/* Teal button - accent color */
 .button--teal {
   background-color: var(--accent);
   color: black;
 }
 
+/* Gray button - neutral color */
 .button--gray {
   background-color: var(--gray);
   color: black;
 }
 
+/* Danger button - warning/delete color */
 .button--danger {
   background-color: var(--danger);
   color: black;
 }
 
+/* ============================================
+   BUTTON STATES - Hover & Active
+   ============================================ */
+/* Hover state - slightly brighter and larger */
 .button:hover {
   filter: brightness(1.05);
   transform: scale(1.08);
 }
 
+/* Active/pressed state - slightly smaller */
 .button:active {
   transform: scale(0.96);
 }
 
-/* bump buttons layout (moved from BumpButtons.css) */
+/* ============================================
+   BUMP BUTTONS LAYOUT - Container Styling
+   ============================================ */
+/* Bump buttons layout (moved from BumpButtons.css) */
 .bump-buttons {
   display: flex;
   flex-direction: column;
@@ -58,11 +79,13 @@
   width: 100%;
 }
 
+/* Big button container - centered */
 .bump-buttons .button-big {
   display: flex;
   justify-content: center;
 }
 
+/* Small buttons container - centered */
 .bump-buttons .bump-buttons-small {
   display: flex;
   justify-content: center;

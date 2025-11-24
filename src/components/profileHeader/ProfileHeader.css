@@ -1,8 +1,16 @@
+/* ============================================
+   HEADER WRAP - Container with Relative Positioning
+   ============================================ */
+/* Main container for cover photo and profile picture */
 .header-wrap {
   position: relative;
   text-align: center;
 }
 
+/* ============================================
+   COVER PHOTO - Banner Image
+   ============================================ */
+/* Cover photo banner - full width */
 .cover-photo-header img {
   width: 100%;
   height: 180px;
@@ -10,6 +18,10 @@
   display: block;
 }
 
+/* ============================================
+   PROFILE PICTURE - Overlapping Circular Photo
+   ============================================ */
+/* Container - positioned to overlap cover photo */
 .profile-picture-header {
   position: absolute;
   left: 50%;
@@ -20,6 +32,7 @@
   height: 160px;
 }
 
+/* Profile image - circular with border */
 .profile-picture-header .profile-img {
   width: 160px;
   height: 160px;
@@ -30,11 +43,16 @@
   margin: 0 auto;
 }
 
+/* ============================================
+   RESPONSIVE - Mobile Adjustments
+   ============================================ */
 @media (max-width: 600px) {
+  /* Smaller cover photo height on mobile */
   .cover-photo-header img {
     height: 150px;
   }
 
+  /* Smaller profile picture on mobile */
   .profile-picture-header .profile-img {
     width: 120px;
     height: 120px;

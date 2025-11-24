@@ -1,15 +1,25 @@
+/* ============================================
+   PROFILE INFO - Paragraph Text Styling
+   ============================================ */
 .user-profile-info p {
   margin: 0.3rem 0;
   font-size: 0.95rem;
   color: var(--muted-text);
 }
 
+/* ============================================
+   USER PROFILE INFO - Main Container
+   ============================================ */
+/* Main container - spaced from profile picture */
 .user-profile-info {
   margin-top: 60px;
   text-align: center;
   font-family: var(--font-sans);
 }
 
+/* ============================================
+   VERIFIED BADGE - Icon Styling
+   ============================================ */
 .badge {
   width: 20px;
   height: 20px;
@@ -17,17 +27,25 @@
   margin-top: 10px;
 }
 
+/* ============================================
+   NAME ROW - Name, Badge, and Action Button
+   ============================================ */
+/* Container for name, verified badge, and bump/settings button */
 .name-row {
   display: flex;
   align-items: center;
-  justify-content: center; /* centers horizontally */
-  gap: var(--space-md); /* space between name, badge and bump button */
+  justify-content: center; /* Centers horizontally */
+  gap: var(--space-md); /* Space between name, badge and bump button */
 }
 
+/* Button spacing - rely on gap instead of margin */
 .name-row .button {
-  margin-left: 0; /* rely on gap for spacing */
+  margin-left: 0;
 }
 
+/* ============================================
+   SETTINGS ICON - Clickable Settings Button
+   ============================================ */
 .settings-icon {
   width: 25px;
   height: 25px;
@@ -35,6 +53,10 @@
   margin-top: 5px;
 }
 
+/* ============================================
+   INFO ROW - Degree and Country Display
+   ============================================ */
+/* Container for icon + text pairs */
 .info-row {
   display: flex;
   align-items: center;
@@ -43,21 +65,16 @@
   margin-top: 6px;
 }
 
+/* Icons in info rows */
 .info-row img {
   width: 18px;
   height: 18px;
 }
 
+/* Text in info rows */
 .info-row p {
   margin: 0;
   font-size: 0.95rem;
-}
-
-.name-row {
-  display: flex;
-  align-items: center;
-  justify-content: center; /* centers horizontally */
-  gap: 6px; /* space between name and badge */
 }
 
 @media (max-width: 600px) {

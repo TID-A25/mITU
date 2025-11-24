@@ -1,3 +1,7 @@
+/* ============================================
+   PROFILE CARD - Clickable Card Container
+   ============================================ */
+/* Main card - clickable with hover effect */
 .profile-card {
   min-width: 180px;
   border-radius: var(--radius-md);
@@ -13,10 +17,15 @@
   cursor: pointer;
 }
 
+/* Hover state - slight scale up */
 .profile-card:hover {
   transform: scale(1.03);
 }
 
+/* ============================================
+   PROFILE PHOTO - Background Image Section
+   ============================================ */
+/* Photo section with background image */
 .profile-photo {
   height: 180px;
   background-size: cover;
@@ -27,6 +36,10 @@
   padding: 1rem;
 }
 
+/* ============================================
+   PROFILE INFO - Name & Degree Overlay
+   ============================================ */
+/* Dark overlay box with name and degree */
 .profile-info {
   background: rgba(0, 0, 0, 0.45);
   padding: 0.5rem 0.75rem;
@@ -34,21 +47,28 @@
   width: 100%;
 }
 
+/* Name text - white on dark background */
 .profile-info h3 {
   margin: 0;
   color: var(--on-dark);
 }
 
+/* Degree text - white on dark background */
 .profile-info p {
   margin: 0;
   font-size: 0.8rem;
   color: var(--on-dark);
 }
 
+/* ============================================
+   INTERESTS - Badge Container
+   ============================================ */
+/* Container for interest badges */
 .interests {
   padding: calc(var(--space-sm) * 2) var(--space-md);
 }
 
+/* Individual interest badge */
 .interests span {
   margin: 2px 4px 0 0;
   background: var(--badge-bg);
