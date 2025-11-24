@@ -9,44 +9,48 @@ export default function EditProfile() {
 
 	const CURRENT_USER_ID = "C6YoifVWmr";
 
+    // prevents rendering before the loading of the data is complete
 	const [loading, setLoading] = useState(true);
+
+    // disables the save button and shows "saving..."" while saving to prevent further user action
 	const [saving, setSaving] = useState(false);
 	const [error, setError] = useState(null);
 
+    // country text field value
 	const [country, setCountry] = useState("");
 
-	// selected interests is an array of interest names
+	// array of interests chosen by the user 
 	const [selected, setSelected] = useState([]);
 
-	// all available interests 
+	// an array of all available interests  (each item is a parse object)
 	const [allInterests, setAllInterests] = useState([]);
 
-	// store the Parse user object so we can save it later
+	// store the Parse user-object so it can be saved it later
 	const [userObj, setUserObj] = useState(null);
 
+    // to navigate back to User-profile after saving
 	const navigate = useNavigate();
 
-	// Load user, user's interests, and all interests
+	// when page opens: Load currentUser, user's interests, and all interests
 	useEffect(() => {
 		async function load() {
 			try {
-				setLoading(true);
+				setLoading(true); // loading is set to true to show "Loading..."
 
-				// load user
+				// load User from Parse and stores it in userObj
 				const userQ = new Parse.Query("Users");
 				const user = await userQ.get(CURRENT_USER_ID);
 				setUserObj(user);
 				setCountry(user.get("country") || "");
 
-				// load user's interest entries (User_interests)
+				// load user's interests from Parse and puts in 'selected' array
 				const uiQ = new Parse.Query("User_interests");
-				uiQ.equalTo("user", user);
+				uiQ.equalTo("user", user); //find the current user from the column "user"
 				uiQ.include("interest");
-				const uiEntries = await uiQ.find();
+				const uiEntries = await uiQ.find(); // get all rows for that user
 				const userInterestNames = uiEntries
-					.map((e) => e.get("interest")?.get("interest_name"))
-					.filter(Boolean);
-				setSelected(userInterestNames);
+					.map((e) => e.get("interest")?.get("interest_name")) // get interest names
+				setSelected(userInterestNames); // set the selected interests
 
 				// load all available interests (keep the Parse object and image url)
 				const interestQ = new Parse.Query("Interest");
@@ -71,38 +75,40 @@ export default function EditProfile() {
 		load();
 	}, []);
 
-	// Allow toggling /selecting/unselecting interests in the array
-	function toggleInterest(name) {
-		setSelected((prev) => {
-			if (prev.includes(name)) return prev.filter((n) => n !== name);
-			return [...prev, name];
-		});
-	}
+	// Allow toggling to update the "selected" array.
+    //if prev array includes user picked interest: remove it; else add it 
+	const handleToggleInterest = (selectedInterest) => {
+		setSelected((prev) =>
+			prev.includes(selectedInterest) ? prev.filter((n) => n !== selectedInterest) : [...prev, selectedInterest]
+		);
+	};
 
 	// Save country and sync interests
 	async function handleSave(e) {
-		e.preventDefault();
-		if (!userObj) return;
+		e.preventDefault(); // have JS handle saving
+		if (!userObj) return; // dont save if user hasn't loaded yet
 
 		try {
-			setSaving(true);
-			setError(null);
+			setSaving(true); // show "saving..."
+			setError(null); //clear error messages if any
 
-			// pdate country
-			userObj.set("country", country);
-			await userObj.save();
+			// update country and write the change to the server
+			userObj.set("country", country); 
+			await userObj.save(); 
 
-			// get current User_interests rows
+			// get current User_interests rows from DB
 			const uiQ = new Parse.Query("User_interests");
 			uiQ.equalTo("user", userObj);
 			uiQ.include("interest");
-			const existing = await uiQ.find();
+			const existing = await uiQ.find(); // get the rows
 
-			const existingNames = existing
+            // get an array of interest names from the existing rows
+			const existingNames = existing 
 				.map((e) => e.get("interest")?.get("interest_name"))
-				.filter(Boolean);
+
 
 			// compute adds and removes
+            // selected = the array of interest currently selected by the user
 			const toAdd = selected.filter((n) => !existingNames.includes(n));
 			const toRemove = existingNames.filter((n) => !selected.includes(n));
 
@@ -110,11 +116,11 @@ export default function EditProfile() {
 			for (const entry of existing) {
 				const name = entry.get("interest")?.get("interest_name");
 				if (toRemove.includes(name)) {
-					await entry.destroy();
+					await entry.destroy(); // remove the row from Parse
 				}
 			}
 
-			// add entries: for each name, find the Interest object and create a row
+			// add entries: for each  interest to add, create a row with a link between the user and the interest
 			for (const name of toAdd) {
 				const interestQ = new Parse.Query("Interest");
 				interestQ.equalTo("interest_name", name);
@@ -160,9 +166,9 @@ export default function EditProfile() {
 
 		<div className="interests-edit">
 				<h4>Interests</h4>
-				<div className="interests-grid">
-					<InterestPicker items={allInterests} selected={selected} onToggle={toggleInterest} />
-				</div>
+			<div className="interests-grid">
+				<InterestPicker items={allInterests} selected={selected} onToggle={handleToggleInterest} />
+			</div>
 			</div>
 
 			<div style={{ display: "flex", justifyContent: "flex-end", marginTop: "1rem" }}>
