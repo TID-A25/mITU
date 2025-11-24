@@ -49,7 +49,10 @@ export default function UserProfile() {
 
   return (
     <div className="page container stack">
-      <ProfileHeader profilePicture={profile.profilePicture} />
+      <ProfileHeader 
+        profilePicture={profile.profilePicture} 
+        isOwnProfile={isOwnProfile}
+      />
       <ProfileInfo
         profile={profile}
         isOwnProfile={isOwnProfile}

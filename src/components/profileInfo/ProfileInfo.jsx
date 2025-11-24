@@ -27,14 +27,6 @@ export default function ProfileInfo({
             onClick={onBump}
           />
         )}
-        {isOwnProfile && (
-          <img
-            src={settingsIcon}
-            className="settings-icon"
-            alt="Settings"
-            onClick={onSettings}
-          />
-        )}
       </div>
 
       <div className="info-row">
