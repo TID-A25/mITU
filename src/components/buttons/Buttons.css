@@ -68,6 +68,15 @@
 }
 
 /* ============================================
+   BACK BUTTON ICON - Arrow Icon Styling
+   ============================================ */
+/* Back arrow icon sizing */
+.back-button-icon {
+  width: 22px;
+  height: 22px;
+}
+
+/* ============================================
    BUMP BUTTONS LAYOUT - Container Styling
    ============================================ */
 /* Bump buttons layout (moved from BumpButtons.css) */

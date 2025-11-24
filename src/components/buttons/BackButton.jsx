@@ -15,7 +15,7 @@ export default function BackButton({ onClick }) {
         viewBox="0 0 24 24"
         strokeWidth={2}
         stroke="currentColor"
-        style={{ width: "22px", height: "22px" }}
+        className="back-button-icon"
       >
         <path
           strokeLinecap="round"

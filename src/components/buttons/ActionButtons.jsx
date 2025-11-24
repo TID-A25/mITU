@@ -14,6 +14,7 @@ import BumpButtons from "./BumpButtons";
  * - "back": back navigation button
  * - "single" (default): configurable single button
  */
+
 export default function ActionButtons({
   mode = "single",
   size = "big",
