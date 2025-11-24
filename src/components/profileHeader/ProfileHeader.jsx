@@ -2,15 +2,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 // asset paths: this file lives at src/components/profile, so go up two levels to src/
 import coverPhoto from "../../assets/images/profiles/Coverpicture.jpg";
-import settingsIcon from "../../assets/images/icons/Settings.svg";
-import Buttons from "../buttons/Buttons.jsx";
 import "./ProfileHeader.css";
 import "../buttons/Buttons.css";
 
 export default function ProfileHeader({
-  profilePicture,
-  showSettings = false,
-  onBump, //callback function, runs when bump is clicked
+  profilePicture
 }) {
   const navigate = useNavigate();
   return (
