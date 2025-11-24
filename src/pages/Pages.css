@@ -86,9 +86,10 @@ p {
   flex-direction: row;
   gap: var(--space-md);
   overflow-x: auto;
-  overflow-y: hidden;
+  overflow-y: visible;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
+  padding: 4px 4px;
 }
 
 /* Gallery items - snap behavior and prevent squishing */

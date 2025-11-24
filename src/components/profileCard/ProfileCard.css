@@ -1,25 +1,33 @@
 /* ============================================
-   PROFILE CARD - Clickable Card Container
+   PROFILE CARD LINK - Wrapper for Hover Effect
    ============================================ */
-/* Main card - clickable with hover effect */
-.profile-card {
-  min-width: 180px;
-  border-radius: var(--radius-md);
-  overflow: hidden;
+/* Link wrapper - handles hover transformation */
+.profile-card-link {
+  display: block;
   text-decoration: none;
   color: inherit;
-  border: 2px solid var(--border);
-  background-color: var(--card-bg);
-  box-shadow: var(--shadow-md);
   flex-shrink: 0;
-  transition: transform 0.2s ease;
   scroll-snap-align: start;
-  cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
 /* Hover state - slight scale up */
-.profile-card:hover {
+.profile-card-link:hover {
   transform: scale(1.03);
+}
+
+/* ============================================
+   PROFILE CARD - Card Container
+   ============================================ */
+/* Main card - contains photo and interests */
+.profile-card {
+  width: 210px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 2px solid var(--border);
+  background-color: var(--card-bg);
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
 }
 
 /* ============================================

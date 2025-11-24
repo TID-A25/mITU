@@ -15,7 +15,7 @@ export default function ProfileCard({ profile }) {
 
   return (
     // Card links to the user's profile page
-    <Link to={`/user/${profile.id}`}>
+    <Link to={`/user/${profile.id}`} className="profile-card-link">
       <div className="profile-card">
         {/* Profile photo as background with text overlay */}
         <div
