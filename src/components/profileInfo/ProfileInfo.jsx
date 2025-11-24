@@ -1,4 +1,6 @@
+// ProfileInfo component - displays user details with name, degree, country, and action buttons
 import React from "react";
+
 // asset paths: this file lives at src/components/profile, so go up two levels to src/
 import verifiedBadge from "../../assets/images/icons/Verified.svg";
 import settingsIcon from "../../assets/images/icons/Settings.svg";
@@ -8,16 +10,19 @@ import ActionButtons from "../buttons/ActionButtons.jsx";
 import "./ProfileInfo.css";
 
 export default function ProfileInfo({
-  profile,
-  isOwnProfile = false,
-  onBump = () => {},
-  onSettings = () => {},
+  profile,               // Profile object with name, degree, semester, country
+  isOwnProfile = false,  // Whether this is the current user's own profile
+  onBump = () => {},     // Callback when bump button is clicked
+  onSettings = () => {}, // Callback when settings icon is clicked
 }) {
   return (
     <div className="user-profile-info">
+      {/* Name row with verification badge and action button */}
       <div className="name-row">
         <h3>{profile.name}</h3>
+        {/* Verified badge icon */}
         <img src={verifiedBadge} className="badge" alt="Verified badge" />
+        {/* Show bump button if viewing another user's profile */}
         {!isOwnProfile && (
           <ActionButtons
             mode="single"
@@ -27,6 +32,7 @@ export default function ProfileInfo({
             onClick={onBump}
           />
         )}
+        {/* Show settings icon if viewing own profile */}
         {isOwnProfile && (
           <img
             src={settingsIcon}
@@ -37,6 +43,7 @@ export default function ProfileInfo({
         )}
       </div>
 
+      {/* Education information row */}
       <div className="info-row">
         <img src={hat} className="hat" alt="Graduation hat" />
         <p>
@@ -44,6 +51,7 @@ export default function ProfileInfo({
         </p>
       </div>
 
+      {/* Country information row */}
       <div className="info-row">
         <img src={globe} className="globe" alt="Globus" />
         <p>{profile.country}</p>

@@ -1,3 +1,4 @@
+// BackButton component - renders a small gray back arrow button
 import React from "react";
 import "./Buttons.css";
 
@@ -6,7 +7,7 @@ export default function BackButton({ onClick }) {
     <button
       onClick={onClick}
       className="button button--small button--gray"
-      aria-label="Back"
+      aria-label="Back" // Accessibility label for screen readers
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

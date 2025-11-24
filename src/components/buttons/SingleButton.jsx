@@ -1,3 +1,4 @@
+// SingleButton component - configurable button with size, color, and label props
 import React from "react";
 import "./Buttons.css";
 
