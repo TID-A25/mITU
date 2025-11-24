@@ -117,7 +117,22 @@ export async function createBump({ userAId, userBId, requestedById } = {}) {
 		const userA = await userQuery.get(userAId);
 		const userB = await userQuery.get(userBId);
 
+		// First, check if a bump already exists between these two users (either direction)
 		const BumpStatus = Parse.Object.extend('Bump_status');
+		const q1 = new Parse.Query(BumpStatus);
+		q1.equalTo('userA', userA);
+		q1.equalTo('userB', userB);
+
+		const q2 = new Parse.Query(BumpStatus);
+		q2.equalTo('userA', userB);
+		q2.equalTo('userB', userA);
+
+		const existing = await Parse.Query.or(q1, q2).first();
+		if (existing) {
+			// Return existing bump instead of creating a duplicate
+			return { bump: existing, created: false };
+		}
+
 		const bump = new BumpStatus();
 		bump.set('userA', userA);
 		bump.set('userB', userB);
@@ -128,7 +143,7 @@ export async function createBump({ userAId, userBId, requestedById } = {}) {
 		}
 
 		const saved = await bump.save();
-		return saved;
+		return { bump: saved, created: true };
 	} catch (err) {
 		console.error('createBump error', err);
 		throw err;

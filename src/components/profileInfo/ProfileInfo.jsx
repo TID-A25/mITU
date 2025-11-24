@@ -4,7 +4,7 @@ import verifiedBadge from "../../assets/images/icons/Verified.svg";
 import settingsIcon from "../../assets/images/icons/Settings.svg";
 import globe from "../../assets/images/icons/Globe.svg";
 import hat from "../../assets/images/icons/Graduation_hat.svg";
-import Buttons from "../buttons/Buttons.jsx";
+import ActionButtons from "../buttons/ActionButtons.jsx";
 import "./ProfileInfo.css";
 
 export default function ProfileInfo({
@@ -19,7 +19,7 @@ export default function ProfileInfo({
         <h3>{profile.name}</h3>
         <img src={verifiedBadge} className="badge" alt="Verified badge" />
         {!isOwnProfile && (
-          <Buttons
+          <ActionButtons
             mode="single"
             size="small"
             color="teal"
