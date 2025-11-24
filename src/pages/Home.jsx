@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import ProfileSection from "../components/profileSection/ProfileSection.jsx";
-import Parse from "parse";
-import "../App.css";
-import "./Pages.css";
+import React from 'react';
+import ProfileSection from '../components/profileSection/ProfileSection.jsx';
+import '../App.css';
+import './Pages.css';
+import useProfiles from '../hooks/useProfiles';
 
 export default function Home() {
   const [profilesByInterest, setProfilesByInterest] = useState({});
@@ -10,8 +10,9 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Define the current logged-in user ID
-  const CURRENT_USER_ID = "C6YoifVWmr"; // user is victoria
+  const { profilesByInterest, loading, error, refresh } = useProfiles({
+    excludeUserId: CURRENT_USER_ID,
+  });
 
   useEffect(() => {
     async function fetchProfiles() {
@@ -143,7 +144,7 @@ export default function Home() {
     );
   }
 
-  if (Object.keys(profilesByInterest).length === 0) {
+  if (!profilesByInterest || Object.keys(profilesByInterest).length === 0) {
     return (
       <div className="page container stack">
         <p>No profiles with matching interests found.</p>

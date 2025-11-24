@@ -2,7 +2,7 @@ import React from "react";
 import { mockProfileData } from "../data/mockProfiles.js";
 import profilePicture from "../assets/images/profiles/Athena.jpg";
 import otherProfilePicture from "../assets/images/profiles/Chad.jpg";
-import Buttons from "../components/buttons/Buttons.jsx";
+import ActionButtons from "../components/buttons/ActionButtons.jsx";
 import BumpHeader from "../components/bump/BumpHeader.jsx";
 
 export default function BumpReceived() {
@@ -21,7 +21,7 @@ export default function BumpReceived() {
         type="received"
       />
 
-      <Buttons mode="bump" variant="received" />
+      <ActionButtons mode="bump" variant="received" />
     </div>
   );
 }
