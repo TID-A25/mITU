@@ -7,11 +7,11 @@ import "./ProfileSection.css";
  * ProfileSection Component
  * Renders a title and a horizontal row of profiles
  */
-export default function ProfileSection({ title, profiles }) {
+export default function ProfileSection({ title, profiles, isCommonInterest = false }) {
   return (
     <section className="profile-section">
       <h2>
-        People who also like <strong>{title}</strong>
+        {isCommonInterest ? "People who also like" : "People who like"} <strong>{title}</strong>
       </h2>
       <ProfileGallery profiles={profiles} />
     </section>
