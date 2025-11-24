@@ -1,68 +1,61 @@
 import React from "react";
-import verifiedBadge from "../assets/images/icons/Verified.svg";
-import { mockProfileData } from "../data/mockProfiles.js";
-import coverPhoto from "../assets/images/profiles/Coverpicture.jpg";
-import profilePicture from "../assets/images/profiles/Athena.jpg";
-import globe from "../assets/images/icons/Globe.svg";
-import hat from "../assets/images/icons/Graduation_hat.svg";
-import settingsIcon from "../assets/images/icons/Settings.svg";
-// InterestScroller lives under src/components/profile
-import InterestGallery from "../components/interestGallery/InterestGallery.jsx";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
+import ProfileHeader from "../components/profileHeader/ProfileHeader";
+import ProfileInfo from "../components/profileInfo/ProfileInfo";
+import InterestGallery from "../components/interestGallery/InterestGallery";
+import "./Pages.css";
+import useProfile from "../hooks/useProfile";
 
 export default function UserProfile() {
-  {
-    /*We load the first element in the mock data list*/
+  const { userId } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // For testing keep user id hardcoded; in production derive from auth
+  const CURRENT_USER_ID = "C6YoifVWmr";
+
+  // whether we show current user's profile (route /user-profile) or a profile by param
+  const isOwnProfile =
+    location.pathname === "/user-profile" || userId === CURRENT_USER_ID;
+  const targetUserId =
+    location.pathname === "/user-profile" ? CURRENT_USER_ID : userId;
+
+  // Use the reusable hook to fetch a single profile (uses parseQueries.fetchProfileById)
+  const { profile, loading, error } = useProfile(targetUserId);
+
+  if (loading) {
+    return (
+      <div className="page container stack">
+        <p>Loading profile..</p>
+      </div>
+    );
   }
-  const profile = mockProfileData[0];
+
+  if (error) {
+    return (
+      <div className="page container stack">
+        <p className="error-message">{error}</p>
+      </div>
+    );
+  }
+
+  if (!profile) {
+    return (
+      <div className="page container stack">
+        <p className="error-message">Profile not found.</p>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      {/* Header photo and cover photo */}
-
-      <div className="header-wrap">
-        <div className="cover-photo-header">
-          <img src={coverPhoto} alt="Cover" />
-        </div>
-
-        <div className="profile-picture-header">
-          <img
-            src={profilePicture}
-            alt="Profile Picture"
-            className="profile-img"
-          />
-          <img
-            src={settingsIcon}
-            className="settings-icon"
-            alt="Settings icon"
-          />
-        </div>
-      </div>
-
-      {/* Profile info on the page */}
-      <div className="user-profile-info">
-        <div className="name-row">
-          <h3>{profile.name}</h3>
-          <img src={verifiedBadge} className="badge" alt="Verified badge" />
-        </div>
-
-        <div className="info-row">
-          <img src={hat} className="hat" alt="Graduation hat" />
-          <p>
-            {profile.degree}, {profile.semester}
-          </p>
-        </div>
-
-        <div className="info-row">
-          <img src={globe} className="globe" alt="Globus" />
-          <p>{profile.country}</p>
-        </div>
-      </div>
-
-      {/* Interests row*/}
-      <div className="interests-row">
-        <h3>Interests</h3>
-        <InterestGallery interests={profile.interests || profile.interest} />
-      </div>
+    <div className="page container stack">
+      <ProfileHeader profilePicture={profile.profilePicture} />
+      <ProfileInfo
+        profile={profile}
+        isOwnProfile={isOwnProfile}
+        onBump={() => navigate(`/bump-sent/${profile.objectId || profile.id}`)}
+      />
+      <InterestGallery interests={profile.interests} />
     </div>
   );
 }

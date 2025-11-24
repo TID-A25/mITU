@@ -1,4 +1,4 @@
-@import './styles/theme.css';
+@import "./styles/theme.css";
 
 /* General Reset */
 body {
@@ -18,6 +18,7 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
+  padding-bottom: 80px; /*reserve space for footer so page content is not hidden underneath the footer */
 }
 
 /* Optional: Light outer background (like native mobile feel) */

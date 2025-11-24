@@ -10,23 +10,29 @@
   font-family: var(--font-sans);
 }
 
-.user-profile-info h3 {
-  font-size: 1.5rem;
-  margin-bottom: 0.2rem;
-}
-
 .badge {
   width: 20px;
   height: 20px;
   vertical-align: middle;
-  margin-left: 4px;
+  margin-top: 10px;
 }
 
 .name-row {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 6px;
+  justify-content: center; /* centers horizontally */
+  gap: var(--space-md); /* space between name, badge and bump button */
+}
+
+.name-row .button {
+  margin-left: 0; /* rely on gap for spacing */
+}
+
+.settings-icon {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  margin-top: 5px;
 }
 
 .info-row {
@@ -54,13 +60,5 @@
   gap: 6px; /* space between name and badge */
 }
 
-.name-row h3 {
-  margin: 0;
-}
-
 @media (max-width: 600px) {
-
-  .user-profile-info h3 {
-    font-size: 1.2rem;
-  }
 }

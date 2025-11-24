@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import InterestCard from "../interestCard/InterestCard.jsx";
 import "./InterestGallery.css";
 
@@ -9,25 +9,42 @@ export default function InterestGallery({ interests }) {
    * on a single profile page.
    * Receives an array of interests.
    */
+  const [normalizedInterests, setNormalizedInterests] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  
-  let normalizedInterests;
+  useEffect(() => {
+    try {
+      setLoading(true);
+      
+      const normalizedInterests = Array.isArray(interests) 
+        ? interests          // is interests an array? 
+        : interests          // if yes then use it
+        ? [interests]        // if not, place it in an array
+        : [];                // if interests is null or undefined, set as empty array
 
-    //if array exists
-  if (Array.isArray(interests)) { 
-    normalizedInterests = interests;
-    //otherwise wrap it in an array
-  } else if (interests) {
-    normalizedInterests = [interests];
-  } else {
-    //otherwise save empty array
-    normalizedInterests = [];
+      setNormalizedInterests(normalizedInterests); 
+      setError(null); 
+    } catch (err) {
+      console.error("Error processing interests:", err);
+      setError("Failed to load interests.");
+    } finally {
+      setLoading(false);
+    }
+  }, [interests]);
+
+  if (loading) {
+    return <p>Loading interests...</p>;
   }
 
-  // if array is empty, show msg to user 
+  if (error) {
+    return <p className="error-message">{error}</p>;
+  }
+
+  // if array is empty, show msg to user
   if (normalizedInterests.length === 0) {
     return (
-      <p className="empty-interests">
+      <p className="error-message">
         This user has not added any interests to their profile yet.
       </p>
     );

@@ -1,0 +1,98 @@
+/* shared layout styles for all pages */
+
+/* main wrapper for each page */
+.page {
+  background-color: var(--bg);
+  min-height: 100vh;
+}
+
+/* keeps page content centered */
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* gives even space between vertical stacked elements */
+.stack > * + * {
+  margin-top: var(--space-md);
+}
+
+/* helper classes for extra spacing */
+.margin-top-md {
+  margin-top: var(--space-md);
+}
+
+.margin-bottom-md {
+  margin-bottom: var(--space-md);
+}
+
+.padding-lg {
+  padding: var(--space-lg);
+}
+
+/* headings */
+h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: var(--space-md);
+}
+
+h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: var(--space-sm);
+}
+
+h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: var(--space-xs);
+}
+
+/* paragraph text */
+p {
+  color: var(--muted-text);
+  line-height: 1.5;
+  margin-bottom: var(--space-sm);
+}
+
+/* Base gallery styles for horizontal scrolling galleries */
+.gallery {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-md);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Make gallery items snap and prevent squishing */
+.gallery > * {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+.gallery::-webkit-scrollbar {
+  display: none;
+}
+
+/* Optional: slightly smaller cards on very small screens
+   (works together with interest-card media query) */
+@media (max-width: 420px) {
+  .gallery {
+    padding: 0 12px 10px;
+    gap: 12px;
+  }
+}
+
+.error-message {
+  color: var(--error-color, #e53e3e);
+  font-weight: 500;
+  padding: var(--space-md);
+  background-color: var(--error-bg, #fff5f5);
+  border-radius: 8px;
+}

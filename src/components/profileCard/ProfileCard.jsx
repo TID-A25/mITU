@@ -1,18 +1,28 @@
 import { Link } from "react-router-dom";
 import React from "react";
-import "../profileSection/ProfileSection.css";
+import "./ProfileCard.css";
 
-/**
- * ProfileCard Component
- * @param {Object} profile - contains name, degree, image
- */
 export default function ProfileCard({ profile }) {
+  // Better fallback for profile picture
+  const getProfilePicture = () => {
+    if (profile.profilePicture) {
+      return profile.profilePicture;
+    }
+    // Fallback to a default avatar or placeholder
+    return "https://via.placeholder.com/150x150/cccccc/666666?text=No+Image";
+  };
+
   return (
-    <Link to="/other-user-profile">
+    <Link to={`/user/${profile.id}`}>
       <div className="profile-card">
         <div
           className="profile-photo"
-          style={{ backgroundImage: `url(${profile.image})` }}
+          style={{ 
+            backgroundImage: `url(${getProfilePicture()})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundColor: '#f0f0f0' // Fallback background color
+          }}
         >
           <div className="profile-info">
             <h3>{profile.name}</h3>
@@ -21,9 +31,9 @@ export default function ProfileCard({ profile }) {
         </div>
 
         <div className="interests">
-          <span>Interest</span>
-          <span>Interest</span>
-          <span>Interest</span>
+          {(profile.interests || []).map((interest, i) => (
+            <span key={i}>{interest}</span>
+          ))}
         </div>
       </div>
     </Link>

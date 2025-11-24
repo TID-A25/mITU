@@ -1,40 +1,43 @@
-import React from "react";
-import { mockProfileData } from "../data/mockProfiles.js";
-import ProfileSection from "../components/profileSection/ProfileSection.jsx";
-import "../App.css"; // Load global styles here
+import React from 'react';
+import ProfileSection from '../components/profileSection/ProfileSection.jsx';
+import '../App.css';
+import './Pages.css';
+import useProfiles from '../hooks/useProfiles';
 
 export default function Home() {
-  {
-    /*Group profiles by interest*/
+  // Hardcoded current user id for demo
+  const CURRENT_USER_ID = 'C6YoifVWmr'; // user is victoria
+
+  const { profilesByInterest, loading, error, refresh } = useProfiles({
+    excludeUserId: CURRENT_USER_ID,
+  });
+
+  if (loading) {
+    return (
+      <div className="page container stack">
+        <p>Loading profiles..</p>
+      </div>
+    );
   }
-  const profilesByInterest = mockProfileData.reduce((acc, profile) => {
-    // make sure we always get an array of interests
-    let interests = [];
 
-    if (Array.isArray(profile.interest)) {
-      interests = profile.interest;
-    } else {
-      interests = [profile.interest];
-    }
+  if (error) {
+    return (
+      <div className="page container stack">
+        <p className="error-message">{error}</p>
+      </div>
+    );
+  }
 
-   {/* looping through each interest and group.
-    * If the interest key doesn't exist in acc,
-    * it is created as an empty array. 
-    * Then the current profile is added to the array. 
-    */}
-    interests.forEach((interest) => {
-      if (!acc[interest]) {
-        acc[interest] = [];
-      }
-      acc[interest].push(profile);
-    });
-
-    return acc;
-  }, {});
+  if (!profilesByInterest || Object.keys(profilesByInterest).length === 0) {
+    return (
+      <div className="page container stack">
+        <p>No profiles with matching interests found.</p>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      {/* Render all interest sections */}
+    <div className="page container stack">
       {Object.entries(profilesByInterest).map(([interest, profiles]) => (
         <ProfileSection key={interest} title={interest} profiles={profiles} />
       ))}

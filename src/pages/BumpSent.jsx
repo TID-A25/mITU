@@ -1,56 +1,78 @@
-import React from "react";
-import { mockProfileData } from "../data/mockProfiles.js";
-import profilePicture from "../assets/images/profiles/Athena.jpg";
-import otherProfilePicture from "../assets/images/profiles/Chad.jpg";
-import confetti_orange from "../assets/images/icons/Confetti_orange.svg";
-import confetti_teal from "../assets/images/icons/Confetti_teal.svg";
-import ButtonBig from "../components/buttons/ButtonBig.jsx";
-import ButtonBack from "../components/buttons/ButtonBack.jsx";
-import ButtonDecline from "../components/buttons/ButtonDecline.jsx";
-import InterestCard from "../components/interestCard/InterestCard.jsx";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import Buttons from "../components/buttons/Buttons.jsx";
+import BumpHeader from "../components/bump/BumpHeader.jsx";
+import InterestGallery from "../components/interestGallery/InterestGallery.jsx";
+import "../App.css";
+import "./Pages.css";
+import useProfile from "../hooks/useProfile";
+import { createBump } from "../services/parseQueries";
 
 export default function BumpSent() {
-  // load first and second element of mock data list, Athena and Chad
-  const you = mockProfileData[0];
-  const other = mockProfileData[1];
+  const params = useParams();
+  const otherUserId = params.otherUserId || params.userId;
+  const navigate = useNavigate();
+
+  // Hardcoded current user id for demo
+  const CURRENT_USER_ID = "C6YoifVWmr"; // victoria
+
+  // Use hooks to fetch both profiles (current and the other user)
+  const currentHook = useProfile(CURRENT_USER_ID);
+  const otherHook = useProfile(otherUserId);
+
+  const currentProfile = currentHook.profile;
+  const otherProfile = otherHook.profile;
+  const loading = currentHook.loading || otherHook.loading;
+  const error = currentHook.error || otherHook.error;
+
+  // track whether we've already created a bump to avoid duplicate saves
+  const [bumpCreated, setBumpCreated] = useState(false);
+
+  // compute shared interests when both profiles available
+  const sharedInterests = (currentProfile?.interests || []).filter((i) => (otherProfile?.interests || []).includes(i));
+
+  useEffect(() => {
+    async function sendBumpOnce() {
+      if (!currentProfile || !otherProfile || bumpCreated) return;
+      try {
+        await createBump({ userAId: currentProfile.id, userBId: otherProfile.id, requestedById: currentProfile.id });
+        setBumpCreated(true);
+      } catch (err) {
+        console.error("Failed to create bump:", err);
+      }
+    }
+
+    sendBumpOnce();
+  }, [currentProfile, otherProfile, bumpCreated]);
+
+  if (loading) {
+    return (
+      <div className="page container stack">
+        <p>Loading bump page..</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="page container stack">
+        <p className="error-message">{error}</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="bump-page">
-      {/* The two profile pictures */}
-      <div className="bumping-pictures">
-        <img src={profilePicture} alt={you.name} className="profile-img" />
-        <img
-          src={otherProfilePicture}
-          alt={other.name}
-          className="profile-img"
-        />
-      </div>
+    <div className="page container stack">
+      <BumpHeader currentUser={currentProfile} otherUser={otherProfile} />
 
-      {/* Title message saying you bumped into them */}
-      <div className="bump-title">
-        <h3 className="name-row">You bumped into {other.name}!</h3>
-      </div>
-
-      {/* Showing You both like: and interest card */}
       <div className="shared-interest-title">
         <h4 className="name-row">You both like:</h4>
       </div>
       <div className="shared-interest-card">
-        <InterestCard interest={you.interest} />
+        <InterestGallery interests={sharedInterests} />
       </div>
 
-      <div className="buttons">
-        {/* OK button */}
-        <div className="button-big">
-          <ButtonBig label="OK" />
-        </div>
-
-        {/* Back and cancel button */}
-        <div className="bump-buttons-small">
-          <ButtonBack />
-          <ButtonDecline label="Cancel" />
-        </div>
-      </div>
+      <Buttons mode="bump" variant="sent" />
     </div>
   );
 }
