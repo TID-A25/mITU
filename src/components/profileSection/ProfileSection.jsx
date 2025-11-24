@@ -11,7 +11,7 @@ export default function ProfileSection({ title, profiles, isCommonInterest = fal
   return (
     <section className="profile-section">
       <h2>
-        {isCommonInterest ? "People who also like" : "People who like"} <strong>{title}</strong>
+        {isCommonInterest ? "People who also like" : "People who like"} <span className="interest-title">{title}</span>
       </h2>
       <ProfileGallery profiles={profiles} />
     </section>

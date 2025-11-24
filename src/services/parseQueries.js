@@ -109,6 +109,29 @@ export async function fetchProfileById(id) {
 	}
 }
 
+// Fetch current user's interests
+export async function fetchCurrentUserInterests(userId) {
+	if (!userId) return [];
+	try {
+		const userQuery = new Parse.Query('Users');
+		const currentUser = await userQuery.get(userId);
+		
+		const currentUserInterestQuery = new Parse.Query('User_interests');
+		currentUserInterestQuery.equalTo('user', currentUser);
+		currentUserInterestQuery.include('interest');
+		const currentUserInterestEntries = await currentUserInterestQuery.find();
+		
+		const currentInterests = currentUserInterestEntries
+			.map((e) => e.get('interest')?.get('interest_name'))
+			.filter(Boolean);
+		
+		return currentInterests;
+	} catch (err) {
+		console.error('fetchCurrentUserInterests error', err);
+		throw err;
+	}
+}
+
 // Create a bump (Bump_status) between two users
 export async function createBump({ userAId, userBId, requestedById } = {}) {
 	if (!userAId || !userBId) throw new Error('userAId and userBId required');

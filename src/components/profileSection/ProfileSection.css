@@ -1,5 +1,20 @@
-
+/* ============================================
+   PROFILE SECTION - Interest Group Container
+   ============================================ */
+/* Section wrapper with horizontal padding */
 .profile-section {
   padding-left: var(--space-md);
   padding-right: var(--space-md);
+}
+
+/* Section heading - normal weight text */
+.profile-section h2 {
+  font-weight: 400;
+}
+
+/* ============================================
+   INTEREST TITLE - Bold Interest Name
+   ============================================ */
+.interest-title {
+  font-weight: 700;
 }
