@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import Buttons from "../components/buttons/Buttons.jsx";
+import ActionButtons from "../components/buttons/ActionButtons.jsx";
 import BumpHeader from "../components/bump/BumpHeader.jsx";
 import InterestGallery from "../components/interestGallery/InterestGallery.jsx";
 import "../App.css";
@@ -72,7 +72,7 @@ export default function BumpSent() {
         <InterestGallery interests={sharedInterests} />
       </div>
 
-      <Buttons mode="bump" variant="sent" />
+      <ActionButtons mode="bump" variant="sent" />
     </div>
   );
 }
