@@ -8,6 +8,7 @@ import Home from "./pages/Home.jsx";
 import UserProfile from "./pages/UserProfile";
 import BumpSent from "./pages/BumpSent.jsx";
 import BumpReceived from "./pages/BumpReceived.jsx";
+import EditProfile from "./pages/EditProfile.jsx";
 import Notifications from "./pages/Notifications.jsx";
 
 function App() {
@@ -18,7 +19,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/user-profile" element={<UserProfile />} />
-          <Route path="/user/:userId" element={<UserProfile />} />
+          <Route path="/user/:userId" element={<UserProfile />} />  
+          <Route path="/edit-profile" element={<EditProfile />} />
           <Route path="/bump-sent/:otherUserId" element={<BumpSent />} />
           <Route path="/bump-received" element={<BumpReceived />} />
           <Route path="/notifications" element={<Notifications />} />
