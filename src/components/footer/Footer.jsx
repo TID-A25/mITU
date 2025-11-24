@@ -16,21 +16,20 @@ export default function Footer() {
   const [active, setActive] = React.useState("home");
   return (
     <footer className="bottom-nav">
-      {/* Notification button . Notification page is yet to be implemented */}
+      {/* Notification button */}
 
-        <Link
-          to=""
-          onClick={() => setActive("notifications")}
-          className="button button--small"
-          aria-label="Notifications"
-        >
-          <img
-            src={active === "notifications" ? bellFill : bell}
-            alt=""
-            className="icon"
-          />
-        </Link>
-
+      <Link
+        to="/notifications"
+        onClick={() => setActive("notifications")}
+        className="button button--small"
+        aria-label="Notifications"
+      >
+        <img
+          src={active === "notifications" ? bellFill : bell}
+          alt=""
+          className="icon"
+        />
+      </Link>
 
       {/* Home button */}
       <Link
