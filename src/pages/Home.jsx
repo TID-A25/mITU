@@ -10,8 +10,10 @@ export default function Home() {
   const CURRENT_USER_ID = 'C6YoifVWmr';
 
   // Fetch all profiles except current user, grouped by interests
-  const { profilesByInterest, loading, error, refresh } = useProfiles({
+  // Also fetch current user's interests to highlight common ones
+  const { profilesByInterest, currentUserInterests, loading, error, refresh } = useProfiles({
     excludeUserId: CURRENT_USER_ID,
+    currentUserId: CURRENT_USER_ID,
   });
 
   // Show loading state while fetching profiles
@@ -46,7 +48,12 @@ export default function Home() {
     <div className="page container stack">
       {/* Map over each interest and render a ProfileSection for it */}
       {Object.entries(profilesByInterest).map(([interest, profiles]) => (
-        <ProfileSection key={interest} title={interest} profiles={profiles} />
+        <ProfileSection 
+          key={interest} 
+          title={interest} 
+          profiles={profiles}
+          isCommonInterest={currentUserInterests.includes(interest)}
+        />
       ))}
     </div>
   );
