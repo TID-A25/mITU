@@ -27,6 +27,7 @@ export default function BumpSent() {
 
   // track whether we've already created a bump to avoid duplicate saves
   const [bumpCreated, setBumpCreated] = useState(false);
+  const [bumpMessage, setBumpMessage] = useState(null);
 
   // compute shared interests when both profiles available
   const sharedInterests = (currentProfile?.interests || []).filter((i) => (otherProfile?.interests || []).includes(i));
@@ -34,11 +35,19 @@ export default function BumpSent() {
   useEffect(() => {
     async function sendBumpOnce() {
       if (!currentProfile || !otherProfile || bumpCreated) return;
+
+      // mark as created to avoid duplicate requests
+      setBumpCreated(true);
       try {
-        await createBump({ userAId: currentProfile.id, userBId: otherProfile.id, requestedById: currentProfile.id });
-        setBumpCreated(true);
+        const result = await createBump({ userAId: currentProfile.id, userBId: otherProfile.id, requestedById: currentProfile.id });
+        // If bump already existed, notify the user
+        if (result && result.created === false) {
+          setBumpMessage("You have already sent a bump to this person");
+        }
       } catch (err) {
         console.error("Failed to create bump:", err);
+        // reset so we can retry later
+        setBumpCreated(false);
       }
     }
 
@@ -63,6 +72,11 @@ export default function BumpSent() {
 
   return (
     <div className="page container stack">
+      {bumpMessage && (
+        <div style={{ background: "#fff3cd", padding: "10px", borderRadius: 6, marginBottom: 12 }}>
+          {bumpMessage}
+        </div>
+      )}
       <BumpHeader currentUser={currentProfile} otherUser={otherProfile} />
 
       <div className="shared-interest-title">
