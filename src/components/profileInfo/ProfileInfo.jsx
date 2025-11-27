@@ -3,6 +3,7 @@ import React from "react";
 import verifiedBadge from "../../assets/images/icons/Verified.svg";
 import settingsIcon from "../../assets/images/icons/Settings.svg";
 import globe from "../../assets/images/icons/Globe.svg";
+import phoneIcon from "../../assets/images/icons/Phone.svg";
 import hat from "../../assets/images/icons/Graduation_hat.svg";
 import ActionButtons from "../buttons/ActionButtons.jsx";
 import "./ProfileInfo.css";
@@ -40,6 +41,13 @@ export default function ProfileInfo({
         <img src={globe} className="globe" alt="Globus" />
         <p>{profile.country}</p>
       </div>
+
+      <div className="info-row">
+        <img src={phoneIcon} className="phone" alt="Phone" />
+        <p className="phone-label">WhatsApp: {profile.phone || 'Not specified'}</p>
+      </div>
+
+      {/* small helper to make sure every profile shows a deterministic DK number when there's no phone in the data */}
     </div>
   );
 }

@@ -56,6 +56,7 @@ export default function UserProfile() {
       <ProfileInfo
         profile={profile}
         isOwnProfile={isOwnProfile}
+        currentUserId={CURRENT_USER_ID}
         onBump={() => navigate(`/bump-sent/${profile.objectId || profile.id}`)}
       />
       <InterestGallery interests={profile.interests} />
