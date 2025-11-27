@@ -52,6 +52,11 @@ h3 {
   margin-bottom: var(--space-xs);
 }
 
+/* Page-specific title for profile pages */
+.edit-profile-title {
+  text-align: center;
+}
+
 /* paragraph text */
 p {
   color: var(--muted-text);

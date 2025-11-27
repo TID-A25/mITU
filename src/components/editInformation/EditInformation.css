@@ -40,12 +40,6 @@
   grid-template-columns: 1fr;
 }
 
-@media (min-width: 720px) {
-  .profile-edit-form .row-2 {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
 .profile-edit-form .col-stack {
   display: flex;
   flex-direction: column;

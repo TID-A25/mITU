@@ -167,7 +167,7 @@ export default function EditProfile() {
 
   return (
     <div className="page container stack">
-      <h2 className="profile-page-title">Edit your profile</h2>
+      <h2 className="edit-profile-title">Edit your profile</h2>
       {error && <p className="error-message">{error}</p>}
 
       <EditInformation
