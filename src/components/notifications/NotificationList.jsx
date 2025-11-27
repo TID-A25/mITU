@@ -19,7 +19,7 @@ export default function NotificationList({ items = [], onOpen, onRefresh }) {
       </div>
 
       {/* Conditional rendering.
-      If there are notifications, they get displayed, otherwise error message */}
+      If there are notifications, they get displayed, otherwise message displayed */}
       {items.length > 0 ? (
         items.map((n) => (
           <NotificationItem key={n.id} notification={n} onOpen={onOpen} />
