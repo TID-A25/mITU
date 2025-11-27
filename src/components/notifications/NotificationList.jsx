@@ -1,17 +1,21 @@
 import React from "react";
 import NotificationItem from "./NotificationItem";
 import "./Notifications.css";
+import refreshIcon from "../../assets/images/icons/Refresh.svg";
 
 export default function NotificationList({ items = [], onOpen, onRefresh }) {
   if (!items.length) {
     return (
       <div className="notifications-list">
-        <div>
+        <div className="notifications-page-header">
           <h1>Notifications</h1>
           {onRefresh && (
-            <button onClick={onRefresh}>
-              Refresh
-            </button>
+            <img
+              src={refreshIcon}
+              className="refresh-icon"
+              alt="Refresh"
+              onClick={onRefresh}
+            />
           )}
         </div>
         <p>No notifications yet</p>
@@ -21,12 +25,15 @@ export default function NotificationList({ items = [], onOpen, onRefresh }) {
 
   return (
     <div className="notifications-list">
-      <div>
+      <div className="notifications-page-header">
         <h1>Notifications</h1>
         {onRefresh && (
-          <button onClick={onRefresh}>
-            Refresh
-          </button>
+          <img
+            src={refreshIcon}
+            className="refresh-icon"
+            alt="Refresh"
+            onClick={onRefresh}
+          />
         )}
       </div>
       {items.map((n) => (
