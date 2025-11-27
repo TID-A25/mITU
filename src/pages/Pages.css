@@ -180,3 +180,43 @@ p {
   color: var(--muted-text);
   margin-top: 0.25rem;
 }
+
+/* Welcome section on Home page */
+.home-welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: var(--space-lg);
+  padding-bottom: var(--space-lg);
+  text-align: center;
+  gap: var(--space-sm);
+}
+
+.home-welcome .welcome-title {
+  color: var(--primary);
+  margin: 0;
+}
+
+.home-welcome .welcome-subtitle {
+  color: var(--muted-text);
+  margin: 0;
+  padding-left: var(--space-lg);
+  padding-right: var(--space-lg);
+}
+
+.atrium {
+  width: 100%;
+}
+
+.arrow-down {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--space-md);
+}
+
+.arrow-down img {
+  width: 44px;
+  height: auto;
+  display: block;
+}
