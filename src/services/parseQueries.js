@@ -173,3 +173,84 @@ export async function createBump({ userAId, userBId, requestedById } = {}) {
 	}
 }
 
+/*Get notifications (bumps) for a specific user*/
+export async function fetchNotifications(userId) {
+  if (!userId) return [];
+  
+  try {
+    const userQuery = new Parse.Query('Users');
+    const currentUser = await userQuery.get(userId);
+    
+    const BumpStatus = Parse.Object.extend('Bump_status');
+    
+    // Queries for bumps where current user is either A or B from bump_status
+    const query1 = new Parse.Query(BumpStatus);
+    query1.equalTo('userA', currentUser);
+    const query2 = new Parse.Query(BumpStatus);
+    query2.equalTo('userB', currentUser);
+    
+    // combined query to differentiate if current user is A or B
+    const combinedQuery = Parse.Query.or(query1, query2);
+    
+    combinedQuery.include('userA');
+    combinedQuery.include('userB');
+    combinedQuery.include('requestedBy');
+    
+    // ordering by most recent first
+    combinedQuery.descending('createdAt');
+    
+    const bumps = await combinedQuery.find();
+    
+    // Bumps are transformed to objects for the notifications
+    const notifications = bumps.map(bump => {
+      const userA = bump.get('userA');
+      const userB = bump.get('userB');
+      const requestedBy = bump.get('requestedBy');
+      const status = bump.get('status');
+      
+      // If userA is current user, other user is B, else vice versa
+      const otherUser = userA.id === userId ? userB : userA;
+      const otherUserName = `${otherUser.get('first_name')} ${otherUser.get('last_name')}`;
+      
+      const profilePic = otherUser.get('profile_pic');
+      const avatar = profilePic ? profilePic.url() : null;
+      
+      // determine notification type based on status and states defined in frontend
+      let type;
+      if (status === 'pending') {
+        if (requestedBy.id === userId) {
+          type = 'bump_sent';
+        } else {
+          type = 'bump_received';
+        }
+      } else if (status === 'accepted') {
+        if (requestedBy.id === userId) {
+          type = 'bump_accepted'; 
+        } else {
+          type = 'accepted_by_current_user'; 
+        }
+      }
+      
+      return {
+        id: bump.id,
+        type,
+        status,
+        actor: {
+          id: otherUser.id,
+          name: otherUserName,
+          avatar
+        },
+        createdAt: bump.get('createdAt'),
+        updatedAt: bump.get('updatedAt'),
+        bumpId: bump.id,
+        otherUserId: otherUser.id
+      };
+    });
+    
+    return notifications;
+  } catch (error) {
+    console.error('Failed to get notifications: ', error);
+    throw error;
+  }
+}
+

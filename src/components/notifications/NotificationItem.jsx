@@ -18,7 +18,7 @@ export default function NotificationItem({ notification = {} }) {
     case "bump_accepted":
       message = `Your bump has been accepted. You can now see their Whatsapp`;
       break;
-    case "accepted_by_you":
+    case "accepted_by_current_user":
       message = `You accepted ${actorName}'s bump, now you can see their whatsapp`;
       break;
     default:

@@ -1,37 +1,33 @@
 import React from "react";
 import NotificationList from "../components/notifications/NotificationList";
 import "../components/notifications/Notifications.css";
-
-import SineImg from "../assets/images/profiles/Athena.JPG";
-import JakobImg from "../assets/images/profiles/Chad.jpg";
-import CarolineImg from "../assets/images/profiles/Default_profile_pic.jpg";
-
-{
-  /* Mock notifications */
-}
-const MOCK = [
-  { id: "1", type: "bump_sent", actor: { name: "Sine", avatar: SineImg } },
-  {
-    id: "2",
-    type: "bump_accepted",
-    actor: { name: "Jakob", avatar: JakobImg },
-  },
-  {
-    id: "3",
-    type: "bump_received",
-    actor: { name: "Caroline", avatar: CarolineImg },
-  },
-  {
-    id: "4",
-    type: "accepted_by_you",
-    actor: { name: "Someone", avatar: CarolineImg },
-  },
-];
+import "./Pages.css";
+import useNotifications from "../hooks/useNotifications";
 
 export default function Notifications() {
+  const CURRENT_USER_ID = "C6YoifVWmr"; 
+  
+  const { notifications, loading, error, refresh } = useNotifications(CURRENT_USER_ID);
+
+  if (loading) {
+    return (
+      <div className="page container stack">
+        <p>Loading..</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="page container stack">
+        <p className="error-message">Failed to load notifications: {error}</p>
+      </div>
+    );
+  }
+
   return (
     <div className="page container stack">
-      <NotificationList items={MOCK} />
+      <NotificationList items={notifications} onRefresh={refresh} />
     </div>
   );
 }
