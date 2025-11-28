@@ -1,0 +1,48 @@
+.notification-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  width: 100%;
+  padding: var(--space-sm);
+  border-radius: 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  text-align: left;
+}
+
+.notification-avatar img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--muted);
+  color: var(--text);
+}
+
+.notification-body {
+  flex: 1;
+}
+
+.notification-title {
+  margin-bottom: 4px;
+}
+
+.notification-meta {
+  font-size: 0.8rem;
+  color: var(--muted-text);
+}
+
+.notification-actions .button {
+  background: none;
+  border: none;
+  color: var(--muted-text);
+}
