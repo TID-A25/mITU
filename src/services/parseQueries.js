@@ -169,25 +169,18 @@ export async function createBump({ userAId, userBId, requestedById } = {}) {
   if (!userAId || !userBId) throw new Error("userAId and userBId required");
   
   try {
+    // Check if bump already exists
+    const existingBump = await checkBumpStatus(userAId, userBId);
+    if (existingBump?.exists) {
+      return { bump: existingBump, created: false };
+    }
+
+    // Create new bump
     const userQuery = new Parse.Query("Users");
     const userA = await userQuery.get(userAId);
     const userB = await userQuery.get(userBId);
 
-    // Check if bump exists (either direction)
     const BumpStatus = Parse.Object.extend("Bump_status");
-    const q1 = new Parse.Query(BumpStatus);
-    q1.equalTo("userA", userA);
-    q1.equalTo("userB", userB);
-
-    const q2 = new Parse.Query(BumpStatus);
-    q2.equalTo("userA", userB);
-    q2.equalTo("userB", userA);
-
-    const existing = await Parse.Query.or(q1, q2).first();
-    if (existing) {
-      return { bump: existing, created: false };
-    }
-
     const bump = new BumpStatus();
     bump.set("userA", userA);
     bump.set("userB", userB);
@@ -208,6 +201,50 @@ export async function createBump({ userAId, userBId, requestedById } = {}) {
   } catch (err) {
     console.error("createBump error", err);
     throw err;
+  }
+}
+
+/**
+ * Check bump status between two users
+ */
+export async function checkBumpStatus(userAId, userBId) {
+  if (!userAId || !userBId) return null;
+  
+  try {
+    const userQuery = new Parse.Query("Users");
+    const userA = await userQuery.get(userAId);
+    const userB = await userQuery.get(userBId);
+
+    const BumpStatus = Parse.Object.extend("Bump_status");
+    
+    // Check both directions
+    const q1 = new Parse.Query(BumpStatus);
+    q1.equalTo("userA", userA);
+    q1.equalTo("userB", userB);
+
+    const q2 = new Parse.Query(BumpStatus);
+    q2.equalTo("userA", userB);
+    q2.equalTo("userB", userA);
+
+    const combinedQuery = Parse.Query.or(q1, q2);
+    combinedQuery.include("requestedBy");
+    const bump = await combinedQuery.first();
+
+    if (!bump) return null;
+
+    const requestedBy = bump.get("requestedBy");
+    const status = bump.get("status");
+
+    return {
+      exists: true,
+      status,
+      requestedByCurrentUser: requestedBy?.id === userAId,
+      bumpId: bump.id,
+      createdAt: bump.createdAt,
+    };
+  } catch (err) {
+    console.error("checkBumpStatus error", err);
+    return null;
   }
 }
 
