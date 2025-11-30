@@ -3,12 +3,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 // asset paths: this file lives at src/components/profile, so go up two levels to src/
 import coverPhoto from "../../assets/images/profiles/Coverpicture.jpg";
-import settingsIcon from "../../assets/images/icons/Settings.svg";
+import editIcon from "../../assets/images/icons/Edit.svg"; 
 import "./ProfileHeader.css";
 
 export default function ProfileHeader({ profilePicture, isOwnProfile = false }) {
   const navigate = useNavigate();
-  
   return (
     <div className="header-wrap">
       {/* Cover photo banner */}
@@ -23,9 +22,9 @@ export default function ProfileHeader({ profilePicture, isOwnProfile = false }) 
         {/* Settings icon - only shown on own profile */}
         {isOwnProfile && (
           <img
-            src={settingsIcon}
-            className="settings-icon"
-            alt="Settings"
+            src={editIcon} 
+            className="settings-icon" 
+            alt="Edit"
             role="button"
             tabIndex={0}
             onClick={() => navigate("/edit-profile")}
