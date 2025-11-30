@@ -7,6 +7,7 @@ import "../App.css";
 import "./Pages.css";
 import useProfile from "../hooks/useProfile";
 import { createBump } from "../services/parseQueries";
+import defaultAvatar from "../assets/images/profiles/Default_profile_pic.jpg";
 
 export default function BumpSent() {
   const params = useParams();
@@ -90,7 +91,12 @@ export default function BumpSent() {
           {bumpMessage}
         </div>
       )}
-      <BumpHeader currentUser={currentProfile} otherUser={otherProfile} />
+      <BumpHeader
+        currentUser={currentProfile}
+        otherUser={otherProfile}
+        leftImageSrc={currentProfile?.profilePicture || defaultAvatar}
+        rightImageSrc={otherProfile?.profilePicture || defaultAvatar}
+      />
 
       <div className="name-row">
         <p>We'll let you know if they accept your request.</p>
