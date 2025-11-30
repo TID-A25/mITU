@@ -115,9 +115,6 @@ export default function BumpSent() {
         onClick={() => navigate(-1)}
         onSecondaryClick={() => navigate(-1)}
       />
-      <div className="name-row">
-        <p>Want to take back your bump? Cancel here.</p>
-      </div>
     </div>
   );
 }
