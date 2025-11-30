@@ -22,7 +22,7 @@ function App() {
           <Route path="/user/:userId" element={<UserProfile />} />  
           <Route path="/edit-profile" element={<EditProfile />} />
           <Route path="/bump-sent/:otherUserId" element={<BumpSent />} />
-          <Route path="/bump-received" element={<BumpReceived />} />
+          <Route path="/bump-received/:otherUserId" element={<BumpReceived />} />
           <Route path="/notifications" element={<Notifications />} />
         </Routes>
         <Footer />

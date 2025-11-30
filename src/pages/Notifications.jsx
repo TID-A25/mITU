@@ -1,4 +1,3 @@
-import React from "react";
 import NotificationList from "../components/notifications/NotificationList";
 import "../components/notifications/Notifications.css";
 import "./Pages.css";

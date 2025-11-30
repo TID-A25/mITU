@@ -1,5 +1,4 @@
 // Home page component - displays profiles grouped by shared interests
-import React from "react";
 import ProfileSection from "../components/profileSection/ProfileSection.jsx";
 import "../App.css";
 import "./Pages.css";
@@ -12,11 +11,10 @@ export default function Home() {
 
   // Fetch all profiles except current user, grouped by interests
   // Also fetch current user's interests to highlight common ones
-  const { profilesByInterest, currentUserInterests, loading, error, refresh } =
-    useProfiles({
-      excludeUserId: CURRENT_USER_ID,
-      currentUserId: CURRENT_USER_ID,
-    });
+  const { profilesByInterest, currentUserInterests, loading, error, refresh } = useProfiles({
+    excludeUserId: CURRENT_USER_ID,
+    currentUserId: CURRENT_USER_ID,
+  });
 
   // Show loading state while fetching profiles
   if (loading) {
@@ -48,22 +46,11 @@ export default function Home() {
   // Render profiles grouped by interest
   return (
     <div className="page container stack">
-      <img alt="Atrium" className="atrium" src={Atrium} />
-      <div className="home-welcome">
-        <h1 className="welcome-title">Welcome to the Atrium!</h1>
-        <p className="welcome-subtitle">
-          Take a look around and see if there's someone you'd like to bump into.
-        </p>
-      </div>
-      <div className="arrow-down">
-        <img src={arrowDown} alt="arrow-down" className="arrow-down" />
-      </div>
-
       {/* Map over each interest and render a ProfileSection for it */}
       {Object.entries(profilesByInterest).map(([interest, profiles]) => (
-        <ProfileSection
-          key={interest}
-          title={interest}
+        <ProfileSection 
+          key={interest} 
+          title={interest} 
           profiles={profiles}
           isCommonInterest={currentUserInterests.includes(interest)}
         />
