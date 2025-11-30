@@ -1,0 +1,13 @@
+.app-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 32px;
+  transform: translateX(-50%);
+  background: var(--danger);
+  color: #000;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  z-index: 1200;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
