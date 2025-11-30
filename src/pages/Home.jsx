@@ -34,23 +34,25 @@ export default function Home() {
     );
   }
 
-  // Show empty state if no profiles with interests found
-  if (!profilesByInterest || Object.keys(profilesByInterest).length === 0) {
-    return (
-      <div className="page container stack">
-        <p>No profiles with matching interests found.</p>
-      </div>
-    );
-  }
-
   // Render profiles grouped by interest
   return (
     <div className="page container stack">
+      <img alt="Atrium" className="atrium" src={Atrium} />
+      <div className="home-welcome">
+        <h1 className="welcome-title">Welcome to the Atrium!</h1>
+        <p className="welcome-subtitle">
+          Take a look around and see if there's someone you'd like to bump into.
+        </p>
+      </div>
+      <div className="arrow-down">
+        <img src={arrowDown} alt="arrow-down" className="arrow-down" />
+      </div>
+
       {/* Map over each interest and render a ProfileSection for it */}
       {Object.entries(profilesByInterest).map(([interest, profiles]) => (
-        <ProfileSection 
-          key={interest} 
-          title={interest} 
+        <ProfileSection
+          key={interest}
+          title={interest}
           profiles={profiles}
           isCommonInterest={currentUserInterests.includes(interest)}
         />
