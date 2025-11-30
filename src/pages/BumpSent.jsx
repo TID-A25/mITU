@@ -8,6 +8,7 @@ import "./Pages.css";
 import useProfile from "../hooks/useProfile";
 import { createBump } from "../services/parseQueries";
 import defaultAvatar from "../assets/images/profiles/Default_profile_pic.jpg";
+import Toast from "../components/ui/Toast.jsx";
 
 export default function BumpSent() {
   const params = useParams();
@@ -34,6 +35,9 @@ export default function BumpSent() {
   const sharedInterests = (currentProfile?.interests || []).filter((i) =>
     (otherProfile?.interests || []).includes(i)
   );
+
+  const [toastOpen, setToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
   useEffect(() => {
     async function sendBumpOnce() {
@@ -113,7 +117,20 @@ export default function BumpSent() {
         mode="bump"
         variant="sent"
         onClick={() => navigate(-1)}
-        onSecondaryClick={() => navigate(-1)}
+        onSecondaryClick={() => {
+          setToastMessage("Your bump has been cancelled.");
+          setToastOpen(true);
+        }}
+      />
+
+      <Toast
+        open={toastOpen}
+        message={toastMessage}
+        duration={2200}
+        onClose={() => {
+          setToastOpen(false);
+          navigate(-1);
+        }}
       />
     </div>
   );
