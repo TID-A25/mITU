@@ -30,7 +30,9 @@ export default function BumpSent() {
   const [bumpMessage, setBumpMessage] = useState(null);
 
   // compute shared interests when both profiles available
-  const sharedInterests = (currentProfile?.interests || []).filter((i) => (otherProfile?.interests || []).includes(i));
+  const sharedInterests = (currentProfile?.interests || []).filter((i) =>
+    (otherProfile?.interests || []).includes(i)
+  );
 
   useEffect(() => {
     async function sendBumpOnce() {
@@ -39,7 +41,11 @@ export default function BumpSent() {
       // mark as created to avoid duplicate requests
       setBumpCreated(true);
       try {
-        const result = await createBump({ userAId: currentProfile.id, userBId: otherProfile.id, requestedById: currentProfile.id });
+        const result = await createBump({
+          userAId: currentProfile.id,
+          userBId: otherProfile.id,
+          requestedById: currentProfile.id,
+        });
         // If bump already existed, notify the user
         if (result && result.created === false) {
           setBumpMessage("You have already sent a bump to this person");
@@ -73,11 +79,22 @@ export default function BumpSent() {
   return (
     <div className="page container stack">
       {bumpMessage && (
-        <div style={{ background: "#fff3cd", padding: "10px", borderRadius: 6, marginBottom: 12 }}>
+        <div
+          style={{
+            background: "#fff3cd",
+            padding: "10px",
+            borderRadius: 6,
+            marginBottom: 12,
+          }}
+        >
           {bumpMessage}
         </div>
       )}
       <BumpHeader currentUser={currentProfile} otherUser={otherProfile} />
+
+      <div className="name-row">
+        <p>We'll let you know if they accept your request.</p>
+      </div>
 
       <div className="shared-interest-title">
         <h4 className="name-row">You both like:</h4>
@@ -86,7 +103,15 @@ export default function BumpSent() {
         <InterestGallery interests={sharedInterests} />
       </div>
 
-      <ActionButtons mode="bump" variant="sent" />
+      <ActionButtons
+        mode="bump"
+        variant="sent"
+        onClick={() => navigate(-1)}
+        onSecondaryClick={() => navigate(-1)}
+      />
+      <div className="name-row">
+        <p>Want to take back your bump? Cancel here.</p>
+      </div>
     </div>
   );
 }

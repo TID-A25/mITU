@@ -15,17 +15,26 @@ export default function ActionButtons({
   color = "teal",
   label = "",
   onClick,
+  onSecondaryClick,
   variant = "sent",
 }) {
   if (mode === "bump") {
-    return <BumpButtons onClick={onClick} variant={variant} />;
+    return (
+      <BumpButtons
+        onClick={onClick}
+        onSecondaryClick={onSecondaryClick}
+        variant={variant}
+      />
+    );
   }
 
   if (mode === "back") {
     return <BackButton onClick={onClick} />;
   }
 
-  return <SingleButton size={size} color={color} label={label} onClick={onClick} />;
+  return (
+    <SingleButton size={size} color={color} label={label} onClick={onClick} />
+  );
 }
 
 export { BackButton, SingleButton, BumpButtons };
