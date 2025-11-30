@@ -5,9 +5,9 @@ import DefaultImg from "../assets/images/interests/default.jpg";
 import InterestPicker from "../components/interestPicker/InterestPicker.jsx";
 import EditInformation from "../components/editInformation/EditInformation.jsx";
 import "./Pages.css";
+import { CURRENT_USER_ID } from "../constants/currentUser"; 
 
 export default function EditProfile() {
-  const CURRENT_USER_ID = "C6YoifVWmr";
 
   // prevents rendering before the loading of the data is complete
   const [loading, setLoading] = useState(true);

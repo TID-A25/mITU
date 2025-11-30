@@ -7,14 +7,12 @@ import "../App.css";
 import "./Pages.css";
 import useProfile from "../hooks/useProfile";
 import { createBump } from "../services/parseQueries";
+import { CURRENT_USER_ID } from "../constants/currentUser"; 
 
 export default function BumpSent() {
   const params = useParams();
   const otherUserId = params.otherUserId || params.userId;
   const navigate = useNavigate();
-
-  // Hardcoded current user id for demo
-  const CURRENT_USER_ID = "C6YoifVWmr"; // victoria
 
   // Use hooks to fetch both profiles (current and the other user)
   const currentHook = useProfile(CURRENT_USER_ID);
