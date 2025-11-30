@@ -6,13 +6,11 @@ import "../App.css";
 import "./Pages.css";
 import useProfile from "../hooks/useProfile";
 import useCreateBump from "../hooks/useCreateBump";
+import { CURRENT_USER_ID } from "../constants/currentUser"; 
 
 export default function BumpSent() {
   const params = useParams();
   const otherUserId = params.otherUserId || params.userId;
-
-  // Hardcoded current user id for demo
-  const CURRENT_USER_ID = "C6YoifVWmr";
 
   // Use hooks to fetch both profiles (current and the other user)
   const currentHook = useProfile(CURRENT_USER_ID);

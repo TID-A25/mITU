@@ -4,6 +4,7 @@ import InterestPicker from "../components/interestPicker/InterestPicker.jsx";
 import EditInformation from "../components/editInformation/EditInformation.jsx";
 import useEditProfile from "../hooks/useEditProfile";
 import "./Pages.css";
+import { CURRENT_USER_ID } from "../constants/currentUser"; 
 
 export default function EditProfile() {
   const CURRENT_USER_ID = "C6YoifVWmr";

@@ -1,7 +1,6 @@
 import React from "react";
 // asset paths: this file lives at src/components/profile, so go up two levels to src/
 import verifiedBadge from "../../assets/images/icons/Verified.svg";
-import settingsIcon from "../../assets/images/icons/Settings.svg";
 import globe from "../../assets/images/icons/Globe.svg";
 import phoneIcon from "../../assets/images/icons/Phone.svg";
 import hat from "../../assets/images/icons/Graduation_hat.svg";
