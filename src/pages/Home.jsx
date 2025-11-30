@@ -6,10 +6,9 @@ import "./Pages.css";
 import useProfiles from "../hooks/useProfiles";
 import Atrium from "../assets/images/atrium.jpg";
 import arrowDown from "../assets/images/icons/arrow_down.svg";
+import { CURRENT_USER_ID } from "../constants/currentUser"; 
 
 export default function Home() {
-  // Hardcoded current user ID for demo (victoria)
-  const CURRENT_USER_ID = "C6YoifVWmr";
 
   // Fetch all profiles except current user, grouped by interests
   // Also fetch current user's interests to highlight common ones

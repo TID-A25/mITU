@@ -3,10 +3,9 @@ import NotificationList from "../components/notifications/NotificationList";
 import "../components/notifications/Notifications.css";
 import "./Pages.css";
 import useNotifications from "../hooks/useNotifications";
+import { CURRENT_USER_ID } from "../constants/currentUser"; 
 
 export default function Notifications() {
-  const CURRENT_USER_ID = "C6YoifVWmr"; 
-  
   const { notifications, loading, error, refresh } = useNotifications(CURRENT_USER_ID);
 
   if (loading) {

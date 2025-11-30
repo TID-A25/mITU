@@ -5,14 +5,13 @@ import ProfileInfo from "../components/profileInfo/ProfileInfo";
 import InterestGallery from "../components/interestGallery/InterestGallery";
 import "./Pages.css";
 import useProfile from "../hooks/useProfile";
+import { CURRENT_USER_ID } from "../constants/currentUser"; 
 
 export default function UserProfile() {
   const { userId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
 
-  // For testing keep user id hardcoded; in production derive from auth
-  const CURRENT_USER_ID = "C6YoifVWmr";
 
   // whether we show current user's profile (route /user-profile) or a profile by param
   const isOwnProfile =
