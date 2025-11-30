@@ -217,7 +217,6 @@ export async function checkBumpStatus(userAId, userBId) {
 
     const BumpStatus = Parse.Object.extend("Bump_status");
     
-    // Check both directions
     const q1 = new Parse.Query(BumpStatus);
     q1.equalTo("userA", userA);
     q1.equalTo("userB", userB);
