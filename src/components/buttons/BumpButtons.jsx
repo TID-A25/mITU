@@ -9,11 +9,21 @@ export default function BumpButtons({
 }) {
   const navigate = useNavigate();
 
-  const labels =
-    variant === "received"
-      ? { big: "Accept!", small: "Decline" }
-      : { big: "OK", small: "Cancel" };
+  // Define labels based on bump state
+  const getLabels = () => {
+    switch (variant) {
+      case "received":
+        return { big: "Accept Bump", small: "Decline" };
+      case "accepted":
+        return { big: "View Contact", small: "Back to Home" };
+      case "sent":
+      default:
+        return { big: "Back to Home", small: "View Profile" };
+    }
+  };
 
+  const labels = getLabels();
+    
   // default action: go back to home if no handler provided
   const navigateHome = () => navigate("/");
   const primaryHandler = onClick ? onClick : navigateHome;

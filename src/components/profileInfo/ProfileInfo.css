@@ -71,5 +71,15 @@
   gap: 6px; /* space between name and badge */
 }
 
+.bump-status-text {
+  font-size: 0.9rem;
+  color: var(--muted-text);
+  padding: 6px 12px;
+  background-color: var(--badge-bg, #f0f0f0);
+  border-radius: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
 @media (max-width: 600px) {
 }
