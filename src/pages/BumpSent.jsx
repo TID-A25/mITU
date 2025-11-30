@@ -77,14 +77,24 @@ export default function BumpSent() {
           {bumpMessage}
         </div>
       )}
-      <BumpHeader currentUser={currentProfile} otherUser={otherProfile} />
+      <BumpHeader 
+        currentUser={currentProfile} 
+        otherUser={otherProfile}
+        leftImageSrc={currentProfile?.profilePicture}
+        rightImageSrc={otherProfile?.profilePicture}
+        type="sent"
+      />
 
-      <div className="shared-interest-title">
-        <h4 className="name-row">You both like:</h4>
-      </div>
-      <div className="shared-interest-card">
-        <InterestGallery interests={sharedInterests} />
-      </div>
+      {sharedInterests.length > 0 && (
+        <>
+          <div className="shared-interest-title">
+            <h4 className="name-row">You both like:</h4>
+          </div>
+          <div className="shared-interest-card">
+            <InterestGallery interests={sharedInterests} />
+          </div>
+        </>
+      )}
 
       <ActionButtons mode="bump" variant="sent" />
     </div>

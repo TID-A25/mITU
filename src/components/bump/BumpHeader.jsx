@@ -21,6 +21,30 @@ export default function BumpHeader({
   const leftAlt = currentUser.name || "You";
   const rightAlt = otherUser.name || "Someone";
 
+  // Generate title and subtitle based on bump type
+  const getHeaderContent = () => {
+    switch (type) {
+      case "received":
+        return {
+          title: `${rightAlt} wants to bump with you!`,
+          subtitle: "Accept to share contact details"
+        };
+      case "accepted":
+        return {
+          title: `You and ${rightAlt} bumped!`,
+          subtitle: "You can now see each other's contact details"
+        };
+      case "sent":
+      default:
+        return {
+          title: `Bump request sent to ${rightAlt}!`,
+          subtitle: "Waiting for them to accept"
+        };
+    }
+  };
+
+  const { title, subtitle } = getHeaderContent();
+
   return (
     <div className="bump-header">
       <div className="bumping-pictures">
@@ -29,11 +53,8 @@ export default function BumpHeader({
       </div>
 
       <div className="bump-title">
-        <h2 className="name-row">
-          {type === "received"
-            ? `${rightAlt} bumped into you!`
-            : `You bumped into ${rightAlt}!`}
-        </h2>
+        <h2 className="name-row">{title}</h2>
+        <p className="bump-subtitle">{subtitle}</p>
       </div>
     </div>
   );

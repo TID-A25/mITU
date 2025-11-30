@@ -49,22 +49,16 @@ export default function UserProfile() {
 
   return (
     <div className="page container stack">
-      <ProfileHeader
-        profilePicture={profile.profilePicture}
+      <ProfileHeader 
+        profilePicture={profile.profilePicture} 
         isOwnProfile={isOwnProfile}
       />
-      <div className="profile-section">
-        <ProfileInfo
-          profile={profile}
-          isOwnProfile={isOwnProfile}
-          currentUserId={CURRENT_USER_ID}
-          onBump={() =>
-            navigate(`/bump-sent/${profile.objectId || profile.id}`)
-          }
-        />
-        <h2>Interests</h2>
-        <InterestGallery interests={profile.interests} />
-      </div>
+      <ProfileInfo
+        profile={profile}
+        isOwnProfile={isOwnProfile}
+        onBump={() => navigate(`/bump-sent/${profile.objectId || profile.id}`)}
+      />
+      <InterestGallery interests={profile.interests} />
     </div>
   );
 }
