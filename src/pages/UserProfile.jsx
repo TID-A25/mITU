@@ -75,6 +75,7 @@ export default function UserProfile() {
         checkingBump={checkingBump}
         onBump={() => navigate(`/bump-sent/${profile.objectId || profile.id}`)}
       />
+      <h2>Interests</h2>
       <InterestGallery interests={profile.interests} />
     </div>
   );
