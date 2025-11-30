@@ -3,28 +3,28 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import ProfileHeader from "../components/profileHeader/ProfileHeader";
 import ProfileInfo from "../components/profileInfo/ProfileInfo";
 import InterestGallery from "../components/interestGallery/InterestGallery";
+import UserSwitcher from "../components/userSwitcher/UserSwitcher";
 import "./Pages.css";
 import useProfile from "../hooks/useProfile";
-import { CURRENT_USER_ID } from "../constants/currentUser"; 
 
 export default function UserProfile() {
   const { userId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
 
+  const { currentDemoUser, handleUserChange, CURRENT_USER_ID } = useProfile(null);
+  const isOwnProfile = location.pathname === "/user-profile" || userId === currentDemoUser;
+  const targetUserId = location.pathname === "/user-profile" ? currentDemoUser : userId;
 
-  // whether we show current user's profile (route /user-profile) or a profile by param
-  const isOwnProfile =
-    location.pathname === "/user-profile" || userId === CURRENT_USER_ID;
-  const targetUserId =
-    location.pathname === "/user-profile" ? CURRENT_USER_ID : userId;
-
-  // Use the reusable hook to fetch a single profile (uses parseQueries.fetchProfileById)
   const { profile, loading, error } = useProfile(targetUserId);
 
+  /* We load the userswitcher in each state so it is still visible to user */
   if (loading) {
     return (
       <div className="page container stack">
+        {location.pathname === "/user-profile" && (
+          <UserSwitcher onUserChange={handleUserChange} />
+        )}
         <p>Loading profile..</p>
       </div>
     );
@@ -33,6 +33,9 @@ export default function UserProfile() {
   if (error) {
     return (
       <div className="page container stack">
+        {location.pathname === "/user-profile" && (
+          <UserSwitcher onUserChange={handleUserChange} />
+        )}
         <p className="error-message">{error}</p>
       </div>
     );
@@ -41,6 +44,9 @@ export default function UserProfile() {
   if (!profile) {
     return (
       <div className="page container stack">
+        {location.pathname === "/user-profile" && (
+          <UserSwitcher onUserChange={handleUserChange} />
+        )}
         <p className="error-message">Profile not found.</p>
       </div>
     );
@@ -48,6 +54,10 @@ export default function UserProfile() {
 
   return (
     <div className="page container stack">
+      {location.pathname === "/user-profile" && (
+        <UserSwitcher onUserChange={handleUserChange} />
+      )}
+
       <ProfileHeader
         profilePicture={profile.profilePicture}
         isOwnProfile={isOwnProfile}
