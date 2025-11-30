@@ -5,6 +5,7 @@ import InterestGallery from "../components/interestGallery/InterestGallery.jsx";
 import "../App.css";
 import "./Pages.css";
 import useProfile from "../hooks/useProfile";
+import Toast from "../components/ui/Toast.jsx";
 import useCreateBump from "../hooks/useCreateBump";
 import { CURRENT_USER_ID } from "../constants/currentUser"; 
 
@@ -31,6 +32,28 @@ export default function BumpSent() {
   // Compute shared interests when both profiles available
   const sharedInterests = (currentProfile?.interests || []).filter((i) => (otherProfile?.interests || []).includes(i));
 
+  useEffect(() => {
+    async function sendBumpOnce() {
+      if (!currentProfile || !otherProfile || bumpCreated) return;
+
+      // mark as created to avoid duplicate requests
+      setBumpCreated(true);
+      try {
+        const result = await createBump({ userAId: currentProfile.id, userBId: otherProfile.id, requestedById: currentProfile.id });
+        // If bump already existed, notify the user
+        if (result && result.created === false) {
+          setBumpMessage("You have already sent a bump to this person");
+        }
+      } catch (err) {
+        console.error("Failed to create bump:", err);
+        // reset so we can retry later
+        setBumpCreated(false);
+      }
+    }
+
+    sendBumpOnce();
+  }, [currentProfile, otherProfile, bumpCreated]);
+
   if (loading) {
     return (
       <div className="page container stack">
@@ -54,26 +77,44 @@ export default function BumpSent() {
           You have already sent a bump to this person
         </div>
       )}
-      <BumpHeader 
-        currentUser={currentProfile} 
+      <BumpHeader
+        currentUser={currentProfile}
         otherUser={otherProfile}
-        leftImageSrc={currentProfile?.profilePicture}
-        rightImageSrc={otherProfile?.profilePicture}
+        leftImageSrc={currentProfile?.profilePicture || defaultAvatar}
+        rightImageSrc={otherProfile?.profilePicture || defaultAvatar}
+      />
         type="sent"
+
+      <div className="name-row">
+        <p>We'll let you know if they accept your request.</p>
+      </div>
+
+      <div className="shared-interest-title">
+        <h4 className="name-row">You both like:</h4>
+      </div>
+      <div className="shared-interest-card">
+        <InterestGallery interests={sharedInterests} />
+      </div>
+
+      <ActionButtons
+        mode="bump"
+        variant="sent"
+        onClick={() => navigate(-1)}
+        onSecondaryClick={() => {
+          setToastMessage("Your bump has been cancelled.");
+          setToastOpen(true);
+        }}
       />
 
-      {sharedInterests.length > 0 && (
-        <>
-          <div className="shared-interest-title">
-            <h4 className="name-row">You both like:</h4>
-          </div>
-          <div className="shared-interest-card">
-            <InterestGallery interests={sharedInterests} />
-          </div>
-        </>
-      )}
-
-      <ActionButtons mode="bump" variant="sent" />
+      <Toast
+        open={toastOpen}
+        message={toastMessage}
+        duration={2200}
+        onClose={() => {
+          setToastOpen(false);
+          navigate(-1);
+        }}
+      />
     </div>
   );
 }

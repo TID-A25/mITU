@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./BumpHeader.css";
 /**
  * BumpHeader
@@ -49,7 +50,24 @@ export default function BumpHeader({
     <div className="bump-header">
       <div className="bumping-pictures">
         <img src={leftImageSrc} alt={leftAlt} className="profile-img" />
-        <img src={rightImageSrc} alt={rightAlt} className="profile-img" />
+        {otherUser ? (
+          // Link to the other user's profile when we have an id, otherwise fallback to generic profile route
+          (() => {
+            const profileId = otherUser.objectId || otherUser.id;
+            const to = profileId ? `/user/${profileId}` : "/user-profile";
+            return (
+              <Link to={to} className="profile-link">
+                <img
+                  src={rightImageSrc}
+                  alt={rightAlt}
+                  className="profile-img"
+                />
+              </Link>
+            );
+          })()
+        ) : (
+          <img src={rightImageSrc} alt={rightAlt} className="profile-img" />
+        )}
       </div>
 
       <div className="bump-title">

@@ -102,8 +102,6 @@ p {
   border-radius: 8px;
 }
 
-/* (Edit profile form styles moved to component-scoped CSS: src/components/editInformation/EditInformation.css) */
-/* Welcome section on Home page */
 .home-welcome {
   display: flex;
   flex-direction: column;
