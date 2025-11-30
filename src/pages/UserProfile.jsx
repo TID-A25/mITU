@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import ProfileHeader from "../components/profileHeader/ProfileHeader";
 import ProfileInfo from "../components/profileInfo/ProfileInfo";
 import InterestGallery from "../components/interestGallery/InterestGallery";
 import "./Pages.css";
 import useProfile from "../hooks/useProfile";
-import { checkBumpStatus } from "../services/parseQueries";
+import useBumpStatus from "../hooks/useBumpStatus";
 
 export default function UserProfile() {
   const { userId } = useParams();
@@ -24,22 +23,11 @@ export default function UserProfile() {
   // Use the reusable hook to fetch a single profile (uses parseQueries.fetchProfileById)
   const { profile, loading, error } = useProfile(targetUserId);
   
-  // Track bump status
-  const [bumpStatus, setBumpStatus] = useState(null);
-  const [checkingBump, setCheckingBump] = useState(false);
-
-  // Check if there's an existing bump when viewing another user's profile
-  useEffect(() => {
-    async function checkBump() {
-      if (!isOwnProfile && targetUserId && CURRENT_USER_ID) {
-        setCheckingBump(true);
-        const status = await checkBumpStatus(CURRENT_USER_ID, targetUserId);
-        setBumpStatus(status);
-        setCheckingBump(false);
-      }
-    }
-    checkBump();
-  }, [isOwnProfile, targetUserId, CURRENT_USER_ID]);
+  // Check bump status when viewing another user's profile
+  const { bumpStatus, loading: checkingBump } = useBumpStatus(
+    isOwnProfile ? null : CURRENT_USER_ID,
+    isOwnProfile ? null : targetUserId
+  );
 
   if (loading) {
     return (

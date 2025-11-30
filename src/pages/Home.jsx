@@ -1,5 +1,3 @@
-// Home page component - displays profiles grouped by shared interests
-import React from 'react';
 import ProfileSection from '../components/profileSection/ProfileSection.jsx';
 import '../App.css';
 import './Pages.css';

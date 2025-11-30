@@ -1,20 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ActionButtons from "../components/buttons/ActionButtons.jsx";
 import BumpHeader from "../components/bump/BumpHeader.jsx";
 import InterestGallery from "../components/interestGallery/InterestGallery.jsx";
 import "../App.css";
 import "./Pages.css";
 import useProfile from "../hooks/useProfile";
-import { createBump } from "../services/parseQueries";
+import useCreateBump from "../hooks/useCreateBump";
 
 export default function BumpSent() {
   const params = useParams();
   const otherUserId = params.otherUserId || params.userId;
-  const navigate = useNavigate();
 
   // Hardcoded current user id for demo
-  const CURRENT_USER_ID = "C6YoifVWmr"; // victoria
+  const CURRENT_USER_ID = "C6YoifVWmr";
 
   // Use hooks to fetch both profiles (current and the other user)
   const currentHook = useProfile(CURRENT_USER_ID);
@@ -25,34 +23,15 @@ export default function BumpSent() {
   const loading = currentHook.loading || otherHook.loading;
   const error = currentHook.error || otherHook.error;
 
-  // track whether we've already created a bump to avoid duplicate saves
-  const [bumpCreated, setBumpCreated] = useState(false);
-  const [bumpMessage, setBumpMessage] = useState(null);
+  // Create bump automatically when both profiles are loaded
+  const { result } = useCreateBump(
+    currentProfile?.id,
+    otherProfile?.id,
+    currentProfile?.id
+  );
 
-  // compute shared interests when both profiles available
+  // Compute shared interests when both profiles available
   const sharedInterests = (currentProfile?.interests || []).filter((i) => (otherProfile?.interests || []).includes(i));
-
-  useEffect(() => {
-    async function sendBumpOnce() {
-      if (!currentProfile || !otherProfile || bumpCreated) return;
-
-      // mark as created to avoid duplicate requests
-      setBumpCreated(true);
-      try {
-        const result = await createBump({ userAId: currentProfile.id, userBId: otherProfile.id, requestedById: currentProfile.id });
-        // If bump already existed, notify the user
-        if (result && result.created === false) {
-          setBumpMessage("You have already sent a bump to this person");
-        }
-      } catch (err) {
-        console.error("Failed to create bump:", err);
-        // reset so we can retry later
-        setBumpCreated(false);
-      }
-    }
-
-    sendBumpOnce();
-  }, [currentProfile, otherProfile, bumpCreated]);
 
   if (loading) {
     return (
@@ -72,9 +51,9 @@ export default function BumpSent() {
 
   return (
     <div className="page container stack">
-      {bumpMessage && (
+      {result && result.created === false && (
         <div style={{ background: "#fff3cd", padding: "10px", borderRadius: 6, marginBottom: 12 }}>
-          {bumpMessage}
+          You have already sent a bump to this person
         </div>
       )}
       <BumpHeader 

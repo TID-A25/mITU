@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import useProfile from "../hooks/useProfile";
 import ActionButtons from "../components/buttons/ActionButtons.jsx";

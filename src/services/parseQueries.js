@@ -1,7 +1,7 @@
 import Parse from "parse";
 
 /**
- * Fetch all profiles with interests (N+1 optimized)
+ * Fetch all profiles with interests
  */
 export async function fetchProfiles({ excludeUserId } = {}) {
   try {
@@ -27,7 +27,6 @@ export async function fetchProfiles({ excludeUserId } = {}) {
 
     // Fetch ALL interests at once
     const allUserInterestsQuery = new Parse.Query("User_interests");
-    allUserInterestsQuery.containedIn("user", users);
     allUserInterestsQuery.containedIn("user", users);
     allUserInterestsQuery.include("interest");
     allUserInterestsQuery.select("interest", "user");
@@ -244,6 +243,111 @@ export async function checkBumpStatus(userAId, userBId) {
   } catch (err) {
     console.error("checkBumpStatus error", err);
     return null;
+  }
+}
+
+/**
+ * Fetch user data and interests for editing profile
+ */
+export async function fetchEditProfileData(userId) {
+  if (!userId) throw new Error('userId required');
+
+  try {
+    // Load user
+    const userQ = new Parse.Query('Users');
+    const user = await userQ.get(userId);
+
+    // Load user's interests
+    const uiQ = new Parse.Query('User_interests');
+    uiQ.equalTo('user', user);
+    uiQ.include('interest');
+    const uiEntries = await uiQ.find();
+
+    const userInterestNames = uiEntries.map((e) =>
+      e.get('interest')?.get('interest_name')
+    ).filter(Boolean);
+
+    // Load all interests
+    const interestQ = new Parse.Query('Interest');
+    interestQ.ascending('interest_name');
+    const interests = await interestQ.find();
+
+    const allInterests = interests.map((i) => ({
+      name: i.get('interest_name'),
+      object: i,
+      img: i.get('interest_pic') ? i.get('interest_pic').url() : null,
+    }));
+
+    return {
+      user,
+      country: user.get('country') || '',
+      phone: user.get('phone') || '',
+      phoneVisibility: user.get('phone_visibility') || 'all',
+      userInterests: userInterestNames,
+      allInterests,
+    };
+  } catch (err) {
+    console.error('fetchEditProfileData error', err);
+    throw err;
+  }
+}
+
+/**
+ * Save profile changes (country, phone, interests)
+ */
+export async function saveProfileChanges(userId, { country, phone, phoneVisibility, selectedInterests }) {
+  if (!userId) throw new Error('userId required');
+
+  try {
+    // Update user fields
+    const userQ = new Parse.Query('Users');
+    const user = await userQ.get(userId);
+    
+    user.set('country', country);
+    user.set('phone', phone);
+    user.set('phone_visibility', phoneVisibility);
+    await user.save();
+
+    // Get current User_interests
+    const uiQ = new Parse.Query('User_interests');
+    uiQ.equalTo('user', user);
+    uiQ.include('interest');
+    const existing = await uiQ.find();
+
+    const existingNames = existing.map((e) =>
+      e.get('interest')?.get('interest_name')
+    ).filter(Boolean);
+
+    // Compute adds and removes
+    const toAdd = selectedInterests.filter((n) => !existingNames.includes(n));
+    const toRemove = existingNames.filter((n) => !selectedInterests.includes(n));
+
+    // Remove entries
+    for (const entry of existing) {
+      const name = entry.get('interest')?.get('interest_name');
+      if (toRemove.includes(name)) {
+        await entry.destroy();
+      }
+    }
+
+    // Add entries
+    for (const name of toAdd) {
+      const interestQ = new Parse.Query('Interest');
+      interestQ.equalTo('interest_name', name);
+      const interestObj = await interestQ.first();
+      if (interestObj) {
+        const UserInterests = Parse.Object.extend('User_interests');
+        const ui = new UserInterests();
+        ui.set('user', user);
+        ui.set('interest', interestObj);
+        await ui.save();
+      }
+    }
+
+    return true;
+  } catch (err) {
+    console.error('saveProfileChanges error', err);
+    throw err;
   }
 }
 
