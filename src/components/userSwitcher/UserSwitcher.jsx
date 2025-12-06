@@ -4,22 +4,44 @@ import './UserSwitcher.css';
 
 export default function UserSwitcher({ onUserChange }) {
   const [selectedUser, setSelectedUser] = useState('');
+  const [users, setUsers] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Initialize current user from localStorage or default
-    initializeCurrentUser();
-    setSelectedUser(CURRENT_USER_ID);
+    // Initialize current user from Cloud Function
+    const init = async () => {
+      try {
+        const userId = await initializeCurrentUser();
+        setSelectedUser(userId);
+        setUsers({ ...DEMO_USERS });
+      } catch (error) {
+        console.error('Failed to initialize users:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    init();
   }, []);
 
-  const handleChange = (event) => {
+  const handleChange = async (event) => {
     const newUserId = event.target.value;
     setSelectedUser(newUserId);
-    setCurrentUserId(newUserId);
     
-    if (onUserChange) {
+    const success = await setCurrentUserId(newUserId);
+    
+    if (success && onUserChange) {
       onUserChange(newUserId);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="user-switcher">
+        <span>Loading users...</span>
+      </div>
+    );
+  }
 
   return (
     <div className="user-switcher">
@@ -29,8 +51,9 @@ export default function UserSwitcher({ onUserChange }) {
         value={selectedUser} 
         onChange={handleChange}
         className="user-select"
+        disabled={loading}
       >
-        {Object.entries(DEMO_USERS).map(([userId, userName]) => (
+        {Object.entries(users).map(([userId, userName]) => (
           <option key={userId} value={userId}>
             {userName}
           </option>
