@@ -6,6 +6,7 @@ export default function Toast({
   message = "",
   duration = 2000,
   onClose,
+  type = "error",
 }) {
   useEffect(() => {
     if (!open) return;
@@ -17,5 +18,5 @@ export default function Toast({
 
   if (!open) return null;
 
-  return <div className="app-toast">{message}</div>;
+  return <div className={`app-toast app-toast--${type}`}>{message}</div>;
 }

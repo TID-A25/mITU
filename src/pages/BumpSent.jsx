@@ -112,6 +112,7 @@ export default function BumpSent() {
           setToastOpen(false);
           navigate(-1);
         }}
+        type="success"
       />
     </div>
   );

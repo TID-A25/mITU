@@ -1,14 +1,18 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import DefaultImg from "../assets/images/default.jpg";
 import InterestPicker from "../components/interestPicker/InterestPicker.jsx";
 import EditInformation from "../components/editInformation/EditInformation.jsx";
 import useEditProfile from "../hooks/useEditProfile";
 import { initializeCurrentUser } from "../constants/currentUser";
+import Toast from "../components/ui/Toast.jsx";
 import "./Pages.css";
 
 export default function EditProfile() {
   const CURRENT_USER_ID = initializeCurrentUser();
   const navigate = useNavigate();
+  const [toastOpen, setToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
   const {
     loading,
@@ -30,8 +34,11 @@ export default function EditProfile() {
     e.preventDefault();
     const success = await saveProfile();
     if (success) {
-      alert("Profile updated successfully.");
-      navigate("/user-profile");
+      setToastMessage("Profile updated successfully.");
+      setToastOpen(true);
+      setTimeout(() => {
+        navigate("/user-profile");
+      }, 2000);
     }
   };
 
@@ -86,6 +93,14 @@ export default function EditProfile() {
           </button>
         </div>
       </EditInformation>
+
+      <Toast
+        open={toastOpen}
+        message={toastMessage}
+        duration={2000}
+        onClose={() => setToastOpen(false)}
+        type="success"
+      />
     </div>
   );
 }
