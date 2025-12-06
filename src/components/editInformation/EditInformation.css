@@ -33,6 +33,17 @@
   box-shadow: 0 0 0 4px rgba(62, 193, 153, 0.12);
 }
 
+/* Hide number input spinner  that occurs due to input field being type= number*/
+.profile-edit-form input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.profile-edit-form input[type="number"]::-webkit-outer-spin-button,
+.profile-edit-form input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
 /* Group country & WhatsApp nicer side-by-side on wide screens */
 .profile-edit-form .row-2 {
   display: grid;
