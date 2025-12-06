@@ -31,7 +31,7 @@ export default function BumpSent() {
     currentProfile?.id
   );
 
-  const sharedInterests = (currentProfile?.interests || []).filter((i) => 
+  const sharedInterests = (currentProfile?.interests || []).filter((i) =>
     (otherProfile?.interests || []).includes(i)
   );
 
@@ -54,7 +54,14 @@ export default function BumpSent() {
   return (
     <div className="page container stack">
       {message && (
-        <div style={{ background: "#fff3cd", padding: "10px", borderRadius: 6, marginBottom: 12 }}>
+        <div
+          style={{
+            background: "#fff3cd",
+            padding: "10px",
+            borderRadius: 6,
+            marginBottom: 12,
+          }}
+        >
           {message}
         </div>
       )}
@@ -65,10 +72,6 @@ export default function BumpSent() {
         rightImageSrc={otherProfile?.profilePicture}
         type="sent"
       />
-
-      <div className="name-row">
-        <p>We'll let you know if they accept your request.</p>
-      </div>
 
       <div className="shared-interest-title">
         <h4 className="name-row">You both like:</h4>

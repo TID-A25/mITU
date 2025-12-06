@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import "./BumpHeader.css";
 /**
@@ -16,7 +15,6 @@ export default function BumpHeader({
   otherUser = {},
   leftImageSrc,
   rightImageSrc,
-  interest,
   type = "sent",
 }) {
   const leftAlt = currentUser.name || "You";
@@ -27,19 +25,19 @@ export default function BumpHeader({
     switch (type) {
       case "received":
         return {
-          title: `${rightAlt} wants to bump with you!`,
-          subtitle: "Accept to share contact details"
+          title: `${rightAlt} wants to bump into you!`,
+          subtitle: "Accept to share contact details",
         };
       case "accepted":
         return {
-          title: `You and ${rightAlt} bumped!`,
-          subtitle: "You can now see each other's contact details"
+          title: `${rightAlt} accepted your request and bumped into you!`,
+          subtitle: "You can now see each other's contact details",
         };
       case "sent":
       default:
         return {
-          title: `Bump request sent to ${rightAlt}!`,
-          subtitle: "Waiting for them to accept"
+          title: `You requested to bump into ${rightAlt}!`,
+          subtitle: "We'll let you know if they accept your request.",
         };
     }
   };
