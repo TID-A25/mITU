@@ -17,7 +17,7 @@ export default function BumpButtons({
         return { big: "View Contact", small: "Back to Home" };
       case "sent":
       default:
-        return { big: "Back to Home", small: "View Profile" };
+        return { big: "Back to Home", small: "Cancel" };
     }
   };
 
