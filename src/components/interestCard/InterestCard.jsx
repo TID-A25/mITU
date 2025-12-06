@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Parse from "parse";
-import DefaultImg from "../../assets/images/interests/default.jpg";
+import DefaultImg from "../../assets/images/default.jpg";
 import "./InterestCard.css";
 
 export default function InterestCard({ interest }) {

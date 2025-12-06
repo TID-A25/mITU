@@ -2,7 +2,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 // asset paths: this file lives at src/components/profile, so go up two levels to src/
-import coverPhoto from "../../assets/images/profiles/Coverpicture.jpg";
+import coverPhoto from "../../assets/images/Coverpicture.jpg";
 import editIcon from "../../assets/images/icons/Edit.svg"; 
 import "./ProfileHeader.css";
 
