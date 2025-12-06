@@ -6,6 +6,7 @@ import Parse from "parse";
 function mapUserToProfile(user, interests = []) {
   const profilePic = user.get("profile_pic");
   const profilePictureUrl = profilePic ? profilePic.url() : null;
+  const phoneVisibility = user.get("phone_visibility") || "bumps";
 
   return {
     id: user.id,
@@ -17,7 +18,8 @@ function mapUserToProfile(user, interests = []) {
     semester: user.get("semester"),
     country: user.get("country") || "Not specified",
     phone: user.get("phone") || null,
-    phone_visibility: user.get("phone_visibility") || "all",
+    phone_visibility: phoneVisibility,
+    phoneVisibility,
   };
 }
 
@@ -263,7 +265,7 @@ export async function fetchEditProfileData(userId) {
       user,
       country: user.get('country') || '',
       phone: user.get('phone') || '',
-      phoneVisibility: user.get('phone_visibility') || 'all',
+      phoneVisibility: user.get('phone_visibility') || 'bumps',
       userInterests: userInterestNames,
       allInterests,
     };
