@@ -27,9 +27,9 @@ export default function EditInformation({
           <label>
             WhatsApp number
             <input
-              type="number" //dont accept letters
-              value={phone}
-              placeholder="e.g. +45 12 34 56 78"
+              type="number"
+              value={phone || ''}
+              placeholder="e.g. 22345678"
               onChange={(e) => onPhoneChange(e.target.value)}
             />
           </label>

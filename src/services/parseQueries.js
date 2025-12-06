@@ -6,6 +6,7 @@ import Parse from "parse";
 function mapUserToProfile(user, interests = []) {
   const profilePic = user.get("profile_pic");
   const profilePictureUrl = profilePic ? profilePic.url() : null;
+  const phoneVisibility = user.get("phone_visibility") || "bumps";
 
   return {
     id: user.id,
@@ -17,7 +18,8 @@ function mapUserToProfile(user, interests = []) {
     semester: user.get("semester"),
     country: user.get("country") || "Not specified",
     phone: user.get("phone") || null,
-    phone_visibility: user.get("phone_visibility") || "all",
+    phone_visibility: phoneVisibility,
+    phoneVisibility,
   };
 }
 
@@ -38,7 +40,7 @@ export async function fetchProfiles({ excludeUserId } = {}) {
       "phone_visibility",
       "phone"
     );
-    
+
     // Exclude current user
     if (excludeUserId) {
       userQuery.notEqualTo("objectId", excludeUserId);
@@ -93,7 +95,7 @@ export async function fetchProfiles({ excludeUserId } = {}) {
  */
 export async function fetchProfileById(id) {
   if (!id) return null;
-  
+
   try {
     const userQuery = new Parse.Query("Users");
     const user = await userQuery.get(id);
@@ -120,7 +122,7 @@ export async function fetchProfileById(id) {
  */
 export async function fetchCurrentUserInterests(userId) {
   if (!userId) return [];
-  
+
   try {
     const userQuery = new Parse.Query("Users");
     const currentUser = await userQuery.get(userId);
@@ -129,7 +131,6 @@ export async function fetchCurrentUserInterests(userId) {
     currentUserInterestQuery.equalTo("user", currentUser);
     currentUserInterestQuery.include("interest");
     const currentUserInterestEntries = await currentUserInterestQuery.find();
-
 
     const currentInterests = currentUserInterestEntries
       .map((e) => e.get("interest")?.get("interest_name"))
@@ -147,7 +148,7 @@ export async function fetchCurrentUserInterests(userId) {
  */
 export async function createBump({ userAId, userBId, requestedById } = {}) {
   if (!userAId || !userBId) throw new Error("userAId and userBId required");
-  
+
   try {
     // Check if bump already exists
     const existingBump = await checkBumpStatus(userAId, userBId);
@@ -165,7 +166,7 @@ export async function createBump({ userAId, userBId, requestedById } = {}) {
     bump.set("userA", userA);
     bump.set("userB", userB);
     bump.set("status", "pending");
-    
+
     if (requestedById) {
       const requestedBy =
         requestedById === userAId
@@ -189,14 +190,14 @@ export async function createBump({ userAId, userBId, requestedById } = {}) {
  */
 export async function checkBumpStatus(userAId, userBId) {
   if (!userAId || !userBId) return null;
-  
+
   try {
     const userQuery = new Parse.Query("Users");
     const userA = await userQuery.get(userAId);
     const userB = await userQuery.get(userBId);
 
     const BumpStatus = Parse.Object.extend("Bump_status");
-    
+
     const q1 = new Parse.Query(BumpStatus);
     q1.equalTo("userA", userA);
     q1.equalTo("userB", userB);
@@ -231,44 +232,44 @@ export async function checkBumpStatus(userAId, userBId) {
  * Fetch user data and interests for editing profile
  */
 export async function fetchEditProfileData(userId) {
-  if (!userId) throw new Error('userId required');
+  if (!userId) throw new Error("userId required");
 
   try {
     // Load user
-    const userQ = new Parse.Query('Users');
+    const userQ = new Parse.Query("Users");
     const user = await userQ.get(userId);
 
     // Load user's interests
-    const uiQ = new Parse.Query('User_interests');
-    uiQ.equalTo('user', user);
-    uiQ.include('interest');
+    const uiQ = new Parse.Query("User_interests");
+    uiQ.equalTo("user", user);
+    uiQ.include("interest");
     const uiEntries = await uiQ.find();
 
-    const userInterestNames = uiEntries.map((e) =>
-      e.get('interest')?.get('interest_name')
-    ).filter(Boolean);
+    const userInterestNames = uiEntries
+      .map((e) => e.get("interest")?.get("interest_name"))
+      .filter(Boolean);
 
     // Load all interests
-    const interestQ = new Parse.Query('Interest');
-    interestQ.ascending('interest_name');
+    const interestQ = new Parse.Query("Interest");
+    interestQ.ascending("interest_name");
     const interests = await interestQ.find();
 
     const allInterests = interests.map((i) => ({
-      name: i.get('interest_name'),
+      name: i.get("interest_name"),
       object: i,
-      img: i.get('interest_pic') ? i.get('interest_pic').url() : null,
+      img: i.get("interest_pic") ? i.get("interest_pic").url() : null,
     }));
 
     return {
       user,
-      country: user.get('country') || '',
-      phone: user.get('phone') || '',
-      phoneVisibility: user.get('phone_visibility') || 'all',
+      country: user.get("country") || "",
+      phone: String(user.get("phone") || ""),
+      phoneVisibility: user.get("phone_visibility") || "bumps",
       userInterests: userInterestNames,
       allInterests,
     };
   } catch (err) {
-    console.error('fetchEditProfileData error', err);
+    console.error("fetchEditProfileData error", err);
     throw err;
   }
 }
@@ -276,36 +277,42 @@ export async function fetchEditProfileData(userId) {
 /**
  * Save profile changes (country, phone, interests)
  */
-export async function saveProfileChanges(userId, { country, phone, phoneVisibility, selectedInterests }) {
-  if (!userId) throw new Error('userId required');
+export async function saveProfileChanges(
+  userId,
+  { country, phone, phoneVisibility, selectedInterests }
+) {
+  if (!userId) throw new Error("userId required");
 
   try {
     // Update user fields
-    const userQ = new Parse.Query('Users');
+    const userQ = new Parse.Query("Users");
     const user = await userQ.get(userId);
-    
-    user.set('country', country);
-    user.set('phone', phone);
-    user.set('phone_visibility', phoneVisibility);
+
+    user.set("country", country);
+    // Convert phone to number since database expects Number type, or set to null if empty
+    user.set("phone", phone ? Number(phone) : null);
+    user.set("phone_visibility", phoneVisibility);
     await user.save();
 
     // Get current User_interests
-    const uiQ = new Parse.Query('User_interests');
-    uiQ.equalTo('user', user);
-    uiQ.include('interest');
+    const uiQ = new Parse.Query("User_interests");
+    uiQ.equalTo("user", user);
+    uiQ.include("interest");
     const existing = await uiQ.find();
 
-    const existingNames = existing.map((e) =>
-      e.get('interest')?.get('interest_name')
-    ).filter(Boolean);
+    const existingNames = existing
+      .map((e) => e.get("interest")?.get("interest_name"))
+      .filter(Boolean);
 
     // Compute adds and removes
     const toAdd = selectedInterests.filter((n) => !existingNames.includes(n));
-    const toRemove = existingNames.filter((n) => !selectedInterests.includes(n));
+    const toRemove = existingNames.filter(
+      (n) => !selectedInterests.includes(n)
+    );
 
     // Remove entries
     for (const entry of existing) {
-      const name = entry.get('interest')?.get('interest_name');
+      const name = entry.get("interest")?.get("interest_name");
       if (toRemove.includes(name)) {
         await entry.destroy();
       }
@@ -313,21 +320,21 @@ export async function saveProfileChanges(userId, { country, phone, phoneVisibili
 
     // Add entries
     for (const name of toAdd) {
-      const interestQ = new Parse.Query('Interest');
-      interestQ.equalTo('interest_name', name);
+      const interestQ = new Parse.Query("Interest");
+      interestQ.equalTo("interest_name", name);
       const interestObj = await interestQ.first();
       if (interestObj) {
-        const UserInterests = Parse.Object.extend('User_interests');
+        const UserInterests = Parse.Object.extend("User_interests");
         const ui = new UserInterests();
-        ui.set('user', user);
-        ui.set('interest', interestObj);
+        ui.set("user", user);
+        ui.set("interest", interestObj);
         await ui.save();
       }
     }
 
     return true;
   } catch (err) {
-    console.error('saveProfileChanges error', err);
+    console.error("saveProfileChanges error", err);
     throw err;
   }
 }
@@ -337,60 +344,62 @@ export async function saveProfileChanges(userId, { country, phone, phoneVisibili
  */
 export async function fetchNotifications(userId) {
   if (!userId) return [];
-  
+
   try {
     // Fetch current user
-    const userQuery = new Parse.Query('Users');
+    const userQuery = new Parse.Query("Users");
     const currentUser = await userQuery.get(userId);
-    
-    const BumpStatus = Parse.Object.extend('Bump_status');
-    
+
+    const BumpStatus = Parse.Object.extend("Bump_status");
+
     // Query bumps where current user is either A or B
     const query1 = new Parse.Query(BumpStatus);
-    query1.equalTo('userA', currentUser);
+    query1.equalTo("userA", currentUser);
     const query2 = new Parse.Query(BumpStatus);
-    query2.equalTo('userB', currentUser);
-    
+    query2.equalTo("userB", currentUser);
+
     // combined query to differentiate if current user is A or B
     const combinedQuery = Parse.Query.or(query1, query2);
-    combinedQuery.include('userA');
-    combinedQuery.include('userB');
-    combinedQuery.include('requestedBy');
-    combinedQuery.descending('createdAt');
-    
+    combinedQuery.include("userA");
+    combinedQuery.include("userB");
+    combinedQuery.include("requestedBy");
+    combinedQuery.descending("createdAt");
+
     const bumps = await combinedQuery.find();
-    
+
     // Transform bumps into notification objects
-    const notifications = bumps.map(bump => {
-      const userA = bump.get('userA');
-      const userB = bump.get('userB');
-      const requestedBy = bump.get('requestedBy');
-      const status = bump.get('status');
-      
+    const notifications = bumps.map((bump) => {
+      const userA = bump.get("userA");
+      const userB = bump.get("userB");
+      const requestedBy = bump.get("requestedBy");
+      const status = bump.get("status");
+
       // If userA is current user, other user is B, else vice versa
       const otherUser = userA.id === userId ? userB : userA;
-      const otherUserName = `${otherUser.get('first_name')} ${otherUser.get('last_name')}`;
-      
-      const profilePic = otherUser.get('profile_pic');
+      const otherUserName = `${otherUser.get("first_name")} ${otherUser.get(
+        "last_name"
+      )}`;
+
+      const profilePic = otherUser.get("profile_pic");
       const avatar = profilePic ? profilePic.url() : null;
-      
+
       // Determine notification type
       let type;
-      if (status === 'pending') {
+      if (status === "pending") {
         //if requestedBy is null or undefined, ?. will return undefined and not throw an error
         if (requestedBy?.id === userId) {
-          type = 'bump_sent';
+          type = "bump_sent";
         } else {
-          type = 'bump_received';
+          type = "bump_received";
         }
-      } else if (status === 'accepted') {
+      } else if (status === "accepted") {
         if (requestedBy?.id === userId) {
-          type = 'bump_accepted';
+          type = "bump_accepted";
         } else {
-          type = 'accepted_by_current_user';
+          type = "accepted_by_current_user";
         }
       }
-      
+
       return {
         id: bump.id,
         type,
@@ -398,18 +407,18 @@ export async function fetchNotifications(userId) {
         actor: {
           id: otherUser.id,
           name: otherUserName,
-          avatar
+          avatar,
         },
-        createdAt: bump.get('createdAt'),
-        updatedAt: bump.get('updatedAt'),
+        createdAt: bump.get("createdAt"),
+        updatedAt: bump.get("updatedAt"),
         bumpId: bump.id,
-        otherUserId: otherUser.id
+        otherUserId: otherUser.id,
       };
     });
-    
+
     return notifications;
   } catch (error) {
-    console.error('Failed to get notifications: ', error);
+    console.error("Failed to get notifications: ", error);
     throw error;
   }
 }
@@ -418,21 +427,21 @@ export async function fetchNotifications(userId) {
  * Accept a bump request (change status from pending to accepted)
  */
 export async function acceptBump(bumpId) {
-  if (!bumpId) throw new Error('bumpId required');
-  
+  if (!bumpId) throw new Error("bumpId required");
+
   try {
-    const BumpStatus = Parse.Object.extend('Bump_status');
+    const BumpStatus = Parse.Object.extend("Bump_status");
     const query = new Parse.Query(BumpStatus);
     const bump = await query.get(bumpId);
-    
-    if (!bump) throw new Error('Bump not found');
-    
-    bump.set('status', 'accepted');
+
+    if (!bump) throw new Error("Bump not found");
+
+    bump.set("status", "accepted");
     await bump.save();
-    
+
     return { success: true, bump };
   } catch (err) {
-    console.error('acceptBump error', err);
+    console.error("acceptBump error", err);
     throw err;
   }
 }
@@ -441,21 +450,20 @@ export async function acceptBump(bumpId) {
  * Delete or cancel a bump request
  */
 export async function deleteBump(bumpId) {
-  if (!bumpId) throw new Error('bumpId required');
-  
+  if (!bumpId) throw new Error("bumpId required");
+
   try {
-    const BumpStatus = Parse.Object.extend('Bump_status');
+    const BumpStatus = Parse.Object.extend("Bump_status");
     const query = new Parse.Query(BumpStatus);
     const bump = await query.get(bumpId);
-    
-    if (!bump) throw new Error('Bump not found');
-    
+
+    if (!bump) throw new Error("Bump not found");
+
     await bump.destroy();
-    
+
     return { success: true };
   } catch (err) {
-    console.error('deleteBump error', err);
+    console.error("deleteBump error", err);
     throw err;
   }
 }
-

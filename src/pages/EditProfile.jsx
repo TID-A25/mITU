@@ -3,10 +3,11 @@ import DefaultImg from "../assets/images/default.jpg";
 import InterestPicker from "../components/interestPicker/InterestPicker.jsx";
 import EditInformation from "../components/editInformation/EditInformation.jsx";
 import useEditProfile from "../hooks/useEditProfile";
+import { initializeCurrentUser } from "../constants/currentUser";
 import "./Pages.css";
 
 export default function EditProfile() {
-  const CURRENT_USER_ID = "C6YoifVWmr";
+  const CURRENT_USER_ID = initializeCurrentUser();
   const navigate = useNavigate();
 
   const {

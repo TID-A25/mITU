@@ -13,6 +13,17 @@ export default function ProfileInfo({
   checkingBump = false,
   onBump = () => {},
 }) {
+  const phoneVisibility = profile.phoneVisibility || profile.phone_visibility || "bumps";
+  const canShowPhone =
+    isOwnProfile ||
+    phoneVisibility === "all" ||
+    (phoneVisibility === "bumps" && bumpStatus?.exists && bumpStatus.status === "accepted");
+  const phoneLabel = canShowPhone
+    ? profile.phone || "Not specified"
+    : phoneVisibility === "none"
+    ? "Hidden"
+    : "Visible to bumps only";
+
   // Determine what to show for bump interaction
   const getBumpContent = () => {
     if (checkingBump) {
@@ -62,10 +73,12 @@ export default function ProfileInfo({
         <p>{profile.country}</p>
       </div>
 
-      <div className="info-row">
-        <img src={phoneIcon} className="phone" alt="Phone" />
-        <p className="phone-label">WhatsApp: {profile.phone || 'Not specified'}</p>
-      </div>
+      {canShowPhone && (
+        <div className="info-row">
+          <img src={phoneIcon} className="phone" alt="Phone" />
+          <p className="phone-label">WhatsApp: {phoneLabel}</p>
+        </div>
+      )}
 
       {/* small helper to make sure every profile shows a deterministic DK number when there's no phone in the data */}
     </div>
