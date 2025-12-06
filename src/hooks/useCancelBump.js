@@ -28,12 +28,7 @@ export default function useCancelBump(currentUserId, otherUserId) {
         return false;
       }
 
-      if (!bumpStatus.requestedByCurrentUser) {
-        setError('You can only cancel your own bump requests');
-        return false;
-      }
-
-
+      // Allow deletion for both sent and received bumps
       await deleteBump(bumpStatus.bumpId);
       return true;
     } catch (err) {

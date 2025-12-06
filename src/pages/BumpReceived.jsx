@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useProfile from "../hooks/useProfile";
 import useAcceptBump from "../hooks/useAcceptBump";
+import useCancelBump from "../hooks/useCancelBump";
 import ActionButtons from "../components/buttons/ActionButtons.jsx";
 import BumpHeader from "../components/bump/BumpHeader.jsx";
 import InterestGallery from "../components/interestGallery/InterestGallery.jsx";
@@ -31,6 +32,11 @@ export default function BumpReceived() {
     otherUserId
   );
 
+  const { handleCancel, error: cancelError } = useCancelBump(
+    CURRENT_USER_ID,
+    otherUserId
+  );
+
   const sharedInterests = (currentProfile?.interests || []).filter((i) => 
     (otherProfile?.interests || []).includes(i)
   );
@@ -40,12 +46,21 @@ export default function BumpReceived() {
     if (success) {
       setToastMessage("Bump accepted!");
       setToastOpen(true);
+    } else if (acceptError) {
+      setToastMessage(acceptError);
+      setToastOpen(true);
     }
   };
 
-  const onDecline = () => {
-    setToastMessage("Bump declined");
-    setToastOpen(true);
+  const onDecline = async () => {
+    const success = await handleCancel();
+    if (success) {
+      setToastMessage("Bump declined");
+      setToastOpen(true);
+    } else if (cancelError) {
+      setToastMessage(cancelError);
+      setToastOpen(true);
+    }
   };
 
   if (loading) {
