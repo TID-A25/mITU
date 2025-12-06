@@ -1,15 +1,22 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import useProfile from "../hooks/useProfile";
+import useAcceptBump from "../hooks/useAcceptBump";
 import ActionButtons from "../components/buttons/ActionButtons.jsx";
 import BumpHeader from "../components/bump/BumpHeader.jsx";
 import InterestGallery from "../components/interestGallery/InterestGallery.jsx";
+import Toast from "../components/ui/Toast.jsx";
+import { CURRENT_USER_ID } from "../constants/currentUser";
+import "../App.css";
+import "./Pages.css";
 
 export default function BumpReceived() {
   const params = useParams();
+  const navigate = useNavigate();
   const otherUserId = params.otherUserId || params.userId;
   
-  // Hardcoded current user id for demo
-  const CURRENT_USER_ID = "C6YoifVWmr"; // victoria
+  const [toastOpen, setToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
   const currentHook = useProfile(CURRENT_USER_ID);
   const otherHook = useProfile(otherUserId);
@@ -19,10 +26,27 @@ export default function BumpReceived() {
   const loading = currentHook.loading || otherHook.loading;
   const error = currentHook.error || otherHook.error;
 
-  // Compute shared interests
+  const { handleAccept, error: acceptError, message } = useAcceptBump(
+    CURRENT_USER_ID,
+    otherUserId
+  );
+
   const sharedInterests = (currentProfile?.interests || []).filter((i) => 
     (otherProfile?.interests || []).includes(i)
   );
+
+  const onAccept = async () => {
+    const success = await handleAccept();
+    if (success) {
+      setToastMessage("Bump accepted! 🎉");
+      setToastOpen(true);
+    }
+  };
+
+  const onDecline = () => {
+    setToastMessage("Bump declined");
+    setToastOpen(true);
+  };
 
   if (loading) {
     return (
@@ -32,16 +56,29 @@ export default function BumpReceived() {
     );
   }
 
-  if (error) {
+  if (error || acceptError) {
     return (
       <div className="page container stack">
-        <p className="error-message">{error}</p>
+        <p className="error-message">{error || acceptError}</p>
       </div>
     );
   }
 
   return (
     <div className="page container stack">
+      {message && (
+        <div
+          style={{
+            background: "#d1f2eb",
+            padding: "10px",
+            borderRadius: 6,
+            marginBottom: 12,
+          }}
+        >
+          {message}
+        </div>
+      )}
+      
       <BumpHeader
         currentUser={currentProfile}
         otherUser={otherProfile}
@@ -61,7 +98,22 @@ export default function BumpReceived() {
         </>
       )}
 
-      <ActionButtons mode="bump" variant="received" />
+      <ActionButtons
+        mode="bump"
+        variant="received"
+        onClick={onAccept}
+        onSecondaryClick={onDecline}
+      />
+
+      <Toast
+        open={toastOpen}
+        message={toastMessage}
+        duration={2200}
+        onClose={() => {
+          setToastOpen(false);
+          navigate("/notifications");
+        }}
+      />
     </div>
   );
 }
