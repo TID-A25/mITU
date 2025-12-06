@@ -1,7 +1,7 @@
 //Setting up Parse
 // ** importing Parse as configured in vite.config.js:
 import "./constants/parseConfig.js";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/header/Header.jsx";
 import Footer from "./components/footer/Footer.jsx";
 import Home from "./pages/Home.jsx";
