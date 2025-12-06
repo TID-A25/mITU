@@ -10,6 +10,7 @@ import BumpSent from "./pages/BumpSent.jsx";
 import BumpReceived from "./pages/BumpReceived.jsx";
 import EditProfile from "./pages/EditProfile.jsx";
 import Notifications from "./pages/Notifications.jsx";
+import NotFound from "./pages/NotFound.jsx";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/bump-sent/:otherUserId" element={<BumpSent />} />
           <Route path="/bump-received/:otherUserId" element={<BumpReceived />} />
           <Route path="/notifications" element={<Notifications />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
       </div>
