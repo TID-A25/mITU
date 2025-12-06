@@ -9,9 +9,9 @@ import { CURRENT_USER_ID } from "../constants/currentUser";
 
 export default function Home() {
 
-  // Fetch all profiles except current user, grouped by interests
+  // Fetch all profiles except current user
   // Also fetch current user's interests to highlight common ones
-  const { profilesByInterest, currentUserInterests, loading, error, refresh } = useProfiles({
+  const { profiles, currentUserInterests, loading, error, refresh } = useProfiles({
     excludeUserId: CURRENT_USER_ID,
     currentUserId: CURRENT_USER_ID,
   });
@@ -33,6 +33,16 @@ export default function Home() {
       </div>
     );
   }
+
+  // Group profiles by their interests
+  const profilesByInterest = {};
+  profiles.forEach((profile) => {
+    if (!profile.interests || profile.interests.length === 0) return;
+    profile.interests.forEach((interest) => {
+      if (!profilesByInterest[interest]) profilesByInterest[interest] = [];
+      profilesByInterest[interest].push(profile);
+    });
+  });
 
   // Render profiles grouped by interest
   return (
