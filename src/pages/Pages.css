@@ -9,7 +9,6 @@
 /* keeps page content centered */
 .container {
   max-width: 100%;
-  margin: 0 auto;
 }
 
 /* gives even space between vertical stacked elements */
