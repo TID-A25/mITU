@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import ActionButtons from "../components/buttons/ActionButtons.jsx";
 import BumpHeader from "../components/bump/BumpHeader.jsx";
 import InterestGallery from "../components/interestGallery/InterestGallery.jsx";
 import "../App.css";
 import "./Pages.css";
 import useProfile from "../hooks/useProfile";
-import { createBump } from "../services/parseQueries";
+import Toast from "../components/ui/Toast.jsx";
+import useCreateBump from "../hooks/useCreateBump";
+import { CURRENT_USER_ID } from "../constants/currentUser";
 
 export default function BumpSent() {
   const params = useParams();
-  const otherUserId = params.otherUserId || params.userId;
   const navigate = useNavigate();
+  const otherUserId = params.otherUserId || params.userId;
+  const [toastOpen, setToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
-  // Hardcoded current user id for demo
-  const CURRENT_USER_ID = "C6YoifVWmr"; // victoria
-
-  // Use hooks to fetch both profiles (current and the other user)
   const currentHook = useProfile(CURRENT_USER_ID);
   const otherHook = useProfile(otherUserId);
 
@@ -25,34 +25,15 @@ export default function BumpSent() {
   const loading = currentHook.loading || otherHook.loading;
   const error = currentHook.error || otherHook.error;
 
-  // track whether we've already created a bump to avoid duplicate saves
-  const [bumpCreated, setBumpCreated] = useState(false);
-  const [bumpMessage, setBumpMessage] = useState(null);
+  const { message } = useCreateBump(
+    currentProfile?.id,
+    otherProfile?.id,
+    currentProfile?.id
+  );
 
-  // compute shared interests when both profiles available
-  const sharedInterests = (currentProfile?.interests || []).filter((i) => (otherProfile?.interests || []).includes(i));
-
-  useEffect(() => {
-    async function sendBumpOnce() {
-      if (!currentProfile || !otherProfile || bumpCreated) return;
-
-      // mark as created to avoid duplicate requests
-      setBumpCreated(true);
-      try {
-        const result = await createBump({ userAId: currentProfile.id, userBId: otherProfile.id, requestedById: currentProfile.id });
-        // If bump already existed, notify the user
-        if (result && result.created === false) {
-          setBumpMessage("You have already sent a bump to this person");
-        }
-      } catch (err) {
-        console.error("Failed to create bump:", err);
-        // reset so we can retry later
-        setBumpCreated(false);
-      }
-    }
-
-    sendBumpOnce();
-  }, [currentProfile, otherProfile, bumpCreated]);
+  const sharedInterests = (currentProfile?.interests || []).filter((i) => 
+    (otherProfile?.interests || []).includes(i)
+  );
 
   if (loading) {
     return (
@@ -72,12 +53,22 @@ export default function BumpSent() {
 
   return (
     <div className="page container stack">
-      {bumpMessage && (
+      {message && (
         <div style={{ background: "#fff3cd", padding: "10px", borderRadius: 6, marginBottom: 12 }}>
-          {bumpMessage}
+          {message}
         </div>
       )}
-      <BumpHeader currentUser={currentProfile} otherUser={otherProfile} />
+      <BumpHeader
+        currentUser={currentProfile}
+        otherUser={otherProfile}
+        leftImageSrc={currentProfile?.profilePicture}
+        rightImageSrc={otherProfile?.profilePicture}
+        type="sent"
+      />
+
+      <div className="name-row">
+        <p>We'll let you know if they accept your request.</p>
+      </div>
 
       <div className="shared-interest-title">
         <h4 className="name-row">You both like:</h4>
@@ -86,7 +77,25 @@ export default function BumpSent() {
         <InterestGallery interests={sharedInterests} />
       </div>
 
-      <ActionButtons mode="bump" variant="sent" />
+      <ActionButtons
+        mode="bump"
+        variant="sent"
+        onClick={() => navigate(-1)}
+        onSecondaryClick={() => {
+          setToastMessage("Your bump has been cancelled.");
+          setToastOpen(true);
+        }}
+      />
+
+      <Toast
+        open={toastOpen}
+        message={toastMessage}
+        duration={2200}
+        onClose={() => {
+          setToastOpen(false);
+          navigate(-1);
+        }}
+      />
     </div>
   );
 }
