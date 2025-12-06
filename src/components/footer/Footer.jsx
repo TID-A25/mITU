@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import React from "react";
+import { Link, useLocation } from "react-router-dom";
 import "./Footer.css";
 import "../buttons/Buttons.css";
 import bell from "../../assets/images/icons/Bell.svg";
@@ -13,14 +12,22 @@ import userFill from "../../assets/images/icons/User-Fill.svg";
  * Footer - bottom navigation bar
  */
 export default function Footer() {
-  const [active, setActive] = React.useState("home");
+  const location = useLocation();
+  const pathname = location.pathname || "/";
+
+  // Footer looks at the current page to determine which icon to highlight
+  let active = "";
+  if (pathname.startsWith("/notifications")) active = "notifications";
+  else if (pathname === "/") active = "home";
+  else if (pathname === "/user-profile") active = "profile";
+  // If is not the current users profile, do not highlight profile icon
+
   return (
     <footer className="bottom-nav">
       {/* Notification button */}
 
       <Link
         to="/notifications"
-        onClick={() => setActive("notifications")}
         className="button button--small"
         aria-label="Notifications"
       >
@@ -32,12 +39,7 @@ export default function Footer() {
       </Link>
 
       {/* Home button */}
-      <Link
-        to="/"
-        onClick={() => setActive("home")}
-        className="button button--small"
-        aria-label="Home"
-      >
+      <Link to="/" className="button button--small" aria-label="Home">
         <img
           src={active === "home" ? homeFill : home}
           alt=""
@@ -48,7 +50,6 @@ export default function Footer() {
       {/* Profile button */}
       <Link
         to="/user-profile"
-        onClick={() => setActive("profile")}
         className="button button--small"
         aria-label="Profile"
       >
