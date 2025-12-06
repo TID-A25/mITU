@@ -26,6 +26,13 @@
   font-weight: 600;
 }
 
+.bump-subtitle {
+  margin-top: 8px;
+  font-size: 0.95rem;
+  color: var(--text-secondary, #666);
+  font-weight: 400;
+}
+
 .shared-interest-title {
   margin-top: 24px;
   font-size: 1rem;

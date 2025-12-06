@@ -14,30 +14,3 @@
   font-size: 2rem;
   color: var(--primary);
 }
-
-.app-header nav {
-  margin-top: 0.5rem;
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: var(--primary);
-}
-
-/* Spacing between nav items */
-.app-header nav button {
-  margin: 0 var(--space-sm);
-}
-
-/* Use shared button base but make header buttons visually inline/transparent by default */
-.app-header nav .button {
-  background: transparent;
-  color: var(--primary);
-  padding: 6px 10px;
-  border-radius: 8px;
-  font: inherit;
-  font-weight: 600;
-}
-
-.app-header nav .button.active {
-  background: var(--primary);
-  color: var(--muted);
-}

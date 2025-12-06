@@ -1,4 +1,3 @@
-import React from "react";
 import InterestGallery from "../interestGallery/InterestGallery.jsx";
 import "./ProfileInterests.css";
 
