@@ -1,4 +1,5 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import ActionButtons from "../components/buttons/ActionButtons.jsx";
 import BumpHeader from "../components/bump/BumpHeader.jsx";
 import InterestGallery from "../components/interestGallery/InterestGallery.jsx";
@@ -7,13 +8,15 @@ import "./Pages.css";
 import useProfile from "../hooks/useProfile";
 import Toast from "../components/ui/Toast.jsx";
 import useCreateBump from "../hooks/useCreateBump";
-import { CURRENT_USER_ID } from "../constants/currentUser"; 
+import { CURRENT_USER_ID } from "../constants/currentUser";
 
 export default function BumpSent() {
   const params = useParams();
+  const navigate = useNavigate();
   const otherUserId = params.otherUserId || params.userId;
+  const [toastOpen, setToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
-  // Use hooks to fetch both profiles (current and the other user)
   const currentHook = useProfile(CURRENT_USER_ID);
   const otherHook = useProfile(otherUserId);
 
@@ -22,37 +25,15 @@ export default function BumpSent() {
   const loading = currentHook.loading || otherHook.loading;
   const error = currentHook.error || otherHook.error;
 
-  // Create bump automatically when both profiles are loaded
-  const { result } = useCreateBump(
+  const { message } = useCreateBump(
     currentProfile?.id,
     otherProfile?.id,
     currentProfile?.id
   );
 
-  // Compute shared interests when both profiles available
-  const sharedInterests = (currentProfile?.interests || []).filter((i) => (otherProfile?.interests || []).includes(i));
-
-  useEffect(() => {
-    async function sendBumpOnce() {
-      if (!currentProfile || !otherProfile || bumpCreated) return;
-
-      // mark as created to avoid duplicate requests
-      setBumpCreated(true);
-      try {
-        const result = await createBump({ userAId: currentProfile.id, userBId: otherProfile.id, requestedById: currentProfile.id });
-        // If bump already existed, notify the user
-        if (result && result.created === false) {
-          setBumpMessage("You have already sent a bump to this person");
-        }
-      } catch (err) {
-        console.error("Failed to create bump:", err);
-        // reset so we can retry later
-        setBumpCreated(false);
-      }
-    }
-
-    sendBumpOnce();
-  }, [currentProfile, otherProfile, bumpCreated]);
+  const sharedInterests = (currentProfile?.interests || []).filter((i) => 
+    (otherProfile?.interests || []).includes(i)
+  );
 
   if (loading) {
     return (
@@ -72,18 +53,18 @@ export default function BumpSent() {
 
   return (
     <div className="page container stack">
-      {result && result.created === false && (
+      {message && (
         <div style={{ background: "#fff3cd", padding: "10px", borderRadius: 6, marginBottom: 12 }}>
-          You have already sent a bump to this person
+          {message}
         </div>
       )}
       <BumpHeader
         currentUser={currentProfile}
         otherUser={otherProfile}
-        leftImageSrc={currentProfile?.profilePicture || defaultAvatar}
-        rightImageSrc={otherProfile?.profilePicture || defaultAvatar}
-      />
+        leftImageSrc={currentProfile?.profilePicture}
+        rightImageSrc={otherProfile?.profilePicture}
         type="sent"
+      />
 
       <div className="name-row">
         <p>We'll let you know if they accept your request.</p>
