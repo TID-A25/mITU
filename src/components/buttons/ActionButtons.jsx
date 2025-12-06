@@ -1,40 +1,27 @@
-import React from "react";
 import "./Buttons.css";
-
 import BackButton from "./BackButton";
 import SingleButton from "./SingleButton";
 import BumpButtons from "./BumpButtons";
 
-/**
- * Compatibility wrapper around focused button components.
- * Keeps the original `Buttons` API but delegates rendering.
- */
-export default function ActionButtons({
-  mode = "single",
-  size = "big",
-  color = "teal",
-  label = "",
-  onClick,
-  onSecondaryClick,
-  variant = "sent",
-}) {
+// ActionButtons: pick which focused button to render based on `mode`
+
+export default function ActionButtons(props) {
+  // reads `mode` from props, all other props are passed through
+  const { mode = "single" } = props;
+
+  // if mode is "bump", render the two-button bump UI
   if (mode === "bump") {
-    return (
-      <BumpButtons
-        onClick={onClick}
-        onSecondaryClick={onSecondaryClick}
-        variant={variant}
-      />
-    );
+    return <BumpButtons {...props} />;
   }
 
+  // if mode is "back", render the small back button
   if (mode === "back") {
-    return <BackButton onClick={onClick} />;
+    return <BackButton {...props} />;
   }
 
-  return (
-    <SingleButton size={size} color={color} label={label} onClick={onClick} />
-  );
+  // otherwise render a single main button (size/color/label come from props)
+  return <SingleButton {...props} />;
 }
 
+// export the focused button components for direct use
 export { BackButton, SingleButton, BumpButtons };

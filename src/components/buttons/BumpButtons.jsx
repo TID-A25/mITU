@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./Buttons.css";
 
@@ -18,20 +17,17 @@ export default function BumpButtons({
         return { big: "View Contact", small: "Back to Home" };
       case "sent":
       default:
-        return { big: "Back to Home", small: "View Profile" };
+        return { big: "Back to Home", small: "Cancel" };
     }
   };
 
   const labels = getLabels();
-    
-  // default action: go back to home if no handler provided
+
+  // primaryHandler uses `onClick` if provided, otherwise navigates home
+  // secondaryHandler uses `onSecondaryClick` if provided, otherwise navigates home
   const navigateHome = () => navigate("/");
   const primaryHandler = onClick ? onClick : navigateHome;
-  const secondaryHandler = onSecondaryClick
-    ? onSecondaryClick
-    : onClick
-    ? onClick
-    : navigateHome;
+  const secondaryHandler = onSecondaryClick ? onSecondaryClick : navigateHome;
 
   return (
     <div className="bump-buttons">
