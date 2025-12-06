@@ -38,7 +38,7 @@ export default function BumpReceived() {
   const onAccept = async () => {
     const success = await handleAccept();
     if (success) {
-      setToastMessage("Bump accepted! 🎉");
+      setToastMessage("Bump accepted!");
       setToastOpen(true);
     }
   };
