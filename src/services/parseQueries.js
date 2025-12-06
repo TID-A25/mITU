@@ -396,13 +396,14 @@ export async function fetchNotifications(userId) {
       // Determine notification type
       let type;
       if (status === 'pending') {
-        if (requestedBy.id === userId) {
+        //if requestedBy is null or undefined, ?. will return undefined and not throw an error
+        if (requestedBy?.id === userId) {
           type = 'bump_sent';
         } else {
           type = 'bump_received';
         }
       } else if (status === 'accepted') {
-        if (requestedBy.id === userId) {
+        if (requestedBy?.id === userId) {
           type = 'bump_accepted';
         } else {
           type = 'accepted_by_current_user';
