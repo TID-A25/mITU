@@ -16,10 +16,10 @@ export default function NotificationItem({ notification = {} }) {
       message = `${actorName} has sent you a bump`;
       break;
     case "bump_accepted":
-      message = `Your bump has been accepted. You can now see their Whatsapp`;
+      message = `Your bump has been accepted. You can now see their WhatsApp`;
       break;
     case "accepted_by_current_user":
-      message = `You accepted ${actorName}'s bump, now you can see their whatsapp`;
+      message = `You accepted ${actorName}'s bump, now you can see their WhatsApp`;
       break;
     default:
       message = text || "Notification";

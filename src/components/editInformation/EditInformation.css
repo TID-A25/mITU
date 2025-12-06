@@ -33,7 +33,7 @@
   box-shadow: 0 0 0 4px rgba(62, 193, 153, 0.12);
 }
 
-/* Group country & whatsapp nicer side-by-side on wide screens */
+/* Group country & WhatsApp nicer side-by-side on wide screens */
 .profile-edit-form .row-2 {
   display: grid;
   gap: 1rem;
