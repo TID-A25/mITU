@@ -31,10 +31,9 @@ export default function NotificationItem({ notification = {} }) {
 
     if (type === 'bump_received' && notification.otherUserId) {
       navigate(`/bump-received/${notification.otherUserId}`);
-    } else if (type === 'bump_accepted' && notification.otherUserId) {
-
-      // for accepted bumps, go to their profile
-      navigate(`/user/${notification.otherUserId}`);
+    } else if ((type === 'bump_accepted' || type === 'accepted_by_current_user') && notification.otherUserId) {
+      // go to bump-accepted page for accepted bumps
+      navigate(`/bump-accepted/${notification.otherUserId}`);
     }
   };
 
