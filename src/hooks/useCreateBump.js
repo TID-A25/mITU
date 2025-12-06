@@ -6,14 +6,16 @@ export default function useCreateBump(userAId, userBId, requestedById, { autoCre
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
+  const [bumpCreated, setBumpCreated] = useState(false);
 
   useEffect(() => {
-    if (!autoCreate || !userAId || !userBId) return;
+    if (!autoCreate || !userAId || !userBId || bumpCreated) return;
 
     let mounted = true;
     setLoading(true);
     setError(null);
     setMessage(null);
+    setBumpCreated(true);
 
     (async () => {
       try {
@@ -29,6 +31,7 @@ export default function useCreateBump(userAId, userBId, requestedById, { autoCre
         if (!mounted) return;
         console.error('useCreateBump error', err);
         setError(err.message || String(err));
+        setBumpCreated(false); 
       } finally {
         if (!mounted) return;
         setLoading(false);
@@ -38,7 +41,7 @@ export default function useCreateBump(userAId, userBId, requestedById, { autoCre
     return () => {
       mounted = false;
     };
-  }, [userAId, userBId, requestedById, autoCreate]);
+  }, [userAId, userBId, requestedById, autoCreate, bumpCreated]);
 
   return { result, loading, error, message };
 }

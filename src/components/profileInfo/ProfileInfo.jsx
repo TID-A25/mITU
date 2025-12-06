@@ -1,4 +1,3 @@
-import React from "react";
 // asset paths: this file lives at src/components/profile, so go up two levels to src/
 import verifiedBadge from "../../assets/images/icons/Verified.svg";
 import globe from "../../assets/images/icons/Globe.svg";
@@ -13,7 +12,6 @@ export default function ProfileInfo({
   bumpStatus = null,
   checkingBump = false,
   onBump = () => {},
-  onSettings = () => {},
 }) {
   // Determine what to show for bump interaction
   const getBumpContent = () => {

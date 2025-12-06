@@ -1,4 +1,3 @@
-import React from "react";
 import NotificationItem from "./NotificationItem";
 import "./Notifications.css";
 import refreshIcon from "../../assets/images/icons/Refresh.svg";
