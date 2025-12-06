@@ -1,6 +1,27 @@
 import Parse from "parse";
 
 /**
+ * Map Parse user object to profile object
+ */
+function mapUserToProfile(user, interests = []) {
+  const profilePic = user.get("profile_pic");
+  const profilePictureUrl = profilePic ? profilePic.url() : null;
+
+  return {
+    id: user.id,
+    objectId: user.id,
+    name: `${user.get("first_name")} ${user.get("last_name")}`,
+    profilePicture: profilePictureUrl,
+    interests,
+    degree: user.get("programme"),
+    semester: user.get("semester"),
+    country: user.get("country") || "Not specified",
+    phone: user.get("phone") || null,
+    phone_visibility: user.get("phone_visibility") || "all",
+  };
+}
+
+/**
  * Fetch all profiles with interests
  */
 export async function fetchProfiles({ excludeUserId } = {}) {
@@ -53,35 +74,10 @@ export async function fetchProfiles({ excludeUserId } = {}) {
     const profilesWithInterests = users.map((user) => {
       try {
         const interests = interestsByUserId[user.id] || [];
-        const profilePic = user.get("profile_pic");
-        const profilePictureUrl = profilePic ? profilePic.url() : null;
-
-        return {
-          id: user.id,
-          objectId: user.id,
-          name: `${user.get("first_name")} ${user.get("last_name")}`,
-          profilePicture: profilePictureUrl,
-          interests,
-          degree: user.get("programme"),
-          semester: user.get("semester"),
-          country: user.get("country") || "Not specified",
-          phone: user.get("phone") || null,
-          phone_visibility: user.get("phone_visibility") || "all",
-        };
+        return mapUserToProfile(user, interests);
       } catch (err) {
         console.error(`Error processing user ${user.id}:`, err);
-        return {
-          id: user.id,
-          objectId: user.id,
-          name: `${user.get("first_name")} ${user.get("last_name")}`,
-          profilePicture: null,
-          interests: [],
-          degree: user.get("programme"),
-          semester: user.get("semester"),
-          country: user.get("country") || "Not specified",
-          phone: user.get("phone") || null,
-          phone_visibility: user.get("phone_visibility") || "all",
-        };
+        return mapUserToProfile(user, []);
       }
     });
 
@@ -112,22 +108,7 @@ export async function fetchProfileById(id) {
       .map((entry) => entry.get("interest")?.get("interest_name"))
       .filter(Boolean);
 
-    const profilePic = user.get("profile_pic");
-    const profilePictureUrl = profilePic ? profilePic.url() : null;
-
-
-    return {
-      id: user.id,
-      objectId: user.id,
-      name: `${user.get("first_name")} ${user.get("last_name")}`,
-      profilePicture: profilePictureUrl,
-      interests,
-      degree: user.get("programme"),
-      semester: user.get("semester"),
-      country: user.get("country") || "Not specified",
-      phone: user.get("phone") || null,
-      phone_visibility: user.get("phone_visibility") || "all",
-    };
+    return mapUserToProfile(user, interests);
   } catch (err) {
     console.error("fetchProfileById error", err);
     throw err;
