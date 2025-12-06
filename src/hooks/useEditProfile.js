@@ -1,14 +1,17 @@
-import { useEffect, useState, useCallback } from 'react';
-import { fetchEditProfileData, saveProfileChanges } from '../services/parseQueries';
+import { useEffect, useState, useCallback } from "react";
+import {
+  fetchEditProfileData,
+  saveProfileChanges,
+} from "../services/parseQueries";
 
 export default function useEditProfile(userId) {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
-  
-  const [country, setCountry] = useState('');
-  const [phone, setPhone] = useState('');
-  const [phoneVisibility, setPhoneVisibility] = useState('bumps');
+
+  const [country, setCountry] = useState("");
+  const [phone, setPhone] = useState("");
+  const [phoneVisibility, setPhoneVisibility] = useState("bumps");
   const [selected, setSelected] = useState([]);
   const [allInterests, setAllInterests] = useState([]);
 
@@ -23,7 +26,7 @@ export default function useEditProfile(userId) {
 
         const data = await fetchEditProfileData(userId);
         if (!mounted) return;
-        
+
         setCountry(data.country);
         setPhone(data.phone);
         setPhoneVisibility(data.phoneVisibility);
@@ -33,8 +36,8 @@ export default function useEditProfile(userId) {
         setError(null);
       } catch (err) {
         if (!mounted) return;
-        console.error('Load error:', err);
-        setError(err.message || 'Failed to load data');
+        console.error("Load error:", err);
+        setError(err.message || "Failed to load data");
       } finally {
         if (!mounted) return;
         setLoading(false);
@@ -63,22 +66,24 @@ export default function useEditProfile(userId) {
       setSaving(true);
       setError(null);
 
+      // Look in allInterests to look up interests in memory instead of querying the database for each one
       await saveProfileChanges(userId, {
         country,
         phone,
         phoneVisibility,
         selectedInterests: selected,
+        allInterests,
       });
 
       return true;
     } catch (err) {
-      console.error('Save failed:', err);
-      setError(err.message || 'Failed to save');
+      console.error("Save failed:", err);
+      setError(err.message || "Failed to save");
       return false;
     } finally {
       setSaving(false);
     }
-  }, [userId, country, phone, phoneVisibility, selected]);
+  }, [userId, country, phone, phoneVisibility, selected, allInterests]);
 
   return {
     loading,
