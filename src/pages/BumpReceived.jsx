@@ -18,6 +18,7 @@ export default function BumpReceived() {
   
   const [toastOpen, setToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("error");
 
   const currentHook = useProfile(CURRENT_USER_ID);
   const otherHook = useProfile(otherUserId);
@@ -45,9 +46,11 @@ export default function BumpReceived() {
     const success = await handleAccept();
     if (success) {
       setToastMessage("Bump accepted!");
+      setToastType("success");
       setToastOpen(true);
     } else if (acceptError) {
       setToastMessage(acceptError);
+      setToastType("error");
       setToastOpen(true);
     }
   };
@@ -56,9 +59,11 @@ export default function BumpReceived() {
     const success = await handleCancel();
     if (success) {
       setToastMessage("Bump declined");
+      setToastType("success");
       setToastOpen(true);
     } else if (cancelError) {
       setToastMessage(cancelError);
+      setToastType("error");
       setToastOpen(true);
     }
   };
@@ -128,6 +133,7 @@ export default function BumpReceived() {
           setToastOpen(false);
           navigate("/notifications");
         }}
+        type={toastType}
       />
     </div>
   );
