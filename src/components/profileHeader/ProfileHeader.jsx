@@ -27,7 +27,7 @@ export default function ProfileHeader({ profilePicture, isOwnProfile = false }) 
             alt="Edit"
             role="button"
             tabIndex={0}
-            onClick={() => navigate("/edit-profile")}
+            onClick={() => navigate("/ed-it-profile")}
             onKeyDown={(e) => e.key === "Enter" && navigate("/edit-profile")}
           />
         )}

@@ -1,7 +1,7 @@
 //Setting up Parse
 // ** importing Parse as configured in vite.config.js:
 import "./constants/parseConfig.js";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/header/Header.jsx";
 import Footer from "./components/footer/Footer.jsx";
 import Home from "./pages/Home.jsx";
@@ -10,6 +10,7 @@ import BumpSent from "./pages/BumpSent.jsx";
 import BumpReceived from "./pages/BumpReceived.jsx";
 import EditProfile from "./pages/EditProfile.jsx";
 import Notifications from "./pages/Notifications.jsx";
+import NotFound from "./pages/NotFound.jsx";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/bump-sent/:otherUserId" element={<BumpSent />} />
           <Route path="/bump-received/:otherUserId" element={<BumpReceived />} />
           <Route path="/notifications" element={<Notifications />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
       </div>
