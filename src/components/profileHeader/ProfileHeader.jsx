@@ -1,5 +1,4 @@
 // ProfileHeader component - displays cover photo and profile picture for user profiles
-import React from "react";
 import { useNavigate } from "react-router-dom";
 // asset paths: this file lives at src/components/profile, so go up two levels to src/
 import coverPhoto from "../../assets/images/Coverpicture.jpg";

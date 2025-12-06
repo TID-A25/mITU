@@ -1,4 +1,3 @@
-import React from "react";
 import ProfileGallery from "../profileGallery/ProfileGallery";
 import "./ProfileSection.css";
 
