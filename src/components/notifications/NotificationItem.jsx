@@ -1,7 +1,8 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./NotificationItem.css";
 
 export default function NotificationItem({ notification = {} }) {
+  const navigate = useNavigate();
   const { actor = {}, type, text } = notification;
 
   const actorName = actor.name || "Someone";
@@ -25,8 +26,23 @@ export default function NotificationItem({ notification = {} }) {
       message = text || "Notification";
   }
 
+  const handleClick = () => {
+    // if someone sent you a bump, go to bump received page
+
+    if (type === 'bump_received' && notification.otherUserId) {
+      navigate(`/bump-received/${notification.otherUserId}`);
+    } else if ((type === 'bump_accepted' || type === 'accepted_by_current_user') && notification.otherUserId) {
+      // go to bump-accepted page for accepted bumps
+      navigate(`/bump-accepted/${notification.otherUserId}`);
+    }
+  };
+
   return (
-    <div className="notification-item simple">
+    <div 
+      className="notification-item simple" 
+      onClick={handleClick}
+      style={{ cursor: type === 'bump_received' || type === 'bump_accepted' ? 'pointer' : 'default' }}
+    >
       <div className="notification-avatar">
         {actor.avatar ? (
           <img src={actor.avatar} alt={actorName} />

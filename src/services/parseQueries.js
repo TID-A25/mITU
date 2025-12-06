@@ -414,3 +414,48 @@ export async function fetchNotifications(userId) {
   }
 }
 
+/**
+ * Accept a bump request (change status from pending to accepted)
+ */
+export async function acceptBump(bumpId) {
+  if (!bumpId) throw new Error('bumpId required');
+  
+  try {
+    const BumpStatus = Parse.Object.extend('Bump_status');
+    const query = new Parse.Query(BumpStatus);
+    const bump = await query.get(bumpId);
+    
+    if (!bump) throw new Error('Bump not found');
+    
+    bump.set('status', 'accepted');
+    await bump.save();
+    
+    return { success: true, bump };
+  } catch (err) {
+    console.error('acceptBump error', err);
+    throw err;
+  }
+}
+
+/**
+ * Delete or cancel a bump request
+ */
+export async function deleteBump(bumpId) {
+  if (!bumpId) throw new Error('bumpId required');
+  
+  try {
+    const BumpStatus = Parse.Object.extend('Bump_status');
+    const query = new Parse.Query(BumpStatus);
+    const bump = await query.get(bumpId);
+    
+    if (!bump) throw new Error('Bump not found');
+    
+    await bump.destroy();
+    
+    return { success: true };
+  } catch (err) {
+    console.error('deleteBump error', err);
+    throw err;
+  }
+}
+

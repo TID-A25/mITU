@@ -8,16 +8,28 @@ export default function BumpButtons({
 }) {
   const navigate = useNavigate();
 
-  // Define labels based on bump state
+  // Define labels and text based on bump state
   const getLabels = () => {
     switch (variant) {
       case "received":
-        return { big: "Accept Bump", small: "Decline" };
+        return { 
+          big: "Accept Bump", 
+          small: "Decline",
+          text: "Not interested?"
+        };
       case "accepted":
-        return { big: "View Contact", small: "Back to Home" };
+        return { 
+          big: "View Contact", 
+          small: "Back",
+          text: "Or go back to Home.."
+        };
       case "sent":
       default:
-        return { big: "Back to Home", small: "Cancel" };
+        return { 
+          big: "Back to Home", 
+          small: "Cancel",
+          text: "Want to take back your bump?"
+        };
     }
   };
 
@@ -42,7 +54,7 @@ export default function BumpButtons({
       </div>
 
       <div className="name-row">
-        <p>Want to take back your bump?</p>
+        <p>{labels.text}</p>
       </div>
 
       <div className="bump-buttons-small">

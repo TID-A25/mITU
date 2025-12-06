@@ -27,7 +27,7 @@ export default function ProfileInfo({
           return <span className="bump-status-text">🔔 Waiting for you to respond</span>;
         }
       } else if (bumpStatus.status === "accepted") {
-        return <span className="bump-status-text">✓ Connected</span>;
+        return <span className="bump-status-text"> Bumped </span>;
       }
     }
     
