@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { CURRENT_USER_ID, setCurrentUserId, DEMO_USERS, initializeCurrentUser } from '../../constants/currentUser';
 import './UserSwitcher.css';
 

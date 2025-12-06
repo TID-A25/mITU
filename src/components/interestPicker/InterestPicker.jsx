@@ -1,4 +1,3 @@
-import React from "react";
 import "./InterestPicker.css";
 
 export default function InterestPicker({ items = [], selected = [], onToggle }) {
