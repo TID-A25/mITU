@@ -21,12 +21,12 @@ export default function BumpButtons({
         return { 
           big: "View Contact", 
           small: "Back",
-          text: "Or go back to Home.."
+          text: "Or go back.."
         };
       case "sent":
       default:
         return { 
-          big: "Back to Home", 
+          big: "Go Back", 
           small: "Cancel",
           text: "Want to take back your bump?"
         };
