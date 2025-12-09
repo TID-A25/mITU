@@ -7,21 +7,28 @@ export let CURRENT_USER_ID = null;
 // Fetch demo users from Cloud Function
 export const fetchDemoUsers = async () => {
   try {
+    console.log("Calling getDemoUsers Cloud Function...");
     const result = await Parse.Cloud.run("getDemoUsers");
+    console.log("Cloud Function response:", result);
+    
     DEMO_USERS = result.reduce((acc, user) => {
       acc[user.id] = user.name;
       return acc;
     }, {});
     
-    // Set default user if none selected
     if (!CURRENT_USER_ID && result.length > 0) {
       CURRENT_USER_ID = result[0].id;
     }
     
+    console.log("DEMO_USERS:", DEMO_USERS);
     return DEMO_USERS;
   } catch (error) {
-    console.error("Failed to fetch demo users:", error);
-    return {};
+    console.error("Cloud Function error details:", {
+      message: error.message,
+      code: error.code,
+      fullError: error
+    });
+    throw error;
   }
 };
 
@@ -34,6 +41,7 @@ export const setCurrentUserId = async (userId) => {
       localStorage.setItem('demoCurrentUserId', userId);
       return true;
     }
+    return false;
   } catch (error) {
     console.error("Failed to set current user:", error);
     return false;
