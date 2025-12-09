@@ -3,7 +3,7 @@
   left: 50%;
   bottom: 32px;
   transform: translateX(-50%);
-  color: #000;
+  color: #fff;
   padding: 10px 14px;
   border-radius: 8px;
   font-weight: 600;
@@ -12,9 +12,17 @@
 }
 
 .app-toast--error {
-  background: var(--danger);
+  background: #D32F2F;
 }
 
 .app-toast--success {
-  background: var(--accent);
+  background: #2E7D32;
+}
+
+.app-toast--info {
+  background: #1976D2;
+}
+
+.app-toast--warning {
+  background: #ED6C02;
 }
