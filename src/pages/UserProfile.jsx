@@ -12,12 +12,15 @@ export default function UserProfile() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { currentDemoUser, handleUserChange, CURRENT_USER_ID } = useProfile(null);
-  const isOwnProfile = location.pathname === "/user-profile" || userId === currentDemoUser;
-  const targetUserId = location.pathname === "/user-profile" ? currentDemoUser : userId;
+  const { currentDemoUser, handleUserChange, CURRENT_USER_ID } =
+    useProfile(null);
+  const isOwnProfile =
+    location.pathname === "/user-profile" || userId === currentDemoUser;
+  const targetUserId =
+    location.pathname === "/user-profile" ? currentDemoUser : userId;
 
   const { profile, loading, error } = useProfile(targetUserId);
-  
+
   // Check bump status when viewing another user's profile
   const { bumpStatus, loading: checkingBump } = useBumpStatus(
     isOwnProfile ? null : CURRENT_USER_ID,
@@ -75,8 +78,10 @@ export default function UserProfile() {
         checkingBump={checkingBump}
         onBump={() => navigate(`/bump-sent/${profile.objectId || profile.id}`)}
       />
-      <h2>Interests</h2>
-      <InterestGallery interests={profile.interests} />
+      <div className="padding-lg">
+        <h2>Interests</h2>
+        <InterestGallery interests={profile.interests} />
+      </div>
     </div>
   );
 }
