@@ -125,6 +125,21 @@ p {
   border-radius: 8px;
 }
 
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  width: 100%;
+}
+
+.loading-message {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--text-primary, #333);
+  text-align: center;
+}
+
 .home-welcome {
   display: flex;
   flex-direction: column;

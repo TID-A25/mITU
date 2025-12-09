@@ -9,7 +9,7 @@ import { CURRENT_USER_ID } from "../constants/currentUser";
 
 export default function Home() {
 
-  // Fetch all profiles except current user
+  // Fetch all profiles except current user, grouped by interests
   // Also fetch current user's interests to highlight common ones
   const { profiles, currentUserInterests, loading, error, refresh } = useProfiles({
     excludeUserId: CURRENT_USER_ID,
@@ -20,7 +20,9 @@ export default function Home() {
   if (loading) {
     return (
       <div className="page container stack">
-        <p>Loading profiles..</p>
+        <div className="loading-container">
+          <p className="loading-message">Loading profiles...</p>
+        </div>
       </div>
     );
   }
