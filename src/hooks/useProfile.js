@@ -19,8 +19,11 @@ export default function useProfile(profileId, { autoRefresh = true } = {}) {
     
 	//loads saved user from localstorage or keeps the default, and updates the state with currentuser
     useEffect(() => {
-        initializeCurrentUser();
-        setCurrentDemoUser(CURRENT_USER_ID);
+        const init = async () => {
+            await initializeCurrentUser();
+            setCurrentDemoUser(CURRENT_USER_ID);
+        };
+        init();
     }, []);
 
 	useEffect(() => {
