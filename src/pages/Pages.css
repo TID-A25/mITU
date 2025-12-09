@@ -94,10 +94,34 @@ p {
 }
 
 .error-message {
-  color: var(--error-color, #e53e3e);
+  color: #D32F2F;
   font-weight: 500;
   padding: var(--space-md);
-  background-color: var(--error-bg, #fff5f5);
+  background-color: #FFEBEE;
+  border-radius: 8px;
+}
+
+.warning-message {
+  color: #ED6C02;
+  font-weight: 500;
+  padding: var(--space-md);
+  background-color: #FFF3E0;
+  border-radius: 8px;
+}
+
+.info-message {
+  color: #1976D2;
+  font-weight: 500;
+  padding: var(--space-md);
+  background-color: #E3F2FD;
+  border-radius: 8px;
+}
+
+.success-message {
+  color: #2E7D32;
+  font-weight: 500;
+  padding: var(--space-md);
+  background-color: #E8F5E9;
   border-radius: 8px;
 }
 
