@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import InterestCard from "../interestCard/InterestCard.jsx";
 import "./InterestGallery.css";
 
-export default function InterestGallery({ interests }) {
+export default function InterestGallery({ interests, showSharedInterestsMessage = false }) {
   /**
    * Interest scroller component.
    * Displays interests as cards in a horizontal scroll layout,
@@ -45,7 +45,9 @@ export default function InterestGallery({ interests }) {
   if (normalizedInterests.length === 0) {
     return (
       <p className="error-message">
-        This user has not added any interests to their profile yet.
+        {showSharedInterestsMessage 
+          ? "You don't have any common interests yet."
+          : "You have not added interests to your profile yet. You won't be visible to other users in the feed."}
       </p>
     );
   }

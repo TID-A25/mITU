@@ -113,7 +113,7 @@ export default function BumpReceived() {
             <h4 className="name-row">You both like:</h4>
           </div>
           <div className="shared-interest-card">
-            <InterestGallery interests={sharedInterests} />
+            <InterestGallery interests={sharedInterests} showSharedInterestsMessage={true} />
           </div>
         </>
       )}

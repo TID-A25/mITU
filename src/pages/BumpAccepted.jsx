@@ -60,7 +60,6 @@ export default function BumpAccepted() {
 
   return (
     <div className="page container stack">
-
       <BumpHeader
         currentUser={currentProfile}
         otherUser={otherProfile}
@@ -73,7 +72,10 @@ export default function BumpAccepted() {
         <h4 className="name-row">You both like:</h4>
       </div>
       <div className="shared-interest-card">
-        <InterestGallery interests={sharedInterests} />
+        <InterestGallery
+          interests={sharedInterests}
+          showSharedInterestsMessage={true}
+        />
       </div>
 
       <ActionButtons
