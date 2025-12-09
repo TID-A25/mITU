@@ -34,7 +34,9 @@ export default function UserProfile() {
         {location.pathname === "/user-profile" && (
           <UserSwitcher onUserChange={handleUserChange} />
         )}
-        <p>Loading profile..</p>
+        <div className="loading-container">
+          <p className="loading-message">Loading profile...</p>
+        </div>
       </div>
     );
   }
