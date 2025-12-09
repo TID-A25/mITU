@@ -26,7 +26,7 @@ export default function BumpButtons({
       case "sent":
       default:
         return { 
-          big: "Back to Home", 
+          big: "Go Back", 
           small: "Cancel",
           text: "Want to take back your bump?"
         };
