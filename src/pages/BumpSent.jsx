@@ -32,7 +32,7 @@ export default function BumpSent() {
     currentProfile?.id
   );
 
-  const { handleCancel, cancelling, error: cancelError } = useCancelBump(
+  const { handleCancel, error: cancelError } = useCancelBump(
     CURRENT_USER_ID,
     otherUserId
   );
@@ -94,7 +94,10 @@ export default function BumpSent() {
         <h4 className="name-row">You both like:</h4>
       </div>
       <div className="shared-interest-card">
-        <InterestGallery interests={sharedInterests} />
+        <InterestGallery
+          interests={sharedInterests}
+          showSharedInterestsMessage={true}
+        />
       </div>
 
       <ActionButtons
