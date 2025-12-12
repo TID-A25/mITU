@@ -9,7 +9,6 @@
 /* keeps page content centered */
 .container {
   max-width: 100%;
-  margin: 0 auto;
 }
 
 /* gives even space between vertical stacked elements */
@@ -52,6 +51,11 @@ h3 {
   margin-bottom: var(--space-xs);
 }
 
+/* Page-specific title for profile pages */
+.edit-profile-title {
+  text-align: center;
+}
+
 /* paragraph text */
 p {
   color: var(--muted-text);
@@ -90,9 +94,87 @@ p {
 }
 
 .error-message {
-  color: var(--error-color, #e53e3e);
+  color: #D32F2F;
   font-weight: 500;
   padding: var(--space-md);
-  background-color: var(--error-bg, #fff5f5);
+  background-color: #FFEBEE;
   border-radius: 8px;
+}
+
+.warning-message {
+  color: #ED6C02;
+  font-weight: 500;
+  padding: var(--space-md);
+  background-color: #FFF3E0;
+  border-radius: 8px;
+}
+
+.info-message {
+  color: #1976D2;
+  font-weight: 500;
+  padding: var(--space-md);
+  background-color: #E3F2FD;
+  border-radius: 8px;
+}
+
+.success-message {
+  color: #2E7D32;
+  font-weight: 500;
+  padding: var(--space-md);
+  background-color: #E8F5E9;
+  border-radius: 8px;
+}
+
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  width: 100%;
+}
+
+.loading-message {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--text-primary, #333);
+  text-align: center;
+}
+
+.home-welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: var(--space-lg);
+  padding-bottom: var(--space-lg);
+  text-align: center;
+  gap: var(--space-sm);
+}
+
+.home-welcome .welcome-title {
+  color: var(--primary);
+  margin: 0;
+}
+
+.home-welcome .welcome-subtitle {
+  color: var(--muted-text);
+  margin: 0;
+  padding-left: var(--space-lg);
+  padding-right: var(--space-lg);
+}
+
+.atrium {
+  width: 100%;
+}
+
+.arrow-down {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--space-md);
+}
+
+.arrow-down img {
+  width: 44px;
+  height: auto;
+  display: block;
 }

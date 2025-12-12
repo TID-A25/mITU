@@ -1,5 +1,15 @@
-
+/* section wrapper with horizontal padding */
 .profile-section {
   padding-left: var(--space-md);
   padding-right: var(--space-md);
+}
+
+/* section heading */
+.profile-section h2 {
+  font-weight: 400;
+}
+
+/* bold interest name */
+.interest-title {
+  font-weight: 700;
 }

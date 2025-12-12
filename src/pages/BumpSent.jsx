@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import Buttons from "../components/buttons/Buttons.jsx";
+import { useState } from "react";
+import ActionButtons from "../components/buttons/ActionButtons.jsx";
 import BumpHeader from "../components/bump/BumpHeader.jsx";
 import InterestGallery from "../components/interestGallery/InterestGallery.jsx";
 import "../App.css";
 import "./Pages.css";
 import useProfile from "../hooks/useProfile";
-import { createBump } from "../services/parseQueries";
+import useCancelBump from "../hooks/useCancelBump";
+import Toast from "../components/ui/Toast.jsx";
+import useCreateBump from "../hooks/useCreateBump";
+import { CURRENT_USER_ID } from "../constants/currentUser";
 
 export default function BumpSent() {
   const params = useParams();
-  const otherUserId = params.otherUserId || params.userId;
   const navigate = useNavigate();
+  const otherUserId = params.otherUserId || params.userId;
+  const [toastOpen, setToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
-  // Hardcoded current user id for demo
-  const CURRENT_USER_ID = "C6YoifVWmr"; // victoria
-
-  // Use hooks to fetch both profiles (current and the other user)
   const currentHook = useProfile(CURRENT_USER_ID);
   const otherHook = useProfile(otherUserId);
 
@@ -25,25 +26,31 @@ export default function BumpSent() {
   const loading = currentHook.loading || otherHook.loading;
   const error = currentHook.error || otherHook.error;
 
-  // track whether we've already created a bump to avoid duplicate saves
-  const [bumpCreated, setBumpCreated] = useState(false);
+  const { message } = useCreateBump(
+    currentProfile?.id,
+    otherProfile?.id,
+    currentProfile?.id
+  );
 
-  // compute shared interests when both profiles available
-  const sharedInterests = (currentProfile?.interests || []).filter((i) => (otherProfile?.interests || []).includes(i));
+  const { handleCancel, error: cancelError } = useCancelBump(
+    CURRENT_USER_ID,
+    otherUserId
+  );
 
-  useEffect(() => {
-    async function sendBumpOnce() {
-      if (!currentProfile || !otherProfile || bumpCreated) return;
-      try {
-        await createBump({ userAId: currentProfile.id, userBId: otherProfile.id, requestedById: currentProfile.id });
-        setBumpCreated(true);
-      } catch (err) {
-        console.error("Failed to create bump:", err);
-      }
+  const sharedInterests = (currentProfile?.interests || []).filter((i) =>
+    (otherProfile?.interests || []).includes(i)
+  );
+
+  const onCancel = async () => {
+    const success = await handleCancel();
+    if (success) {
+      setToastMessage("The bump has been cancelled.");
+      setToastOpen(true);
+    } else if (cancelError) {
+      setToastMessage(cancelError);
+      setToastOpen(true);
     }
-
-    sendBumpOnce();
-  }, [currentProfile, otherProfile, bumpCreated]);
+  };
 
   if (loading) {
     return (
@@ -63,16 +70,53 @@ export default function BumpSent() {
 
   return (
     <div className="page container stack">
-      <BumpHeader currentUser={currentProfile} otherUser={otherProfile} />
+      {message && (
+        <div
+          style={{
+            background: "#fff3cd",
+            padding: "10px",
+            borderRadius: 6,
+            marginBottom: 12,
+          }}
+        >
+          {message}
+        </div>
+      )}
+      <BumpHeader
+        currentUser={currentProfile}
+        otherUser={otherProfile}
+        leftImageSrc={currentProfile?.profilePicture}
+        rightImageSrc={otherProfile?.profilePicture}
+        type="sent"
+      />
 
       <div className="shared-interest-title">
         <h4 className="name-row">You both like:</h4>
       </div>
       <div className="shared-interest-card">
-        <InterestGallery interests={sharedInterests} />
+        <InterestGallery
+          interests={sharedInterests}
+          showSharedInterestsMessage={true}
+        />
       </div>
 
-      <Buttons mode="bump" variant="sent" />
+      <ActionButtons
+        mode="bump"
+        variant="sent"
+        onClick={() => navigate(-1)}
+        onSecondaryClick={onCancel}
+      />
+
+      <Toast
+        open={toastOpen}
+        message={toastMessage}
+        duration={2200}
+        onClose={() => {
+          setToastOpen(false);
+          navigate(-1);
+        }}
+        type="success"
+      />
     </div>
   );
 }
