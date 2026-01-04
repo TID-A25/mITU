@@ -4,14 +4,19 @@ import { fetchProfiles, fetchCurrentUserInterests } from '../services/parseQueri
 
 export default function useProfiles({ excludeUserId, currentUserId } = {}) {
     // State: flat array of profiles
+    //setProfiles updates the array of profiles and triggers a re-render when profiles are fetched
     const [profiles, setProfiles] = useState([]);
+
     // State: current user's interests for highlighting common interests
     const [currentUserInterests, setCurrentUserInterests] = useState([]);
+
     // State: loading indicator
     const [loading, setLoading] = useState(true);
+
     // State: error message
     const [error, setError] = useState(null);
-    // State: refresh counter to trigger re-fetch
+
+    // State: refresh counter to trigger re-fetch. Trigger is that index increments. 
     const [refreshIndex, setRefreshIndex] = useState(0);
 
     // Effect: fetch profiles and current user's interests when dependencies change
