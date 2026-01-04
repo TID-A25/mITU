@@ -2,6 +2,12 @@ import Parse from "parse";
 
 /**
  * Map Parse user object to profile object
+ * Helper function, takes user and interests array as input
+ * and returns a profile object. 
+ * Every user becomes an object, from the data we have queried. 
+ * 
+ * Note: We could have called this function something else 
+ * like userToProfileObject 
  */
 function mapUserToProfile(user, interests = []) {
   const profilePic = user.get("profile_pic");
@@ -41,18 +47,24 @@ export async function fetchProfiles({ excludeUserId } = {}) {
       "phone"
     );
 
-    // Exclude current user
+    // Exclude current user. if current userid provided, then we exclude user id ON HOME PAGE
     if (excludeUserId) {
       userQuery.notEqualTo("objectId", excludeUserId);
     }
 
+    //we make a variable that contains what we got in fetchProfiles.
+    // We have await in order to wait for the data to be fetched before moving on.
     const users = await userQuery.find();
 
     // Fetch ALL interests at once
     const allUserInterestsQuery = new Parse.Query("User_interests");
+    //look at all data in users variable and find the interests that belong to each user.
     allUserInterestsQuery.containedIn("user", users);
+    //include the interest object in the results
     allUserInterestsQuery.include("interest");
+    //select only the interest and user fields
     allUserInterestsQuery.select("interest", "user");
+    //starts a query to look for the interests that belong to the users
     const allInterestResults = await allUserInterestsQuery.find();
 
     // Build lookup map: { userId: [interest1, interest2, ...] }
@@ -63,27 +75,48 @@ export async function fetchProfiles({ excludeUserId } = {}) {
       if (user && interest) {
         const userId = user.id;
         const interestName = interest.get("interest_name");
+        /* 
+          If there is an interest name...
+          and if it does not matches to the userid (!!)
+          then we push an empty list/ dont add it to the interestsByUserId
+
+          Emma → ["Math", "Art", "Music"]
+
+           */
         if (interestName) {
           if (!interestsByUserId[userId]) {
             interestsByUserId[userId] = [];
           }
+          /*
+           interestsByUserId = {
+            "emma_id": ["Photography", "Travel"]
+            } 
+            
+          */
           interestsByUserId[userId].push(interestName);
         }
       }
     });
 
     // Transform into profile objects
+    /* For every user from the users array (from the user table)
+       we save the specific userid mapped to the specific interests
+       in the interests variable
+       then we pass that info to the mapUserToProfile function */
     const profilesWithInterests = users.map((user) => {
       try {
+        // get interests for this user or empty list, if no interests foud
         const interests = interestsByUserId[user.id] || [];
         return mapUserToProfile(user, interests);
+        /* If there is error, we call 
+        the mapUserToProfile function with an empty interests array */
       } catch (err) {
         console.error(`Error processing user ${user.id}:`, err);
         return mapUserToProfile(user, []);
       }
     });
 
-    return profilesWithInterests;
+    return profilesWithInterests; /* Name proposition: uSeRoBjEcT */
   } catch (error) {
     console.error("fetchProfiles error", error);
     throw error;
@@ -104,10 +137,24 @@ export async function fetchProfileById(id) {
     userInterestQuery.equalTo("user", user);
     userInterestQuery.include("interest");
     userInterestQuery.select("interest");
+    /*  In interestResults, we have multiple entries PER person
+    so fx
+    Emma --> Photography
+    Emma --> Travel 
+
+    await means that we want to wait for the querying to finish before
+    moving on, so we dont search for interests before we have the user fx.
+    then we collect everything into one.
+     */
     const interestResults = await userInterestQuery.find();
 
     const interests = interestResults
+     /*for each row, get ONLY the interest name.
+      the chaining - " ?." is like a try-catch. 
+      if there isnt a value in the 'interest' - if it is NULL,
+      it catches it, and returns undefined instead*/
       .map((entry) => entry.get("interest")?.get("interest_name"))
+      //filter out any null/undefined values 
       .filter(Boolean);
 
     return mapUserToProfile(user, interests);
@@ -119,6 +166,10 @@ export async function fetchProfileById(id) {
 
 /**
  * Fetch current user's interests (for highlighting shared interests)
+ * SAME AS ABOVE just returns a list of the current user's interests, 
+ * instead of a full profile object.
+ * 
+ * Used in useProfiles hook to get current user's interests for comparison.
  */
 export async function fetchCurrentUserInterests(userId) {
   if (!userId) return [];
