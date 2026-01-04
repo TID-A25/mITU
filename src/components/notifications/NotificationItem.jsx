@@ -44,6 +44,7 @@ export default function NotificationItem({ notification = {} }) {
       style={{ cursor: type === 'bump_received' || type === 'bump_accepted' ? 'pointer' : 'default' }}
     >
       <div className="notification-avatar">
+        {/* If avatar exists, show it, otherwise show first letter of actor's name */}
         {actor.avatar ? (
           <img src={actor.avatar} alt={actorName} />
         ) : (

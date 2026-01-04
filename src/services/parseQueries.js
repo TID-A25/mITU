@@ -203,6 +203,7 @@ export async function createBump({ userAId, userBId, requestedById } = {}) {
   try {
     // Check if bump already exists
     const existingBump = await checkBumpStatus(userAId, userBId);
+    /* If no bump found, return undefined */
     if (existingBump?.exists) {
       return { bump: existingBump, created: false };
     }
@@ -212,6 +213,8 @@ export async function createBump({ userAId, userBId, requestedById } = {}) {
     const userA = await userQuery.get(userAId);
     const userB = await userQuery.get(userBId);
 
+    /* Object.extend makes a JS class for the Parse object,
+    which we can use when we want to make entries for the Bump_status table */
     const BumpStatus = Parse.Object.extend("Bump_status");
     const bump = new BumpStatus();
     bump.set("userA", userA);
@@ -220,6 +223,8 @@ export async function createBump({ userAId, userBId, requestedById } = {}) {
 
     if (requestedById) {
       const requestedBy =
+      /* We check if the requester is respectively userA or userB.
+      If it is neither, then we query the requester (requestedById) */
         requestedById === userAId
           ? userA
           : requestedById === userBId
@@ -227,7 +232,7 @@ export async function createBump({ userAId, userBId, requestedById } = {}) {
           : await userQuery.get(requestedById);
       bump.set("requestedBy", requestedBy);
     }
-
+    //entries are created HERE
     const saved = await bump.save();
     return { bump: saved, created: true };
   } catch (err) {
@@ -242,12 +247,21 @@ export async function createBump({ userAId, userBId, requestedById } = {}) {
 export async function checkBumpStatus(userAId, userBId) {
   if (!userAId || !userBId) return null;
 
+
   try {
     const userQuery = new Parse.Query("Users");
     const userA = await userQuery.get(userAId);
     const userB = await userQuery.get(userBId);
 
     const BumpStatus = Parse.Object.extend("Bump_status");
+
+  /* We first check if userA and userB from the User table
+  is the same as thew one in Bump_Status.
+
+  SO in q1 we check if userA is the first column, and userB is the second column 
+  and in q2 we check the opposite 
+  
+  If we stored by sorting in alphabetical order, we wouldn't need dis. */
 
     const q1 = new Parse.Query(BumpStatus);
     q1.equalTo("userA", userA);
@@ -280,7 +294,9 @@ export async function checkBumpStatus(userAId, userBId) {
 }
 
 /**
- * Fetch user data and interests for editing profile
+ * Fetch user data and interests for editing profile.
+ * Not updating aything yet, just loading user interests, all existing interest,
+ * and any editable usedr data
  */
 export async function fetchEditProfileData(userId) {
   if (!userId) throw new Error("userId required");
@@ -315,6 +331,7 @@ export async function fetchEditProfileData(userId) {
       user,
       country: user.get("country") || "",
       phone: String(user.get("phone") || ""),
+      //set phone_visibility to bumps, if not set already
       phoneVisibility: user.get("phone_visibility") || "bumps",
       userInterests: userInterestNames,
       allInterests,
@@ -325,12 +342,12 @@ export async function fetchEditProfileData(userId) {
   }
 }
 
-/**
- * Save profile changes (country, phone, interests)
+/** 
+ * Save profile changes (country, phone, interests).,
+ * Used in useEditProfile hook, to update profile data. 
  */
 export async function saveProfileChanges(
-  userId,
-  { country, phone, phoneVisibility, selectedInterests }
+  userId, { country, phone, phoneVisibility, selectedInterests }
 ) {
   if (!userId) throw new Error("userId required");
 
@@ -355,13 +372,15 @@ export async function saveProfileChanges(
       .map((e) => e.get("interest")?.get("interest_name"))
       .filter(Boolean);
 
-    // Compute adds and removes
+    // Find interests that are in the selectedInterests but not in existingNames (to add)
+    // and interests that are in existingNames but not in selectedInterests (to remove)
     const toAdd = selectedInterests.filter((n) => !existingNames.includes(n));
     const toRemove = existingNames.filter(
       (n) => !selectedInterests.includes(n)
     );
 
-    // Remove entries
+    // Remove the entries which the user has deselected. 
+    // looks in 'existing' --> User_interests table
     for (const entry of existing) {
       const name = entry.get("interest")?.get("interest_name");
       if (toRemove.includes(name)) {
@@ -369,7 +388,8 @@ export async function saveProfileChanges(
       }
     }
 
-    // Add entries
+    // For each interest in toAdd ,look up interest by name. 
+    // If interest is found, add new interest to the users interests.
     for (const name of toAdd) {
       const interestQ = new Parse.Query("Interest");
       interestQ.equalTo("interest_name", name);
@@ -409,7 +429,7 @@ export async function fetchNotifications(userId) {
     const query2 = new Parse.Query(BumpStatus);
     query2.equalTo("userB", currentUser);
 
-    // combined query to differentiate if current user is A or B
+    // combined query - searches for q1 and 12 at the SAME TIME to differentiate if current user is A or B
     const combinedQuery = Parse.Query.or(query1, query2);
     combinedQuery.include("userA");
     combinedQuery.include("userB");
