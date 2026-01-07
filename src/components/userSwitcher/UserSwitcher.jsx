@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { CURRENT_USER_ID, setCurrentUserId, DEMO_USERS, initializeCurrentUser } from '../../constants/currentUser';
 import './UserSwitcher.css';
 
+//onuserchange received as a prop from userprofile.jsx
 export default function UserSwitcher({ onUserChange }) {
   const [selectedUser, setSelectedUser] = useState(''); // current selected user
   const [users, setUsers] = useState({}); // storing list of users {userid: username}
@@ -30,6 +31,7 @@ export default function UserSwitcher({ onUserChange }) {
     
     const success = await setCurrentUserId(newUserId); // update current user in backend: Update CURRENT_USER_ID to be newUserId
     
+    //if set successfull, and callback exists...
     if (success && onUserChange) {
       onUserChange(newUserId);
     }

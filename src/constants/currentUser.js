@@ -8,7 +8,7 @@ export let CURRENT_USER_ID = null;
 export const fetchDemoUsers = async () => {
   try {
     const result = await Parse.Cloud.run("getDemoUsers");
-
+    //transforms array of users into object with id:name pairs
     DEMO_USERS = result.reduce((acc, user) => {
       acc[user.id] = user.name;
       return acc;
@@ -17,7 +17,6 @@ export const fetchDemoUsers = async () => {
     if (!CURRENT_USER_ID && result.length > 0) {
       CURRENT_USER_ID = result[0].id;
     }
-
     return DEMO_USERS;
   } catch (error) {
     console.error("Cloud Function error details:", {
