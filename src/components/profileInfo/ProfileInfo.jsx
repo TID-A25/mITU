@@ -13,14 +13,18 @@ export default function ProfileInfo({
   checkingBump = false,
   onBump = () => {},
 }) {
+  // Lock in phone visibility setting, and if it can't be found, default setting to "bumps"
   const phoneVisibility = profile.phoneVisibility || profile.phone_visibility || "bumps";
+  
   const canShowPhone =
     isOwnProfile ||
     phoneVisibility === "all" ||
     (phoneVisibility === "bumps" && bumpStatus?.exists && bumpStatus.status === "accepted");
-  const phoneLabel = canShowPhone
+ 
+
+    const phoneLabel = canShowPhone
     ? profile.phone || "Not specified"
-    : phoneVisibility === "none"
+    : phoneVisibility === "none" // if canShowPhone is false and if phoneVisibility is "none"
     ? "Hidden"
     : "Visible to bumps only";
 

@@ -4,7 +4,7 @@ import Parse from "parse";
 export let DEMO_USERS = {};
 export let CURRENT_USER_ID = null;
 
-// Fetch demo users from Cloud Function
+// Fetch demo users from Cloud Function "getDemoUsers" which stores users in "result"
 export const fetchDemoUsers = async () => {
   try {
     const result = await Parse.Cloud.run("getDemoUsers");
@@ -13,7 +13,7 @@ export const fetchDemoUsers = async () => {
       acc[user.id] = user.name;
       return acc;
     }, {});
-    
+
     if (!CURRENT_USER_ID && result.length > 0) {
       CURRENT_USER_ID = result[0].id;
     }
@@ -22,7 +22,7 @@ export const fetchDemoUsers = async () => {
     console.error("Cloud Function error details:", {
       message: error.message,
       code: error.code,
-      fullError: error
+      fullError: error,
     });
     throw error;
   }
@@ -34,7 +34,7 @@ export const setCurrentUserId = async (userId) => {
     const result = await Parse.Cloud.run("setDemoUser", { userId });
     if (result.success) {
       CURRENT_USER_ID = userId;
-      localStorage.setItem('demoCurrentUserId', userId);
+      localStorage.setItem("demoCurrentUserId", userId);
       return true;
     }
     return false;
@@ -51,11 +51,11 @@ export const getCurrentUserName = () => {
 
 // Load saved user from localStorage and validate with server
 export const initializeCurrentUser = async () => {
-  const saved = localStorage.getItem('demoCurrentUserId');
-  
+  const saved = localStorage.getItem("demoCurrentUserId");
+
   // Fetch available users from Cloud Function
   await fetchDemoUsers();
-  
+
   // If saved user exists and is valid, use it
   if (saved && DEMO_USERS[saved]) {
     CURRENT_USER_ID = saved;
@@ -63,6 +63,6 @@ export const initializeCurrentUser = async () => {
     // Otherwise use first available user
     CURRENT_USER_ID = Object.keys(DEMO_USERS)[0];
   }
-  
+
   return CURRENT_USER_ID;
 };

@@ -13,6 +13,7 @@ export default function EditProfile() {
   const [toastOpen, setToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
 
+  //load current user's profile data, along with handlesave & toggleInterest function
   const {
     loading,
     saving,
@@ -27,8 +28,9 @@ export default function EditProfile() {
     allInterests,
     handleToggleInterest,
     handleSave: saveProfile,
-  } = useEditProfile(CURRENT_USER_ID);
+  } = useEditProfile(CURRENT_USER_ID); 
 
+  //runs when save button is clicked
   const handleSave = async (e) => {
     e.preventDefault();
     const success = await saveProfile();
@@ -41,6 +43,7 @@ export default function EditProfile() {
     }
   };
 
+  // from useEditProfile hook. loading = false when fetching is done
   if (loading) {
     return (
       <div className="page container stack">
@@ -49,19 +52,22 @@ export default function EditProfile() {
     );
   }
 
+  // top op the page in Edit Profile page
   return (
     <div className="page container stack">
       <h2 className="edit-profile-title">Edit your profile</h2>
       {error && <p className="error-message">{error}</p>}
 
+
+
       <EditInformation
-        country={country}
+        country={country} // current user's data from useEditProfile hook inserted in EditInformation component
         onCountryChange={setCountry}
         phone={phone}
         onPhoneChange={setPhone}
         phoneVisibility={phoneVisibility}
         onPhoneVisibilityChange={setPhoneVisibility}
-        onSubmit={handleSave}
+        onSubmit={handleSave} // prevent reload when saving
       >
         <div className="interests-edit">
           <h4>Interests</h4>
@@ -79,7 +85,7 @@ export default function EditProfile() {
 
         <div className="form-actions">
           <button
-            type="submit"
+            type="submit" // we declare this button to trigger onSubmit in EditInformation
             disabled={saving}
             className="button button--teal"
             style={{
