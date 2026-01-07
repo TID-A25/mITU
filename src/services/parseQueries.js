@@ -359,6 +359,7 @@ export async function fetchNotifications(userId) {
     query2.equalTo("userB", currentUser);
 
     // combined query to differentiate if current user is A or B
+    //avoiding  N+1 query problem by including userA, userB, requestedBy in the same query
     const combinedQuery = Parse.Query.or(query1, query2);
     combinedQuery.include("userA");
     combinedQuery.include("userB");

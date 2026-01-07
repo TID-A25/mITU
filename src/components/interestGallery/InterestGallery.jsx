@@ -33,6 +33,8 @@ export default function InterestGallery({ interests, showSharedInterestsMessage 
     }
   }, [interests]);
 
+  
+
   if (loading) {
     return <p>Loading interests...</p>;
   }
