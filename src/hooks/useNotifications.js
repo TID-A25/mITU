@@ -1,5 +1,8 @@
-import { useEffect, useState, useCallback } from 'react';
-import { fetchNotifications } from '../services/parseQueries';
+import { useEffect, useState, useCallback } from "react";
+import { fetchNotifications } from "../services/parseQueries";
+
+// load the list of notifications for the current user
+// notifications is passed to NotificationsList component
 
 export default function useNotifications(userId) {
   const [notifications, setNotifications] = useState([]);
@@ -24,7 +27,7 @@ export default function useNotifications(userId) {
         setNotifications(notificationData || []);
       } catch (err) {
         if (!mounted) return;
-        console.error('useNotifications load error', err);
+        console.error("useNotifications load error", err);
         setError(err.message || String(err));
       } finally {
         if (!mounted) return;
@@ -43,6 +46,6 @@ export default function useNotifications(userId) {
     notifications,
     loading,
     error,
-    refresh
+    refresh,
   };
 }

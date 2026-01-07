@@ -41,9 +41,10 @@ export default function BumpSent() {
     otherUserId
   );
 
+  // returns array of shared interests
   const sharedInterests = (currentProfile?.interests || []).filter((i) =>
     (otherProfile?.interests || []).includes(i)
-  );
+  ); 
   
   const onCancel = async () => {
     const success = await handleCancel();

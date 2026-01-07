@@ -3,11 +3,11 @@ import Parse from "parse";
 /**
  * Map Parse user object to profile object
  * Helper function, takes user and interests array as input
- * and returns a profile object. 
- * Every user becomes an object, from the data we have queried. 
- * 
- * Note: We could have called this function something else 
- * like userToProfileObject 
+ * and returns a profile object.
+ * Every user becomes an object, from the data we have queried.
+ *
+ * Note: We could have called this function something else
+ * like userToProfileObject
  */
 function mapUserToProfile(user, interests = []) {
   const profilePic = user.get("profile_pic");
@@ -149,12 +149,12 @@ export async function fetchProfileById(id) {
     const interestResults = await userInterestQuery.find();
 
     const interests = interestResults
-     /*for each row, get ONLY the interest name.
+      /*for each row, get ONLY the interest name.
       the chaining - " ?." is like a try-catch. 
       if there isnt a value in the 'interest' - if it is NULL,
       it catches it, and returns undefined instead*/
       .map((entry) => entry.get("interest")?.get("interest_name"))
-      //filter out any null/undefined values 
+      //filter out any null/undefined values
       .filter(Boolean);
 
     return mapUserToProfile(user, interests);
@@ -166,9 +166,9 @@ export async function fetchProfileById(id) {
 
 /**
  * Fetch current user's interests (for highlighting shared interests)
- * SAME AS ABOVE just returns a list of the current user's interests, 
+ * SAME AS ABOVE just returns a list of the current user's interests,
  * instead of a full profile object.
- * 
+ *
  * Used in useProfiles hook to get current user's interests for comparison.
  */
 export async function fetchCurrentUserInterests(userId) {
@@ -223,7 +223,7 @@ export async function createBump({ userAId, userBId, requestedById } = {}) {
 
     if (requestedById) {
       const requestedBy =
-      /* We check if the requester is respectively userA or userB.
+        /* We check if the requester is respectively userA or userB.
       If it is neither, then we query the requester (requestedById) */
         requestedById === userAId
           ? userA
@@ -247,7 +247,6 @@ export async function createBump({ userAId, userBId, requestedById } = {}) {
 export async function checkBumpStatus(userAId, userBId) {
   if (!userAId || !userBId) return null;
 
-
   try {
     const userQuery = new Parse.Query("Users");
     const userA = await userQuery.get(userAId);
@@ -255,7 +254,7 @@ export async function checkBumpStatus(userAId, userBId) {
 
     const BumpStatus = Parse.Object.extend("Bump_status");
 
-  /* We first check if userA and userB from the User table
+    /* We first check if userA and userB from the User table
   is the same as thew one in Bump_Status.
 
   SO in q1 we check if userA is the first column, and userB is the second column 
@@ -273,7 +272,7 @@ export async function checkBumpStatus(userAId, userBId) {
 
     const combinedQuery = Parse.Query.or(q1, q2);
     combinedQuery.include("requestedBy");
-    const bump = await combinedQuery.first();
+    const bump = await combinedQuery.first(); // we expect at most one bump between two users
 
     if (!bump) return null;
 
@@ -342,12 +341,13 @@ export async function fetchEditProfileData(userId) {
   }
 }
 
-/** 
+/**
  * Save profile changes (country, phone, interests).,
- * Used in useEditProfile hook, to update profile data. 
+ * Used in useEditProfile hook, to update profile data.
  */
 export async function saveProfileChanges(
-  userId, { country, phone, phoneVisibility, selectedInterests }
+  userId,
+  { country, phone, phoneVisibility, selectedInterests }
 ) {
   if (!userId) throw new Error("userId required");
 
@@ -358,16 +358,17 @@ export async function saveProfileChanges(
 
     user.set("country", country);
     // Convert phone to number since database expects Number type, or set to null if empty
-    user.set("phone", phone ? Number(phone) : null);
+    user.set("phone", phone ? Number(phone) : null); // in column "phone" place phone. asks: is. number?
     user.set("phone_visibility", phoneVisibility);
     await user.save();
 
     // Get current User_interests
     const uiQ = new Parse.Query("User_interests");
     uiQ.equalTo("user", user);
-    uiQ.include("interest");
+    uiQ.include("interest"); // join interest from interest table
     const existing = await uiQ.find();
 
+    // Get existing interest names into existingNames array
     const existingNames = existing
       .map((e) => e.get("interest")?.get("interest_name"))
       .filter(Boolean);
@@ -379,7 +380,7 @@ export async function saveProfileChanges(
       (n) => !selectedInterests.includes(n)
     );
 
-    // Remove the entries which the user has deselected. 
+    // Remove the entries which the user has deselected.
     // looks in 'existing' --> User_interests table
     for (const entry of existing) {
       const name = entry.get("interest")?.get("interest_name");
@@ -388,7 +389,7 @@ export async function saveProfileChanges(
       }
     }
 
-    // For each interest in toAdd ,look up interest by name. 
+    // For each interest in toAdd ,look up interest by name.
     // If interest is found, add new interest to the users interests.
     for (const name of toAdd) {
       const interestQ = new Parse.Query("Interest");
@@ -423,24 +424,24 @@ export async function fetchNotifications(userId) {
 
     const BumpStatus = Parse.Object.extend("Bump_status");
 
-    // Query bumps where current user is either A or B
+    // Query bumps where current user is A and B to get all bumps involving current user
     const query1 = new Parse.Query(BumpStatus);
     query1.equalTo("userA", currentUser);
+
     const query2 = new Parse.Query(BumpStatus);
     query2.equalTo("userB", currentUser);
 
-    // combined query - searches for q1 and 12 at the SAME TIME to differentiate if current user is A or B
-    // combined query to differentiate if current user is A or B
+    // combined query - searches for q1 and 2 at the SAME TIME to differentiate if current user is A or B
     //avoiding  N+1 query problem by including userA, userB, requestedBy in the same query
     const combinedQuery = Parse.Query.or(query1, query2);
     combinedQuery.include("userA");
     combinedQuery.include("userB");
-    combinedQuery.include("requestedBy");
+    combinedQuery.include("requestedBy"); //fetch related info
     combinedQuery.descending("createdAt");
 
-    const bumps = await combinedQuery.find();
+    const bumps = await combinedQuery.find(); // finds ALL bumps involving current user
 
-    // Transform bumps into notification objects
+    // Convert each bump into a notification object
     const notifications = bumps.map((bump) => {
       const userA = bump.get("userA");
       const userB = bump.get("userB");
@@ -454,9 +455,9 @@ export async function fetchNotifications(userId) {
       )}`;
 
       const profilePic = otherUser.get("profile_pic");
-      const avatar = profilePic ? profilePic.url() : null;
+      const avatar = profilePic ? profilePic.url() : null; // in notificationItem.jsx we set first letter if no avatar
 
-      // Determine notification type
+      // Determine notification type based on bump status and who requested it
       let type;
       if (status === "pending") {
         //if requestedBy is null or undefined, ?. will return undefined and not throw an error

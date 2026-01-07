@@ -21,7 +21,7 @@ export default function ProfileInfo({
     phoneVisibility === "all" ||
     (phoneVisibility === "bumps" && bumpStatus?.exists && bumpStatus.status === "accepted");
  
-
+// text displayed in phone section
     const phoneLabel = canShowPhone
     ? profile.phone || "Not specified"
     : phoneVisibility === "none" // if canShowPhone is false and if phoneVisibility is "none"

@@ -31,9 +31,9 @@ export default function EditProfile() {
   } = useEditProfile(CURRENT_USER_ID); 
 
   //runs when save button is clicked
-  const handleSave = async (e) => {
+  const handleSave = async (e) => { // async to wait for saveProfile to complete
     e.preventDefault();
-    const success = await saveProfile();
+    const success = await saveProfile(); 
     if (success) {
       setToastMessage("Profile updated successfully.");
       setToastOpen(true);
