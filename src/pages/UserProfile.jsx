@@ -12,6 +12,7 @@ export default function UserProfile() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  //managing which user is selected in userswitcher
   const { currentDemoUser, handleUserChange, CURRENT_USER_ID } =
     useProfile(null);
   const isOwnProfile =
@@ -66,6 +67,7 @@ export default function UserProfile() {
   return (
     <div className="page container stack">
       {location.pathname === "/user-profile" && (
+        //pass handleuserchange to userswitcher so tjat when user changes, it updates the state in useprofile
         <UserSwitcher onUserChange={handleUserChange} />
       )}
 

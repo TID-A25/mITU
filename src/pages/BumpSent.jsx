@@ -18,6 +18,8 @@ export default function BumpSent() {
   const [toastOpen, setToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
 
+ /* Fetching two profiles simultaneously, the current user and the other user*/
+
   const currentHook = useProfile(CURRENT_USER_ID);
   const otherHook = useProfile(otherUserId);
 
@@ -25,6 +27,8 @@ export default function BumpSent() {
   const otherProfile = otherHook.profile;
   const loading = currentHook.loading || otherHook.loading;
   const error = currentHook.error || otherHook.error;
+
+  /*Profiles load async, so we need to wait for both to load before proceeding*/
 
   const { message } = useCreateBump(
     currentProfile?.id,
@@ -40,7 +44,7 @@ export default function BumpSent() {
   const sharedInterests = (currentProfile?.interests || []).filter((i) =>
     (otherProfile?.interests || []).includes(i)
   );
-
+  
   const onCancel = async () => {
     const success = await handleCancel();
     if (success) {
