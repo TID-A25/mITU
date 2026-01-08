@@ -26,6 +26,8 @@ export default function BumpAccepted() {
     otherUserId
   );
 
+  //if interests is undefined or null, use empty array. 
+  //filter loops through each interest, keeps it if it is also in otherProfile.interests
   const sharedInterests = (currentProfile?.interests || []).filter((i) =>
     (otherProfile?.interests || []).includes(i)
   );

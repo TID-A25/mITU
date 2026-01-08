@@ -20,6 +20,7 @@ export default function UserProfile() {
   const targetUserId =
     location.pathname === "/user-profile" ? currentDemoUser : userId;
 
+    //fetch profile data for viewing the user profile page
   const { profile, loading, error } = useProfile(targetUserId);
 
   // Check bump status when viewing another user's profile
