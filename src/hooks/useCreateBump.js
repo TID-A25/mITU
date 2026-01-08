@@ -8,6 +8,7 @@ export default function useCreateBump(userAId, userBId, requestedById, { autoCre
   const [message, setMessage] = useState(null);
   const [bumpCreated, setBumpCreated] = useState(false);
 
+  // Effect: create bump when user IDs or autoCreate flag changes
   useEffect(() => {
     if (!autoCreate || !userAId || !userBId || bumpCreated) return;
 
@@ -43,5 +44,11 @@ export default function useCreateBump(userAId, userBId, requestedById, { autoCre
     };
   }, [userAId, userBId, requestedById, autoCreate, bumpCreated]);
 
-  return { result, loading, error, message };
+  // return API
+  return { 
+    result,         // Object: result of createBump operation
+    loading,        // Boolean: is operation in progress?
+    error,          // String: error message
+    message         // String: informational message
+  };
 }

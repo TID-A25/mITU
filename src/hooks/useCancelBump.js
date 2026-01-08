@@ -5,6 +5,7 @@ export default function useCancelBump(currentUserId, otherUserId) {
   const [cancelling, setCancelling] = useState(false);
   const [error, setError] = useState(null);
 
+  // Handler to cancel a bump request
   const handleCancel = useCallback(async () => {
     if (!currentUserId || !otherUserId) {
       setError('Missing user IDs');
@@ -15,7 +16,7 @@ export default function useCancelBump(currentUserId, otherUserId) {
       setCancelling(true);
       setError(null);
 
-      // Check bump status, get bumpid
+      // Check bump status, get bumped
       const bumpStatus = await checkBumpStatus(currentUserId, otherUserId);
       
       if (!bumpStatus?.exists) {
@@ -40,9 +41,10 @@ export default function useCancelBump(currentUserId, otherUserId) {
     }
   }, [currentUserId, otherUserId]);
 
+  // return API
   return {
-    handleCancel,
-    cancelling,
-    error,
+    handleCancel,       // Function to call to cancel bump
+    cancelling,         // Boolean: is operation in progress?
+    error,              // String: error message
   };
 }

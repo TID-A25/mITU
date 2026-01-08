@@ -6,12 +6,15 @@ export default function useProfile(profileId, { autoRefresh = true } = {}) {
 	const [profile, setProfile] = useState(null);
 	const [loading, setLoading] = useState(Boolean(profileId && autoRefresh));
 	const [error, setError] = useState(null);
+
+	// refresh mechanism
 	const [refreshIndex, setRefreshIndex] = useState(0);
 
-	//user switching state tracks which user is currently selected in dropdown
+	// user switching state tracks which user is currently selected in dropdown
 	const [currentDemoUser, setCurrentDemoUser] = useState(CURRENT_USER_ID);
 
-	//updates currentdemouser to the selected user and triggers refresh
+	// ===== USER SWITCHING HANDLER =====
+	// updates current demo user to the selected user and triggers refresh
     const handleUserChange = useCallback((newUserId) => {
         setCurrentDemoUser(newUserId);
         refresh();
@@ -26,6 +29,7 @@ export default function useProfile(profileId, { autoRefresh = true } = {}) {
         init();
     }, []);
 
+	// Effect: fetch profile when profileId, autoRefresh, or refreshIndex changes
 	useEffect(() => {
 		if (!profileId) return;
 		// When autoRefresh is false, don't fetch automatically until refresh() is called
@@ -57,16 +61,18 @@ export default function useProfile(profileId, { autoRefresh = true } = {}) {
 
 	const refresh = useCallback(() => setRefreshIndex((i) => i + 1), []);
 
+	// Local update function
 	const updateLocal = useCallback((patch) => setProfile((p) => (p ? { ...p, ...patch } : p)), []);
 
+    // return API
     return { 
-        profile, 
-        loading, 
-        error, 
-        refresh, 
-        updateLocal, 
-        currentDemoUser, 
-        handleUserChange,
-        CURRENT_USER_ID 
+        profile,            // Profile object or null
+        loading,            // Is data loading?
+        error,              // Error message
+        refresh,            // Function to reload profile
+        updateLocal,        // Function for optimistic local updates
+        currentDemoUser,    // Currently selected demo user ID
+        handleUserChange,   // Function to switch demo users
+        CURRENT_USER_ID     // Global constant for current user ID
     };
 }

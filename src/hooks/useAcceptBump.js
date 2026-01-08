@@ -6,12 +6,13 @@ export default function useAcceptBump(currentUserId, otherUserId) {
   const [error, setError] = useState(null);
   const [message, setMessage] = useState('');
 
+  // Handler to accept a bump request
   const handleAccept = useCallback(async () => {
     if (!currentUserId || !otherUserId) {
       setError('Missing user IDs');
       return false;
     }
-
+ 
     try {
       setAccepting(true);
       setError(null);
@@ -47,10 +48,11 @@ export default function useAcceptBump(currentUserId, otherUserId) {
     }
   }, [currentUserId, otherUserId]);
 
+  // return API
   return {
-    handleAccept,
-    accepting,
-    error,
-    message,
+    handleAccept,  // Function to call to accept bump
+    accepting,     // Boolean: is operation in progress?
+    error,         // String: error message
+    message,       // String: success/info message
   };
 }

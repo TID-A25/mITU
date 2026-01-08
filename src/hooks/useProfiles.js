@@ -56,11 +56,12 @@ export default function useProfiles({ excludeUserId, currentUserId } = {}) {
     // Callback: refresh profiles by incrementing counter
     const refresh = useCallback(() => setRefreshIndex((i) => i + 1), []);
 
+    // return API
     return {
-        profiles,
-        currentUserInterests,
-        loading,
-        error,
-        refresh,
+        profiles,                 // Array of profile objects
+        currentUserInterests,     // Array of current user's interests (for highlighting shared ones)
+        loading,                  // Is data loading?
+        error,                    // Error message
+        refresh,                  // Function to manually refresh all profiles
     };
 }

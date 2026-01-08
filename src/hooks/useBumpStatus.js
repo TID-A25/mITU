@@ -6,6 +6,7 @@ export default function useBumpStatus(currentUserId, targetUserId) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // Effect: fetch bump status when user IDs change
   useEffect(() => {
     if (!currentUserId || !targetUserId) {
       setBumpStatus(null);
@@ -36,5 +37,10 @@ export default function useBumpStatus(currentUserId, targetUserId) {
     };
   }, [currentUserId, targetUserId]);
 
-  return { bumpStatus, loading, error };
+  // return API
+  return { 
+    bumpStatus,   // Object with bump status details
+    loading,      // Boolean: is loading?
+    error         // String: error message
+  };
 }

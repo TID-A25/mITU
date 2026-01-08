@@ -29,6 +29,7 @@ export default function EditProfile() {
     handleSave: saveProfile,
   } = useEditProfile(CURRENT_USER_ID);
 
+  // Handler for save action
   const handleSave = async (e) => {
     e.preventDefault();
     const success = await saveProfile();

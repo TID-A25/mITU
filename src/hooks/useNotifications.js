@@ -7,6 +7,7 @@ export default function useNotifications(userId) {
   const [error, setError] = useState(null);
   const [refreshIndex, setRefreshIndex] = useState(0);
 
+  // Effect to fetch notifications when userId or refreshIndex changes
   useEffect(() => {
     if (!userId) {
       setLoading(false);
@@ -17,10 +18,13 @@ export default function useNotifications(userId) {
     setLoading(true);
     setError(null);
 
+    // Fetch notifications
     (async () => {
       try {
         const notificationData = await fetchNotifications(userId);
         if (!mounted) return;
+
+        // Set notifications state
         setNotifications(notificationData || []);
       } catch (err) {
         if (!mounted) return;
@@ -39,10 +43,11 @@ export default function useNotifications(userId) {
 
   const refresh = useCallback(() => setRefreshIndex((i) => i + 1), []);
 
+  // Return API
   return {
-    notifications,
-    loading,
-    error,
-    refresh
+    notifications,  // Array of notifications
+    loading,        // Is data loading?
+    error,          // Error message if any
+    refresh         // Function to re-fetch notifications
   };
 }

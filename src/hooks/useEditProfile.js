@@ -12,6 +12,7 @@ export default function useEditProfile(userId) {
   const [selected, setSelected] = useState([]);
   const [allInterests, setAllInterests] = useState([]);
 
+  // Effect to load initial profile data
   useEffect(() => {
     if (!userId) return;
 
@@ -21,9 +22,11 @@ export default function useEditProfile(userId) {
       try {
         setLoading(true);
 
+        // Fetch existing profile data 
         const data = await fetchEditProfileData(userId);
         if (!mounted) return;
         
+        // Populate state with fetched data
         setCountry(data.country);
         setPhone(data.phone);
         setPhoneVisibility(data.phoneVisibility);
@@ -48,6 +51,7 @@ export default function useEditProfile(userId) {
     };
   }, [userId]);
 
+  // Handler to toggle interest selection
   const handleToggleInterest = useCallback((selectedInterest) => {
     setSelected((prev) =>
       prev.includes(selectedInterest)
@@ -80,19 +84,27 @@ export default function useEditProfile(userId) {
     }
   }, [userId, country, phone, phoneVisibility, selected]);
 
+  // return API
   return {
-    loading,
-    saving,
-    error,
-    country,
-    setCountry,
-    phone,
-    setPhone,
-    phoneVisibility,
-    setPhoneVisibility,
-    selected,
-    allInterests,
-    handleToggleInterest,
-    handleSave,
+    // Loading states
+    loading,             // Is data loading?
+    saving,              // Is save operation in progress?
+    error,               // Error message
+    
+    // Form field state and setters
+    country,              // Country value
+    setCountry,           // Setter for country
+    phone,                // Phone number value
+    setPhone,             // Setter for phone number
+    phoneVisibility,      // Phone visibility setting
+    setPhoneVisibility,   // Setter for phone visibility
+    
+    // Interest state and data
+    selected,              // Selected interests
+    allInterests,          // All available interests
+    
+    // Action handlers
+    handleToggleInterest,  // Function to toggle interest selection
+    handleSave,            // Function to save changes
   };
 }

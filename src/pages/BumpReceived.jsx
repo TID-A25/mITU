@@ -42,6 +42,7 @@ export default function BumpReceived() {
     (otherProfile?.interests || []).includes(i)
   );
 
+  // Handlers for accept and decline actions
   const onAccept = async () => {
     const success = await handleAccept();
     if (success) {
@@ -55,6 +56,7 @@ export default function BumpReceived() {
     }
   };
 
+  // Decline handler
   const onDecline = async () => {
     const success = await handleCancel();
     if (success) {
