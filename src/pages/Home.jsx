@@ -36,15 +36,19 @@ export default function Home() {
     );
   }
 
-  // Group profiles by their interests
+  // Loop through every profile and map them to their interests. 
   const profilesByInterest = {};
-  profiles.forEach((profile) => {
-    if (!profile.interests || profile.interests.length === 0) return;
-    profile.interests.forEach((interest) => {
-      if (!profilesByInterest[interest]) profilesByInterest[interest] = [];
-      profilesByInterest[interest].push(profile);
+  profiles.forEach((profile) => { 
+    if (!profile.interests || profile.interests.length === 0) return; // skip profiles with no interests
+    profile.interests.forEach((interest) => { // for each interest of the profile:
+      if (!profilesByInterest[interest]) profilesByInterest[interest] = []; // create array of that interest if not exists
+      profilesByInterest[interest].push(profile); // add profile to that interest array
     });
   });
+  /* profilesByInterest:
+  "Hiking": [profileA, profileB],
+  "Music": [profileC],
+  */
 
   // Render profiles grouped by interest
   return (

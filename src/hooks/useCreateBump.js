@@ -1,13 +1,19 @@
-import { useEffect, useState } from 'react';
-import { createBump } from '../services/parseQueries';
+import { useEffect, useState } from "react";
+import { createBump } from "../services/parseQueries";
 
-export default function useCreateBump(userAId, userBId, requestedById, { autoCreate = true } = {}) {
+export default function useCreateBump(
+  userAId,
+  userBId,
+  requestedById,
+  { autoCreate = true } = {}
+) {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
   const [bumpCreated, setBumpCreated] = useState(false);
 
+  // if autoCreate is false, dont createBump
   useEffect(() => {
     if (!autoCreate || !userAId || !userBId || bumpCreated) return;
 
@@ -19,19 +25,24 @@ export default function useCreateBump(userAId, userBId, requestedById, { autoCre
 
     (async () => {
       try {
-        const bumpResult = await createBump({ userAId, userBId, requestedById });
+        const bumpResult = await createBump({
+          // create the bump
+          userAId,
+          userBId,
+          requestedById,
+        });
         if (!mounted) return;
-        
-        setResult(bumpResult);
-        
+
+        setResult(bumpResult); // the created bump gets stored in state
+
         if (bumpResult && bumpResult.created === false) {
           setMessage("You have already sent a bump to this person");
         }
       } catch (err) {
         if (!mounted) return;
-        console.error('useCreateBump error', err);
+        console.error("useCreateBump error", err);
         setError(err.message || String(err));
-        setBumpCreated(false); 
+        setBumpCreated(false);
       } finally {
         if (!mounted) return;
         setLoading(false);

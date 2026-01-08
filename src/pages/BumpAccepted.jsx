@@ -9,7 +9,7 @@ import "../App.css";
 import "./Pages.css";
 
 export default function BumpAccepted() {
-  const params = useParams();
+  const params = useParams(); // reads part of an URL, like /bump-accepted/:otherUserId
   const navigate = useNavigate();
   const otherUserId = params.otherUserId || params.userId;
 

@@ -1,14 +1,14 @@
-import { useState, useCallback } from 'react';
-import { acceptBump, checkBumpStatus } from '../services/parseQueries';
+import { useState, useCallback } from "react";
+import { acceptBump, checkBumpStatus } from "../services/parseQueries";
 
 export default function useAcceptBump(currentUserId, otherUserId) {
   const [accepting, setAccepting] = useState(false);
   const [error, setError] = useState(null);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   const handleAccept = useCallback(async () => {
     if (!currentUserId || !otherUserId) {
-      setError('Missing user IDs');
+      setError("Missing user IDs");
       return false;
     }
 
@@ -18,34 +18,34 @@ export default function useAcceptBump(currentUserId, otherUserId) {
 
       // check bump status
       const bumpStatus = await checkBumpStatus(currentUserId, otherUserId);
-      
+
       if (!bumpStatus?.exists) {
-        setError('No bump request found');
+        setError("No bump request found");
         return false;
       }
 
-      if (bumpStatus.status === 'accepted') {
-        setMessage('Bump already accepted');
+      if (bumpStatus.status === "accepted") {
+        setMessage("Bump already accepted");
         return false;
       }
 
       if (bumpStatus.requestedByCurrentUser) {
-        setError('You cannot accept your own bump request');
+        setError("You cannot accept your own bump request");
         return false;
       }
 
       // Accept the bump
       await acceptBump(bumpStatus.bumpId);
-      setMessage('Bump accepted! 🎊');
+      setMessage("Bump accepted! 🎊");
       return true;
     } catch (err) {
-      console.error('useAcceptBump error', err);
-      setError(err.message || 'Failed to accept bump');
+      console.error("useAcceptBump error", err);
+      setError(err.message || "Failed to accept bump");
       return false;
     } finally {
       setAccepting(false);
     }
-  }, [currentUserId, otherUserId]);
+  }, [currentUserId, otherUserId]); //if either userId changes, rerun handleAccept
 
   return {
     handleAccept,

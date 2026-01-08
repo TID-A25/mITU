@@ -8,11 +8,11 @@ export let CURRENT_USER_ID = null;
 export const fetchDemoUsers = async () => {
   try {
     const result = await Parse.Cloud.run("getDemoUsers");
-    //transforms array of users into object with id:name pairs
+    //transforms array of users into object with id:name pairs for fasteer access
     DEMO_USERS = result.reduce((acc, user) => {
       acc[user.id] = user.name;
       return acc;
-    }, {});
+    }, {}); // starting with empty object
 
     if (!CURRENT_USER_ID && result.length > 0) {
       CURRENT_USER_ID = result[0].id;
@@ -28,7 +28,7 @@ export const fetchDemoUsers = async () => {
   }
 };
 
-// Function to set current user
+// Function to confirm and set current user in localStorage
 export const setCurrentUserId = async (userId) => {
   try {
     const result = await Parse.Cloud.run("setDemoUser", { userId });
