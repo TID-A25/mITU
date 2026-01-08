@@ -37,7 +37,8 @@ export default function BumpHeader({
       default:
         return {
           title: `You requested to bump into ${rightAlt}!`,
-          subtitle: "We'll let you know if they accept your request.",
+          subtitle:
+            "We'll let you know if they accept your request. You can see their WhatsApp number once they accept, if they shared it to bumps.",
         };
     }
   };
